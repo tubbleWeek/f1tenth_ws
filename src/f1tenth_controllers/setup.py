@@ -1,4 +1,6 @@
 from setuptools import setup
+import os
+from glob import glob
 
 package_name = 'f1tenth_controllers'
 
@@ -10,6 +12,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name, 'launch'), glob('launch/*.py')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -21,7 +24,8 @@ setup(
     entry_points={
         'console_scripts': [
             'follow_the_gap_node = f1tenth_controllers.follow_the_gap_node:main',
-            'pure_pursuit_node = f1tenth_controllers.pure_pursuit:main'
+            'pure_pursuit_node = f1tenth_controllers.pure_pursuit:main',
+            'pure_pursuit_nodev2 = f1tenth_controllers.pure_pursuit_sim:main'
         ],
     },
 )
