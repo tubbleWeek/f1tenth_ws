@@ -1,0 +1,37 @@
+[10.491s] Invoking command in '/home/nvidia/f1tenth_ws/src/new_map_saver': PYTHONPATH=/home/nvidia/f1tenth_ws/build/new_map_saver/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/new_map_saver build --build-base /home/nvidia/f1tenth_ws/build/new_map_saver/build install --record /home/nvidia/f1tenth_ws/build/new_map_saver/install.log --install-scripts $base/lib/new_map_saver --single-version-externally-managed install_data
+[12.571s] running egg_info
+[12.578s] creating ../../build/new_map_saver/new_map_saver.egg-info
+[12.579s] writing ../../build/new_map_saver/new_map_saver.egg-info/PKG-INFO
+[12.580s] writing dependency_links to ../../build/new_map_saver/new_map_saver.egg-info/dependency_links.txt
+[12.582s] writing entry points to ../../build/new_map_saver/new_map_saver.egg-info/entry_points.txt
+[12.582s] writing requirements to ../../build/new_map_saver/new_map_saver.egg-info/requires.txt
+[12.583s] writing top-level names to ../../build/new_map_saver/new_map_saver.egg-info/top_level.txt
+[12.592s] writing manifest file '../../build/new_map_saver/new_map_saver.egg-info/SOURCES.txt'
+[12.915s] reading manifest file '../../build/new_map_saver/new_map_saver.egg-info/SOURCES.txt'
+[12.930s] writing manifest file '../../build/new_map_saver/new_map_saver.egg-info/SOURCES.txt'
+[12.931s] running build
+[12.931s] running build_py
+[12.932s] creating /home/nvidia/f1tenth_ws/build/new_map_saver/build
+[12.933s] creating /home/nvidia/f1tenth_ws/build/new_map_saver/build/lib
+[12.933s] creating /home/nvidia/f1tenth_ws/build/new_map_saver/build/lib/new_map_saver
+[12.934s] copying new_map_saver/__init__.py -> /home/nvidia/f1tenth_ws/build/new_map_saver/build/lib/new_map_saver
+[12.934s] running install
+[12.947s] running install_lib
+[12.953s] creating /home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver
+[12.957s] copying /home/nvidia/f1tenth_ws/build/new_map_saver/build/lib/new_map_saver/__init__.py -> /home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver
+[12.961s] byte-compiling /home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver/__init__.py to __init__.cpython-38.pyc
+[12.970s] running install_data
+[12.971s] creating /home/nvidia/f1tenth_ws/install/new_map_saver/share/ament_index
+[12.972s] creating /home/nvidia/f1tenth_ws/install/new_map_saver/share/ament_index/resource_index
+[12.972s] creating /home/nvidia/f1tenth_ws/install/new_map_saver/share/ament_index/resource_index/packages
+[12.973s] copying resource/new_map_saver -> /home/nvidia/f1tenth_ws/install/new_map_saver/share/ament_index/resource_index/packages
+[12.974s] copying package.xml -> /home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver
+[12.974s] creating /home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/launch
+[12.975s] copying launch/map_saver.launch.py -> /home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/launch
+[12.975s] creating /home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/config
+[12.976s] copying config/map_saver_params.yaml -> /home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/config
+[12.977s] running install_egg_info
+[12.986s] Copying ../../build/new_map_saver/new_map_saver.egg-info to /home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver-0.0.0-py3.8.egg-info
+[12.994s] running install_scripts
+[13.131s] writing list of installed files to '/home/nvidia/f1tenth_ws/build/new_map_saver/install.log'
+[13.371s] Invoked command in '/home/nvidia/f1tenth_ws/src/new_map_saver' returned '0': PYTHONPATH=/home/nvidia/f1tenth_ws/build/new_map_saver/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/new_map_saver build --build-base /home/nvidia/f1tenth_ws/build/new_map_saver/build install --record /home/nvidia/f1tenth_ws/build/new_map_saver/install.log --install-scripts $base/lib/new_map_saver --single-version-externally-managed install_data

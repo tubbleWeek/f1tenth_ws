@@ -10,8 +10,12 @@ setup.py
 ../../build/f1tenth_controllers/f1tenth_controllers.egg-info/zip-safe
 f1tenth_controllers/__init__.py
 f1tenth_controllers/follow_the_gap_node.py
+f1tenth_controllers/p_controller copy.py
+f1tenth_controllers/p_controller.py
 f1tenth_controllers/pure_pursuit copy.py
 f1tenth_controllers/pure_pursuit.py
+f1tenth_controllers/pure_pursuit_sim.py
+launch/map_loc_launch.py
 resource/f1tenth_controllers
 test/test_copyright.py
 test/test_flake8.py

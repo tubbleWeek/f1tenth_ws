@@ -1,0 +1,50 @@
+[7.697s] Invoking command in '/home/nvidia/f1tenth_ws/src/f1tenth_controllers': PYTHONPATH=/home/nvidia/f1tenth_ws/build/f1tenth_controllers/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/f1tenth_controllers build --build-base /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build install --record /home/nvidia/f1tenth_ws/build/f1tenth_controllers/install.log --install-scripts $base/lib/f1tenth_controllers --single-version-externally-managed install_data
+[9.268s] running egg_info
+[9.277s] creating ../../build/f1tenth_controllers/f1tenth_controllers.egg-info
+[9.279s] writing ../../build/f1tenth_controllers/f1tenth_controllers.egg-info/PKG-INFO
+[9.282s] writing dependency_links to ../../build/f1tenth_controllers/f1tenth_controllers.egg-info/dependency_links.txt
+[9.284s] writing entry points to ../../build/f1tenth_controllers/f1tenth_controllers.egg-info/entry_points.txt
+[9.287s] writing requirements to ../../build/f1tenth_controllers/f1tenth_controllers.egg-info/requires.txt
+[9.288s] writing top-level names to ../../build/f1tenth_controllers/f1tenth_controllers.egg-info/top_level.txt
+[9.298s] writing manifest file '../../build/f1tenth_controllers/f1tenth_controllers.egg-info/SOURCES.txt'
+[9.508s] reading manifest file '../../build/f1tenth_controllers/f1tenth_controllers.egg-info/SOURCES.txt'
+[9.514s] writing manifest file '../../build/f1tenth_controllers/f1tenth_controllers.egg-info/SOURCES.txt'
+[9.516s] running build
+[9.517s] running build_py
+[9.520s] creating /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build
+[9.521s] creating /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib
+[9.524s] creating /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib/f1tenth_controllers
+[9.526s] copying f1tenth_controllers/pure_pursuit.py -> /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib/f1tenth_controllers
+[9.535s] copying f1tenth_controllers/pure_pursuit copy.py -> /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib/f1tenth_controllers
+[9.537s] copying f1tenth_controllers/pure_pursuit_sim.py -> /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib/f1tenth_controllers
+[9.544s] copying f1tenth_controllers/__init__.py -> /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib/f1tenth_controllers
+[9.545s] copying f1tenth_controllers/follow_the_gap_node.py -> /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib/f1tenth_controllers
+[9.546s] running install
+[9.555s] running install_lib
+[9.562s] creating /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers
+[9.564s] copying /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib/f1tenth_controllers/pure_pursuit.py -> /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers
+[9.566s] copying /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib/f1tenth_controllers/pure_pursuit copy.py -> /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers
+[9.568s] copying /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib/f1tenth_controllers/pure_pursuit_sim.py -> /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers
+[9.571s] copying /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib/f1tenth_controllers/__init__.py -> /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers
+[9.573s] copying /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib/f1tenth_controllers/follow_the_gap_node.py -> /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers
+[9.584s] byte-compiling /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers/pure_pursuit.py to pure_pursuit.cpython-38.pyc
+[9.605s] byte-compiling /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers/pure_pursuit copy.py to pure_pursuit copy.cpython-38.pyc
+[9.612s] byte-compiling /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers/pure_pursuit_sim.py to pure_pursuit_sim.cpython-38.pyc
+[9.621s] byte-compiling /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers/__init__.py to __init__.cpython-38.pyc
+[9.624s] byte-compiling /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers/follow_the_gap_node.py to follow_the_gap_node.cpython-38.pyc
+[9.632s] running install_data
+[9.634s] creating /home/nvidia/f1tenth_ws/install/f1tenth_controllers/share/ament_index
+[9.635s] creating /home/nvidia/f1tenth_ws/install/f1tenth_controllers/share/ament_index/resource_index
+[9.636s] creating /home/nvidia/f1tenth_ws/install/f1tenth_controllers/share/ament_index/resource_index/packages
+[9.638s] copying resource/f1tenth_controllers -> /home/nvidia/f1tenth_ws/install/f1tenth_controllers/share/ament_index/resource_index/packages
+[9.640s] copying package.xml -> /home/nvidia/f1tenth_ws/install/f1tenth_controllers/share/f1tenth_controllers
+[9.641s] creating /home/nvidia/f1tenth_ws/install/f1tenth_controllers/share/f1tenth_controllers/launch
+[9.643s] copying launch/map_loc_launch.py -> /home/nvidia/f1tenth_ws/install/f1tenth_controllers/share/f1tenth_controllers/launch
+[9.645s] running install_egg_info
+[9.657s] Copying ../../build/f1tenth_controllers/f1tenth_controllers.egg-info to /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers-0.0.0-py3.8.egg-info
+[9.667s] running install_scripts
+[9.779s] Installing follow_the_gap_node script to /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/f1tenth_controllers
+[9.785s] Installing pure_pursuit_node script to /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/f1tenth_controllers
+[9.789s] Installing pure_pursuit_nodev2 script to /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/f1tenth_controllers
+[9.795s] writing list of installed files to '/home/nvidia/f1tenth_ws/build/f1tenth_controllers/install.log'
+[10.210s] Invoked command in '/home/nvidia/f1tenth_ws/src/f1tenth_controllers' returned '0': PYTHONPATH=/home/nvidia/f1tenth_ws/build/f1tenth_controllers/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/f1tenth_controllers build --build-base /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build install --record /home/nvidia/f1tenth_ws/build/f1tenth_controllers/install.log --install-scripts $base/lib/f1tenth_controllers --single-version-externally-managed install_data

@@ -20,6 +20,10 @@ import tf_transformations
 from collections import deque
 from tf2_ros import Buffer, TransformListener, LookupException, ConnectivityException, ExtrapolationException
 
+from visualization_msgs.msg import Marker
+from geometry_msgs.msg import Point
+from sensor_msgs.msg import Joy
+
 class Waypoint:
     def __init__(self, x, y, velocity, index):
         self.x = x
@@ -43,13 +47,22 @@ class PurePursuitController(Node):
         self.goal_buble = 0.25
         self.reached_waypoint = False
         self.theta = 0
+        # load the waypoints 
         self.getPath()
-
+        # get the length of the path
+        self.path_length = len(self.path) - 1
         # ROS subscriptions and publisher
         self.odom_subscription = self.create_subscription(
-            Odometry, "/odom", self.odom_callback, 20
+            Odometry, "/odom", self.odom_callback, 10
         )
         self.odom_subscription
+
+        self.joy_subscription = self.create_subscription(
+            Joy, "/joy", self.joy_callback, 5
+        )
+        self.joy_subscription
+        # reset curr_pos
+        self.reset_curr_pos = 0
 
         self.ackermann_publisher = self.create_publisher(
             AckermannDriveStamped, "/drive", qos_profile_sensor_data
@@ -61,18 +74,80 @@ class PurePursuitController(Node):
         # initialization
         self.odom_buffer = deque(maxlen=10) # 10: buffer_size
         # self.current_waypoint = Waypoint(self.x, self.y, 4, -1)
+        
         self.current_waypoint = None
-        self.lookahead_waypoint = self.getClosestPoint()
-        self.prev_lookahead_waypoint = self.lookahead_waypoint
+        self.prev_lookahead_waypoint = self.lookahead_waypoint = None
+
         self.steering = 0.0
 
+
+        self.lookahead_marker_pub = self.create_publisher(Marker, "/lookahead_marker", 5)
+        self.lookahead_marker_timer = self.create_timer(0.1, self.lookahead_publish_waypoint)
+
+        self.curr_marker_pub = self.create_publisher(Marker, "/curr_marker", 5)
+        self.currmarker_timer = self.create_timer(0.1, self.curr_publish_waypoint)
 
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
         self.transform_deque = deque(maxlen=10)
 
-
         self.i = 0
+
+
+    def lookahead_publish_waypoint(self):
+        # wp --> x,y,v,idx
+        if self.lookahead_waypoint == None:
+            return
+        waypoint =  self.lookahead_waypoint
+        # self.get_logger().info(f'lookahead waypoint x: {waypoint.x}, wp_y: {waypoint.y}, wp index: {waypoint.index}')
+        marker = Marker()
+        marker.header.frame_id = "map"
+        marker.header.stamp = self.get_clock().now().to_msg()
+        marker.ns = "lookahead_waypoint"
+        marker.id = self.lookahead_waypoint.index
+        marker.type = Marker.SPHERE
+        marker.action = Marker.ADD
+        marker.pose.position.x = self.lookahead_waypoint.x
+        marker.pose.position.y = self.lookahead_waypoint.y
+        marker.pose.position.z = 0.0
+        marker.pose.orientation.w = 1.0
+
+        marker.scale.x = 0.25
+        marker.scale.y = 0.25
+        marker.scale.z = 0.25
+
+        marker.color.a = 1.0
+        marker.color.r = 1.0
+
+        self.lookahead_marker_pub.publish(marker)
+
+    def curr_publish_waypoint(self):
+        # wp --> x,y,v,idx
+        if self.current_waypoint == None:
+            return
+        waypoint = self.current_waypoint
+        # self.get_logger().info(f'curr waypoint x: {waypoint.x}, wp_y: {waypoint.y}, wp index: {waypoint.index}')
+        marker = Marker()
+        marker.header.frame_id = "map"
+        marker.header.stamp = self.get_clock().now().to_msg()
+        marker.ns = "curr_waypoint"
+        marker.id = self.current_waypoint.index
+        marker.type = Marker.SPHERE
+        marker.action = Marker.ADD
+        marker.pose.position.x = self.current_waypoint.x
+        marker.pose.position.y = self.current_waypoint.y
+
+        marker.pose.position.z = 0.0
+        marker.pose.orientation.w = 1.0
+
+        marker.scale.x = 0.25
+        marker.scale.y = 0.25
+        marker.scale.z = 0.25
+
+        marker.color.a = 1.0
+        marker.color.b = 0.0
+
+        self.curr_marker_pub.publish(marker)
 
     def odom_callback(self, msg):  # update x and y position
         self.x = msg.pose.pose.position.x
@@ -82,6 +157,10 @@ class PurePursuitController(Node):
             [orientation_q.x, orientation_q.y, orientation_q.z, orientation_q.w])
         self.odom_buffer.append([self.x, self.y, self.theta]) # x,y,heading
 
+    def joy_callback(self, msg):
+        self.joy_msg = msg
+        self.reset_curr_pos = self.joy_msg,buttons[2]
+
     def getPath(self):  # load all waypoints into list
         waypoints = np.loadtxt(self.map_path, delimiter=",")
         # Load path into waypoint list
@@ -90,13 +169,11 @@ class PurePursuitController(Node):
             self.path.append(Waypoint(point[0], point[1], point[2], i))
             i += 1
 
-    def getClosestPoint(
-        self,
-    ):  # should only be used once in initialization to get first point to go to
-        minDistance = (self.path[0].x - self.x) ** 2 + (self.path[0].y - self.y) ** 2
+    def getClosestPoint(self, curr_x, curr_y):  # should only be used once in initialization to get first point to go to
+        minDistance = (self.path[0].x - curr_x) ** 2 + (self.path[0].y - curr_y) ** 2
         closestPoint = self.path[0]
         for point in self.path:
-            distance = (point.x - self.x) ** 2 + (point.y - self.y) ** 2
+            distance = (point.x - curr_x) ** 2 + (point.y - curr_y) ** 2
             if distance < minDistance:
                 minDistance = distance
                 closestPoint = point
@@ -120,10 +197,11 @@ class PurePursuitController(Node):
         dy = self.lookahead_waypoint.y - y
         desired_angle = math.atan2(dy, dx)
         angle_diff = desired_angle - heading
+        str_angle_input = (1/3) * angle_diff # K_p = 1/3
         max_steering_angle = 0.34
-        mapped_angle = (angle_diff / math.pi) * max_steering_angle
-
-        return mapped_angle
+        clipped_str_angle_input = min(max(-max_steering_angle, str_angle_input), max_steering_angle)
+        # mapped_angle = (angle_diff / math.pi) * max_steering_angle
+        return clipped_str_angle_input
 
     def drive(self):  # main controller function for the robot
         '''
@@ -155,25 +233,42 @@ class PurePursuitController(Node):
                 transform.transform.rotation.w,
             ]
         )[2]
-
-        if (self.i % 10) == 0:
+        tf_transformations.euler_matrix(curr_heading[0], curr_heading[1], curr_heading[2])
+        
+        if self.current_waypoint == None:
+            self.get_logger().info(f"current waypoint assigned!!!")
+            self.current_waypoint = self.getClosestPoint(curr_x, curr_y)
+            if self.current_waypoint.index == self.path_length:
+                self.lookahead_waypoint = self.path[0]
+            else:
+                self.lookahead_waypoint = self.path[self.current_waypoint.index + 1]
+            return 
+        if self.reset_curr_pos == 1:
+            self.get_logger().info(f"current waypoint updated!!!")
+            self.current_waypoint = self.getClosestPoint(curr_x, curr_y)
+            if self.current_waypoint.index == self.path_length:
+                self.lookahead_waypoint = self.path[0]
+            else:
+                self.lookahead_waypoint = self.path[self.current_waypoint.index + 1]
+            return 
+        
+        if (self.i % 20) == 0:
             self.get_logger().info(f"current x position: {curr_x}")
             self.get_logger().info(f"current y position: {curr_y}")
             self.get_logger().info(f"current heading value: {curr_heading}")
+            # self.get_logger().info(f"current x position: {self.current_waypoint.x}")
+            # self.get_logger().info(f"current y position: {self.current_waypoint.y}")
+            self.get_logger().info(f"current index value: {self.current_waypoint.index}")
 
-        # Find and set the lookahead waypoint
-        self.prev_lookahead_waypoint = self.lookahead_waypoint
-        self.lookahead_waypoint = self.get_lookaheadpoint(curr_x, curr_y)
-
-        if (self.i % 10) == 0:
+        if (self.i % 20) == 0:
             self.get_logger().info(f"lookahead_waypoint: x: {self.lookahead_waypoint.x}, y: {self.lookahead_waypoint.y}")
-            # self.get_logger().info(f"lookahead_waypoint index: {self.lookahead_waypoint.index}")
+            self.get_logger().info(f"lookahead_waypoint index: {self.lookahead_waypoint.index}")
 
         # Calculate steering angle and set velocity
         self.steering = self.steering_angle(curr_x, curr_y, curr_heading)
         velocity = self.lookahead_waypoint.velocity
 
-        if (self.i % 10) == 0: 
+        if (self.i % 20) == 0: 
             self.get_logger().info(f"actual velocity: {velocity * self.velocity_percentage}")
             self.get_logger().info(f"velocity: {1.0}")
             self.get_logger().info(f"steering angle: {self.steering}")
@@ -185,7 +280,17 @@ class PurePursuitController(Node):
         data = AckermannDriveStamped(header=std_msgs.msg.Header(), drive=drive)
         self.ackermann_publisher.publish(data)
 
-        if ((self.i % 10) == 0) and (self.i != 0):
+
+        #Check distance between lookahead and the current position
+        distance = math.sqrt((self.lookahead_waypoint.x - curr_x)**2 + (self.lookahead_waypoint.y - curr_y)**2)
+        if distance < 0.3:
+            self.current_waypoint = self.lookahead_waypoint
+            if self.current_waypoint.index == self.path_length:
+                self.lookahead_waypoint = self.path[0]
+            else:
+                self.lookahead_waypoint = self.path[self.current_waypoint.index + 1]
+
+        if ((self.i % 20) == 0) and (self.i != 0):
             self.i = 0
         
         self.i += 1
