@@ -9,6 +9,7 @@ setup.py
 ../../../build/f1tenth_stack/f1tenth_stack.egg-info/top_level.txt
 ../../../build/f1tenth_stack/f1tenth_stack.egg-info/zip-safe
 config/amcl_params.yaml
+config/costmap_params.yaml
 config/f1tenth_online_async.yaml
 config/joy_teleop.yaml
 config/map_server_params.yaml

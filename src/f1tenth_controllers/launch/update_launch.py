@@ -93,10 +93,18 @@ def generate_launch_description():
         }]
     )
 
-    costmap_node = Node(
+    global_costmap_node = Node(
         package='nav2_costmap_2d',
         executable='nav2_costmap_2d',
-        name='nav2_costmap_2d',
+        name='global_costmap',
+        output='screen',
+        parameters=[LaunchConfiguration('costmap_config')]
+    )
+
+    local_costmap_node = Node(
+        package='nav2_costmap_2d',
+        executable='nav2_costmap_2d',
+        name='local_costmap',
         output='screen',
         parameters=[LaunchConfiguration('costmap_config')]
     )
@@ -107,8 +115,9 @@ def generate_launch_description():
         name='lifecycle_manager_costmap',
         output='screen',
         parameters=[{
+            'use_sim_time': False,
             'autostart': True,
-            'node_names': ['nav2_costmap_2d']
+            'node_names': ['global_costmap', 'local_costmap']
         }]
     )
 
@@ -140,13 +149,18 @@ def generate_launch_description():
         actions=[wp_vis_node]
     )
 
-    costmap_n_ta = TimerAction(
+    global_costmap_n_ta = TimerAction(
         period = 4.0,
-        actions=[costmap_node]
+        actions=[global_costmap_node]
+    )
+
+    local_costmap_n_ta = TimerAction(
+        period = 4.5,
+        actions=[local_costmap_node]
     )
 
     costmap_lc_ta = TimerAction(
-        period = 4.5,
+        period = 5.0,
         actions=[costmap_lifecyle]
     )
     # finalize
@@ -154,8 +168,9 @@ def generate_launch_description():
     ld.add_action(wp_vis_node)
     ld.add_action(map_lc_ta)
     # ld.add_action(wp_visual_ta)
-    ld.add_action(costmap_n_ta)
-    ld.add_action(costmap_lc_ta)
+#    ld.add_action(global_costmap_n_ta)
+#    ld.add_action(local_costmap_n_ta)
+#    ld.add_action(costmap_lc_ta)
     ld.add_action(amcl_n_ta)
     ld.add_action(amcl_lc_ta)
 

@@ -14,6 +14,7 @@
 /home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/config/joy_teleop.yaml
 /home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/config/mux.yaml
 /home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/config/waypoint_visual_config.yaml
+/home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/config/costmap_params.yaml
 /home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/config/amcl_params.yaml
 /home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/python3.8/site-packages/f1tenth_stack-0.0.1-py3.8.egg-info/requires.txt
 /home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/python3.8/site-packages/f1tenth_stack-0.0.1-py3.8.egg-info/SOURCES.txt

@@ -15,7 +15,9 @@ f1tenth_controllers/p_controller.py
 f1tenth_controllers/pure_pursuit copy.py
 f1tenth_controllers/pure_pursuit.py
 f1tenth_controllers/pure_pursuit_sim.py
+launch/costmap_launch.py
 launch/map_loc_launch.py
+launch/update_launch.py
 resource/f1tenth_controllers
 test/test_copyright.py
 test/test_flake8.py

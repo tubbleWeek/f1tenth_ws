@@ -29,6 +29,21 @@ The Host machine needs to have ROS2 Foxy and with it Rviz2 package.
 
 The f1tenth_ws on the Jetson is where all of the ROS nodes are stored, most of the coding should be done through ssh.
 
+### Updated Launch instructions
+
+A launch file has been created that launches all three nodes described below as well as the Nav2 Costmap node.
+You can run the launch file with:
+```
+  ros2 launch f1tenth_controllers map_loc_launch.py
+```
+#### Issues
+
+Sometimes the costmap will not start. In the case that it does not launch, to launch the costmap, run the command:
+```
+  ros2 run nav2_util lifecycle_bringup costmap/costmap
+  
+```
+The `costmap/costmap` is the topic that the transition event's name is, by default it should be `costmap/costmap`. Once this command is ran, you should see a message in the terminal that the costmap has been started
 ### Running Nodes
 
 There are 3 main nodes that need to be launched for controllers to work on the F1tenth. Each of the nodes will output an error if they cannot be started. They should be launched in this order

@@ -1,4 +1,0 @@
-make[2]: Warning: File '/home/nvidia/f1tenth_ws/src/pure_pursuit/src/waypoint_visualizer.cpp' has modification time 782318617 s in the future
-make[2]: warning:  Clock skew detected.  Your build may be incomplete.
-make[2]: Warning: File '/home/nvidia/f1tenth_ws/src/pure_pursuit/src/pure_pursuit.cpp' has modification time 782318593 s in the future
-make[2]: warning:  Clock skew detected.  Your build may be incomplete.
