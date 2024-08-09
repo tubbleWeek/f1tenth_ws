@@ -56,16 +56,34 @@ class PotentialFieldController(Node):
         #TODO
         # x = np.abs(self.position[0] - self.goalPosition[0])
         # y = np.abs(self.position[1] - self.goalPosition[1])
+
+
+        #net force that needs to be split into x and y components
+        net_force = 0.5 * self.scalingFactorRepulse * ((1/self.closestObject) - self.distanceInfluence)**2
+
+        #angle to split vector into components
+        angle = math.atan2(self.position[1], self.position[0])
+
+        x = net_force * math.cos(angle)
+        y = net_force * math.sin(angle)
+
+
         #Checks if the object is close enough that the robot needs to avoid
-        if x <= self.distanceInfluence:
-            x = 0.5 * self.scalingFactorRepulse * ((1/self.closestObject) - self.distanceInfluence)**2
-        else:
-            x = 0
+        if x >= self.distanceInfluence:
+            x = 0.0
+        if y >= self.distanceInfluence:
+            y = 0.0
+
+        #Not Right
+        # if x <= self.distanceInfluence:
+        #     x = 0.5 * self.scalingFactorRepulse * ((1/self.closestObject) - self.distanceInfluence)**2
+        # else:
+        #     x = 0
         
-        if y <= self.distanceInfluence:
-            y = 0.5 * self.scalingFactorRepulse * ((1/self.closestObject) - self.distanceInfluence)**2
-        else:
-            y = 0
+        # if y <= self.distanceInfluence:
+        #     y = 0.5 * self.scalingFactorRepulse * ((1/self.closestObject) - self.distanceInfluence)**2
+        # else:
+        #     y = 0
 
         self.repulseForce = (x,y)
         
