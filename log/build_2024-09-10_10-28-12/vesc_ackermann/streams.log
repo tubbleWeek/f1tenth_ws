@@ -1,0 +1,39 @@
+[0.269s] Invoking command in '/home/nvidia/f1tenth_ws/build/vesc_ackermann': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc_ackermann -- -j6 -l6
+[0.779s] [ 28%] Built target vesc_to_odom_node
+[0.900s] [ 57%] Built target ackermann_to_vesc_node
+[0.913s] [100%] Built target vesc_ackermann
+[0.979s] Invoked command in '/home/nvidia/f1tenth_ws/build/vesc_ackermann' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc_ackermann -- -j6 -l6
+[1.369s] Invoking command in '/home/nvidia/f1tenth_ws/build/vesc_ackermann': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc_ackermann
+[1.506s] -- Install configuration: ""
+[1.508s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/lib/vesc_ackermann/ackermann_to_vesc_node
+[1.512s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/lib/vesc_ackermann/vesc_to_odom_node
+[1.516s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/include
+[1.516s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/include/vesc_ackermann
+[1.517s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/include/vesc_ackermann/vesc_to_odom.hpp
+[1.518s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/include/vesc_ackermann/ackermann_to_vesc.hpp
+[1.519s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/environment/library_path.sh
+[1.520s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/environment/library_path.dsv
+[1.521s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/lib/libvesc_ackermann.so
+[1.522s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/launch
+[1.523s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/launch/ackermann_to_vesc_node.launch.xml
+[1.524s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/launch/vesc_to_odom_node.launch.xml
+[1.526s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/ament_index/resource_index/package_run_dependencies/vesc_ackermann
+[1.529s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/ament_index/resource_index/parent_prefix_path/vesc_ackermann
+[1.531s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/environment/ament_prefix_path.sh
+[1.533s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/environment/ament_prefix_path.dsv
+[1.533s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/environment/path.sh
+[1.534s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/environment/path.dsv
+[1.534s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/local_setup.bash
+[1.535s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/local_setup.sh
+[1.535s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/local_setup.zsh
+[1.535s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/local_setup.dsv
+[1.536s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.dsv
+[1.536s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/ament_index/resource_index/packages/vesc_ackermann
+[1.537s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/ament_index/resource_index/rclcpp_components/vesc_ackermann
+[1.537s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/cmake/ament_cmake_export_dependencies-extras.cmake
+[1.538s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/cmake/ament_cmake_export_include_directories-extras.cmake
+[1.538s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/cmake/ament_cmake_export_libraries-extras.cmake
+[1.539s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/cmake/vesc_ackermannConfig.cmake
+[1.539s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/cmake/vesc_ackermannConfig-version.cmake
+[1.540s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.xml
+[1.580s] Invoked command in '/home/nvidia/f1tenth_ws/build/vesc_ackermann' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc_ackermann

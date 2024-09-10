@@ -1,0 +1,15 @@
+[0.277s] Invoking command in '/home/nvidia/f1tenth_ws/build/vesc_msgs': /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc_msgs -- -j6 -l6
+[4.697s] [  1%] Built target vesc_msgs__cpp
+[4.698s] [ 12%] Built target vesc_msgs__rosidl_generator_c
+[4.700s] [ 23%] Built target vesc_msgs__rosidl_typesupport_cpp
+[4.707s] [ 38%] Built target vesc_msgs__rosidl_typesupport_introspection_cpp
+[4.712s] [ 45%] Built target vesc_msgs__rosidl_typesupport_c
+[4.716s] [ 56%] Built target vesc_msgs__rosidl_typesupport_fastrtps_cpp
+[4.717s] [ 67%] Built target vesc_msgs__rosidl_typesupport_introspection_c
+[4.718s] [ 78%] Built target vesc_msgs__rosidl_typesupport_fastrtps_c
+[4.718s] [ 78%] Built target vesc_msgs
+[4.719s] [ 80%] Built target vesc_msgs__py
+[4.719s] [ 89%] Built target vesc_msgs__python
+[4.720s] [ 92%] Built target vesc_msgs__rosidl_typesupport_introspection_c__pyext
+[4.720s] [ 96%] Built target vesc_msgs__rosidl_typesupport_fastrtps_c__pyext
+[4.721s] [100%] Built target vesc_msgs__rosidl_typesupport_c__pyext

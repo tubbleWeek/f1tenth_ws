@@ -1,0 +1,173 @@
+[0.000000] (-) TimerEvent: {}
+[0.002608] (ackermann_mux) JobQueued: {'identifier': 'ackermann_mux', 'dependencies': OrderedDict()}
+[0.003982] (key_teleop) JobQueued: {'identifier': 'key_teleop', 'dependencies': OrderedDict()}
+[0.005779] (mouse_teleop) JobQueued: {'identifier': 'mouse_teleop', 'dependencies': OrderedDict()}
+[0.006196] (new_map_saver) JobQueued: {'identifier': 'new_map_saver', 'dependencies': OrderedDict()}
+[0.006646] (teleop_tools_msgs) JobQueued: {'identifier': 'teleop_tools_msgs', 'dependencies': OrderedDict()}
+[0.006824] (vesc_msgs) JobQueued: {'identifier': 'vesc_msgs', 'dependencies': OrderedDict()}
+[0.006951] (joy_teleop) JobQueued: {'identifier': 'joy_teleop', 'dependencies': OrderedDict([('teleop_tools_msgs', '/f1tenth_ws/install/teleop_tools_msgs')])}
+[0.007092] (vesc_ackermann) JobQueued: {'identifier': 'vesc_ackermann', 'dependencies': OrderedDict([('vesc_msgs', '/f1tenth_ws/install/vesc_msgs')])}
+[0.007231] (vesc_driver) JobQueued: {'identifier': 'vesc_driver', 'dependencies': OrderedDict([('vesc_msgs', '/f1tenth_ws/install/vesc_msgs')])}
+[0.007388] (teleop_tools) JobQueued: {'identifier': 'teleop_tools', 'dependencies': OrderedDict([('key_teleop', '/f1tenth_ws/install/key_teleop'), ('teleop_tools_msgs', '/f1tenth_ws/install/teleop_tools_msgs'), ('joy_teleop', '/f1tenth_ws/install/joy_teleop')])}
+[0.007619] (vesc) JobQueued: {'identifier': 'vesc', 'dependencies': OrderedDict([('vesc_msgs', '/f1tenth_ws/install/vesc_msgs'), ('vesc_ackermann', '/f1tenth_ws/install/vesc_ackermann'), ('vesc_driver', '/f1tenth_ws/install/vesc_driver')])}
+[0.007753] (f1tenth_stack) JobQueued: {'identifier': 'f1tenth_stack', 'dependencies': OrderedDict([('ackermann_mux', '/f1tenth_ws/install/ackermann_mux'), ('teleop_tools_msgs', '/f1tenth_ws/install/teleop_tools_msgs'), ('vesc_msgs', '/f1tenth_ws/install/vesc_msgs'), ('joy_teleop', '/f1tenth_ws/install/joy_teleop'), ('vesc_ackermann', '/f1tenth_ws/install/vesc_ackermann'), ('vesc_driver', '/f1tenth_ws/install/vesc_driver'), ('vesc', '/f1tenth_ws/install/vesc')])}
+[0.007910] (vesc_msgs) JobStarted: {'identifier': 'vesc_msgs'}
+[0.061007] (teleop_tools_msgs) JobStarted: {'identifier': 'teleop_tools_msgs'}
+[0.099315] (ackermann_mux) JobStarted: {'identifier': 'ackermann_mux'}
+[0.119797] (-) TimerEvent: {}
+[0.140162] (key_teleop) JobStarted: {'identifier': 'key_teleop'}
+[0.190323] (mouse_teleop) JobStarted: {'identifier': 'mouse_teleop'}
+[0.221413] (-) TimerEvent: {}
+[0.239585] (new_map_saver) JobStarted: {'identifier': 'new_map_saver'}
+[0.303149] (vesc_msgs) JobProgress: {'identifier': 'vesc_msgs', 'progress': 'cmake'}
+[0.309529] (vesc_msgs) JobProgress: {'identifier': 'vesc_msgs', 'progress': 'build'}
+[0.314361] (vesc_msgs) Command: {'cmd': ['/usr/bin/cmake', '--build', '/f1tenth_ws/build/vesc_msgs', '--', '-j6', '-l6'], 'cwd': '/f1tenth_ws/build/vesc_msgs', 'env': OrderedDict([('HOSTNAME', 'ubuntu'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-10.2/targets/aarch64-linux/lib:'), ('HOME', '/root'), ('OLDPWD', '/f1tenth_ws/scripts'), ('ROS_PYTHON_VERSION', '3'), ('LC_CTYPE', 'C.UTF-8'), ('ROS_DISTRO', 'foxy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('NVIDIA_DRIVER_CAPABILITIES', 'all'), ('TERM', 'xterm'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/usr/local/cuda-10.2/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('DISPLAY', ':1'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_ROOT', '/opt/ros/foxy'), ('AMENT_PREFIX_PATH', '/opt/ros/foxy'), ('PWD', '/f1tenth_ws/build/vesc_msgs'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('NVIDIA_VISIBLE_DEVICES', 'all'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/foxy')]), 'shell': False}
+[0.340600] (-) TimerEvent: {}
+[0.344126] (teleop_tools_msgs) JobProgress: {'identifier': 'teleop_tools_msgs', 'progress': 'cmake'}
+[0.349780] (teleop_tools_msgs) JobProgress: {'identifier': 'teleop_tools_msgs', 'progress': 'build'}
+[0.359026] (teleop_tools_msgs) Command: {'cmd': ['/usr/bin/cmake', '--build', '/f1tenth_ws/build/teleop_tools_msgs', '--', '-j6', '-l6'], 'cwd': '/f1tenth_ws/build/teleop_tools_msgs', 'env': OrderedDict([('HOSTNAME', 'ubuntu'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-10.2/targets/aarch64-linux/lib:'), ('HOME', '/root'), ('OLDPWD', '/f1tenth_ws/scripts'), ('ROS_PYTHON_VERSION', '3'), ('LC_CTYPE', 'C.UTF-8'), ('ROS_DISTRO', 'foxy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('NVIDIA_DRIVER_CAPABILITIES', 'all'), ('TERM', 'xterm'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/usr/local/cuda-10.2/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('DISPLAY', ':1'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_ROOT', '/opt/ros/foxy'), ('AMENT_PREFIX_PATH', '/opt/ros/foxy'), ('PWD', '/f1tenth_ws/build/teleop_tools_msgs'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('NVIDIA_VISIBLE_DEVICES', 'all'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/foxy')]), 'shell': False}
+[0.382176] (ackermann_mux) JobProgress: {'identifier': 'ackermann_mux', 'progress': 'cmake'}
+[0.387036] (ackermann_mux) JobProgress: {'identifier': 'ackermann_mux', 'progress': 'build'}
+[0.399829] (ackermann_mux) Command: {'cmd': ['/usr/bin/cmake', '--build', '/f1tenth_ws/build/ackermann_mux', '--', '-j6', '-l6'], 'cwd': '/f1tenth_ws/build/ackermann_mux', 'env': OrderedDict([('HOSTNAME', 'ubuntu'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-10.2/targets/aarch64-linux/lib:'), ('HOME', '/root'), ('OLDPWD', '/f1tenth_ws/scripts'), ('ROS_PYTHON_VERSION', '3'), ('LC_CTYPE', 'C.UTF-8'), ('ROS_DISTRO', 'foxy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('NVIDIA_DRIVER_CAPABILITIES', 'all'), ('TERM', 'xterm'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/foxy/bin:/usr/local/cuda-10.2/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('DISPLAY', ':1'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_ROOT', '/opt/ros/foxy'), ('AMENT_PREFIX_PATH', '/opt/ros/foxy'), ('PWD', '/f1tenth_ws/build/ackermann_mux'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('NVIDIA_VISIBLE_DEVICES', 'all'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/foxy')]), 'shell': False}
+[0.441703] (-) TimerEvent: {}
+[0.544809] (-) TimerEvent: {}
+[0.647543] (-) TimerEvent: {}
+[0.748705] (-) TimerEvent: {}
+[0.850165] (-) TimerEvent: {}
+[0.951693] (-) TimerEvent: {}
+[1.052863] (-) TimerEvent: {}
+[1.154066] (-) TimerEvent: {}
+[1.255482] (-) TimerEvent: {}
+[1.356675] (-) TimerEvent: {}
+[1.457856] (-) TimerEvent: {}
+[1.559240] (-) TimerEvent: {}
+[1.662631] (-) TimerEvent: {}
+[1.765285] (-) TimerEvent: {}
+[1.866601] (-) TimerEvent: {}
+[1.967784] (-) TimerEvent: {}
+[2.069023] (-) TimerEvent: {}
+[2.170322] (-) TimerEvent: {}
+[2.271669] (-) TimerEvent: {}
+[2.372856] (-) TimerEvent: {}
+[2.474025] (-) TimerEvent: {}
+[2.575317] (-) TimerEvent: {}
+[2.676586] (-) TimerEvent: {}
+[2.778811] (-) TimerEvent: {}
+[2.882222] (-) TimerEvent: {}
+[2.983452] (-) TimerEvent: {}
+[3.084624] (-) TimerEvent: {}
+[3.185817] (-) TimerEvent: {}
+[3.287110] (-) TimerEvent: {}
+[3.388252] (-) TimerEvent: {}
+[3.489467] (-) TimerEvent: {}
+[3.590723] (-) TimerEvent: {}
+[3.691967] (-) TimerEvent: {}
+[3.793225] (-) TimerEvent: {}
+[3.896580] (-) TimerEvent: {}
+[3.912478] (vesc_msgs) StderrLine: {'line': b'CMake Error: The current CMakeCache.txt directory /f1tenth_ws/build/vesc_msgs/CMakeCache.txt is different than the directory /home/nvidia/f1tenth_ws/build/vesc_msgs where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt\n'}
+[3.918069] (vesc_msgs) StderrLine: {'line': b'CMake Error: The source directory "/home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc_msgs" does not exist.\n'}
+[3.923295] (vesc_msgs) StderrLine: {'line': b'Specify --help for usage, or press the help button on the CMake GUI.\n'}
+[3.926160] (vesc_msgs) StderrLine: {'line': b'make: *** [Makefile:1468: cmake_check_build_system] Error 1\n'}
+[3.929039] (teleop_tools_msgs) StderrLine: {'line': b'CMake Error: The current CMakeCache.txt directory /f1tenth_ws/build/teleop_tools_msgs/CMakeCache.txt is different than the directory /home/nvidia/f1tenth_ws/build/teleop_tools_msgs where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt\n'}
+[3.931494] (teleop_tools_msgs) StderrLine: {'line': b'CMake Error: The source directory "/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/teleop_tools_msgs" does not exist.\n'}
+[3.932322] (teleop_tools_msgs) StderrLine: {'line': b'Specify --help for usage, or press the help button on the CMake GUI.\n'}
+[3.934428] (teleop_tools_msgs) StderrLine: {'line': b'make: *** [Makefile:748: cmake_check_build_system] Error 1\n'}
+[3.935122] (ackermann_mux) StderrLine: {'line': b'CMake Error: The current CMakeCache.txt directory /f1tenth_ws/build/ackermann_mux/CMakeCache.txt is different than the directory /home/nvidia/f1tenth_ws/build/ackermann_mux where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt\n'}
+[3.943029] (ackermann_mux) StderrLine: {'line': b'CMake Error: The source directory "/home/nvidia/f1tenth_ws/src/f1tenth_system/ackermann_mux" does not exist.\n'}
+[3.946667] (ackermann_mux) StderrLine: {'line': b'Specify --help for usage, or press the help button on the CMake GUI.\n'}
+[3.947236] (ackermann_mux) StderrLine: {'line': b'make: *** [Makefile:326: cmake_check_build_system] Error 1\n'}
+[3.947695] (vesc_msgs) CommandEnded: {'returncode': 2}
+[3.953428] (teleop_tools_msgs) CommandEnded: {'returncode': 2}
+[3.971197] (ackermann_mux) CommandEnded: {'returncode': 2}
+[3.997511] (-) TimerEvent: {}
+[4.009761] (key_teleop) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'egg_info', '--egg-base', '../../../../build/key_teleop', 'build', '--build-base', '/f1tenth_ws/build/key_teleop/build', 'install', '--prefix', '/f1tenth_ws/install/key_teleop', '--record', '/f1tenth_ws/build/key_teleop/install.log', '--single-version-externally-managed'], 'cwd': '/f1tenth_ws/src/f1tenth_system/teleop_tools/key_teleop', 'env': {'HOSTNAME': 'ubuntu', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-10.2/targets/aarch64-linux/lib:', 'HOME': '/root', 'OLDPWD': '/f1tenth_ws/scripts', 'ROS_PYTHON_VERSION': '3', 'LC_CTYPE': 'C.UTF-8', 'ROS_DISTRO': 'foxy', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'NVIDIA_DRIVER_CAPABILITIES': 'all', 'TERM': 'xterm', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/foxy/bin:/usr/local/cuda-10.2/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'DISPLAY': ':1', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS_ROOT': '/opt/ros/foxy', 'AMENT_PREFIX_PATH': '/opt/ros/foxy', 'PWD': '/f1tenth_ws/build/key_teleop', 'PYTHONPATH': '/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages', 'NVIDIA_VISIBLE_DEVICES': 'all', 'COLCON': '1'}, 'shell': False}
+[4.043738] (mouse_teleop) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'egg_info', '--egg-base', '../../../../build/mouse_teleop', 'build', '--build-base', '/f1tenth_ws/build/mouse_teleop/build', 'install', '--prefix', '/f1tenth_ws/install/mouse_teleop', '--record', '/f1tenth_ws/build/mouse_teleop/install.log', '--single-version-externally-managed'], 'cwd': '/f1tenth_ws/src/f1tenth_system/teleop_tools/mouse_teleop', 'env': {'HOSTNAME': 'ubuntu', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-10.2/targets/aarch64-linux/lib:', 'HOME': '/root', 'OLDPWD': '/f1tenth_ws/scripts', 'ROS_PYTHON_VERSION': '3', 'LC_CTYPE': 'C.UTF-8', 'ROS_DISTRO': 'foxy', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'NVIDIA_DRIVER_CAPABILITIES': 'all', 'TERM': 'xterm', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/foxy/bin:/usr/local/cuda-10.2/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'DISPLAY': ':1', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS_ROOT': '/opt/ros/foxy', 'AMENT_PREFIX_PATH': '/opt/ros/foxy', 'PWD': '/f1tenth_ws/build/mouse_teleop', 'PYTHONPATH': '/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages', 'NVIDIA_VISIBLE_DEVICES': 'all', 'COLCON': '1'}, 'shell': False}
+[4.077015] (new_map_saver) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'egg_info', '--egg-base', '../../build/new_map_saver', 'build', '--build-base', '/f1tenth_ws/build/new_map_saver/build', 'install', '--prefix', '/f1tenth_ws/install/new_map_saver', '--record', '/f1tenth_ws/build/new_map_saver/install.log', '--single-version-externally-managed'], 'cwd': '/f1tenth_ws/src/new_map_saver', 'env': {'HOSTNAME': 'ubuntu', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-10.2/targets/aarch64-linux/lib:', 'HOME': '/root', 'OLDPWD': '/f1tenth_ws/scripts', 'ROS_PYTHON_VERSION': '3', 'LC_CTYPE': 'C.UTF-8', 'ROS_DISTRO': 'foxy', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'NVIDIA_DRIVER_CAPABILITIES': 'all', 'TERM': 'xterm', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/foxy/bin:/usr/local/cuda-10.2/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'DISPLAY': ':1', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS_ROOT': '/opt/ros/foxy', 'AMENT_PREFIX_PATH': '/opt/ros/foxy', 'PWD': '/f1tenth_ws/build/new_map_saver', 'PYTHONPATH': '/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages', 'NVIDIA_VISIBLE_DEVICES': 'all', 'COLCON': '1'}, 'shell': False}
+[4.110905] (-) TimerEvent: {}
+[4.218245] (-) TimerEvent: {}
+[4.323502] (-) TimerEvent: {}
+[4.332879] (ackermann_mux) JobEnded: {'identifier': 'ackermann_mux', 'rc': 2}
+[4.400611] (teleop_tools_msgs) JobEnded: {'identifier': 'teleop_tools_msgs', 'rc': 'SIGINT'}
+[4.423802] (-) TimerEvent: {}
+[4.524697] (-) TimerEvent: {}
+[4.626636] (-) TimerEvent: {}
+[4.728039] (-) TimerEvent: {}
+[4.797327] (vesc_msgs) JobEnded: {'identifier': 'vesc_msgs', 'rc': 'SIGINT'}
+[4.828375] (-) TimerEvent: {}
+[4.929415] (-) TimerEvent: {}
+[5.030866] (-) TimerEvent: {}
+[5.132770] (-) TimerEvent: {}
+[5.221020] (key_teleop) StdoutLine: {'line': b'running egg_info\n'}
+[5.224572] (key_teleop) StdoutLine: {'line': b'writing ../../../../build/key_teleop/key_teleop.egg-info/PKG-INFO\n'}
+[5.226668] (key_teleop) StdoutLine: {'line': b'writing dependency_links to ../../../../build/key_teleop/key_teleop.egg-info/dependency_links.txt\n'}
+[5.227856] (key_teleop) StdoutLine: {'line': b'writing entry points to ../../../../build/key_teleop/key_teleop.egg-info/entry_points.txt\n'}
+[5.228871] (key_teleop) StdoutLine: {'line': b'writing requirements to ../../../../build/key_teleop/key_teleop.egg-info/requires.txt\n'}
+[5.229665] (key_teleop) StdoutLine: {'line': b'writing top-level names to ../../../../build/key_teleop/key_teleop.egg-info/top_level.txt\n'}
+[5.233001] (-) TimerEvent: {}
+[5.333991] (-) TimerEvent: {}
+[5.348957] (new_map_saver) StdoutLine: {'line': b'running egg_info\n'}
+[5.353131] (new_map_saver) StdoutLine: {'line': b'writing ../../build/new_map_saver/new_map_saver.egg-info/PKG-INFO\n'}
+[5.355700] (new_map_saver) StdoutLine: {'line': b'writing dependency_links to ../../build/new_map_saver/new_map_saver.egg-info/dependency_links.txt\n'}
+[5.356640] (new_map_saver) StdoutLine: {'line': b'writing entry points to ../../build/new_map_saver/new_map_saver.egg-info/entry_points.txt\n'}
+[5.357605] (new_map_saver) StdoutLine: {'line': b'writing requirements to ../../build/new_map_saver/new_map_saver.egg-info/requires.txt\n'}
+[5.358222] (new_map_saver) StdoutLine: {'line': b'writing top-level names to ../../build/new_map_saver/new_map_saver.egg-info/top_level.txt\n'}
+[5.422918] (mouse_teleop) StdoutLine: {'line': b'running egg_info\n'}
+[5.427091] (mouse_teleop) StdoutLine: {'line': b'writing ../../../../build/mouse_teleop/mouse_teleop.egg-info/PKG-INFO\n'}
+[5.429371] (mouse_teleop) StdoutLine: {'line': b'writing dependency_links to ../../../../build/mouse_teleop/mouse_teleop.egg-info/dependency_links.txt\n'}
+[5.430560] (mouse_teleop) StdoutLine: {'line': b'writing entry points to ../../../../build/mouse_teleop/mouse_teleop.egg-info/entry_points.txt\n'}
+[5.431500] (mouse_teleop) StdoutLine: {'line': b'writing requirements to ../../../../build/mouse_teleop/mouse_teleop.egg-info/requires.txt\n'}
+[5.432286] (mouse_teleop) StdoutLine: {'line': b'writing top-level names to ../../../../build/mouse_teleop/mouse_teleop.egg-info/top_level.txt\n'}
+[5.434244] (-) TimerEvent: {}
+[5.456382] (key_teleop) StdoutLine: {'line': b"reading manifest file '../../../../build/key_teleop/key_teleop.egg-info/SOURCES.txt'\n"}
+[5.463017] (key_teleop) StdoutLine: {'line': b"writing manifest file '../../../../build/key_teleop/key_teleop.egg-info/SOURCES.txt'\n"}
+[5.465776] (key_teleop) StdoutLine: {'line': b'running build\n'}
+[5.466765] (key_teleop) StdoutLine: {'line': b'running build_py\n'}
+[5.468456] (key_teleop) StdoutLine: {'line': b'running install\n'}
+[5.473655] (key_teleop) StdoutLine: {'line': b'running install_lib\n'}
+[5.483327] (key_teleop) StdoutLine: {'line': b'running install_data\n'}
+[5.487334] (key_teleop) StdoutLine: {'line': b'running install_egg_info\n'}
+[5.496072] (key_teleop) StdoutLine: {'line': b"removing '/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages/key_teleop-0.3.0-py3.8.egg-info' (and everything under it)\n"}
+[5.498372] (key_teleop) StdoutLine: {'line': b'Copying ../../../../build/key_teleop/key_teleop.egg-info to /f1tenth_ws/install/key_teleop/lib/python3.8/site-packages/key_teleop-0.3.0-py3.8.egg-info\n'}
+[5.506216] (key_teleop) StdoutLine: {'line': b'running install_scripts\n'}
+[5.534600] (-) TimerEvent: {}
+[5.562858] (new_map_saver) StdoutLine: {'line': b"reading manifest file '../../build/new_map_saver/new_map_saver.egg-info/SOURCES.txt'\n"}
+[5.569459] (new_map_saver) StdoutLine: {'line': b"writing manifest file '../../build/new_map_saver/new_map_saver.egg-info/SOURCES.txt'\n"}
+[5.570855] (new_map_saver) StdoutLine: {'line': b'running build\n'}
+[5.571774] (new_map_saver) StdoutLine: {'line': b'running build_py\n'}
+[5.573513] (new_map_saver) StdoutLine: {'line': b'running install\n'}
+[5.577775] (new_map_saver) StdoutLine: {'line': b'running install_lib\n'}
+[5.587073] (new_map_saver) StdoutLine: {'line': b'running install_data\n'}
+[5.590312] (new_map_saver) StdoutLine: {'line': b'running install_egg_info\n'}
+[5.598740] (new_map_saver) StdoutLine: {'line': b"removing '/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver-0.0.0-py3.8.egg-info' (and everything under it)\n"}
+[5.600820] (new_map_saver) StdoutLine: {'line': b'Copying ../../build/new_map_saver/new_map_saver.egg-info to /f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver-0.0.0-py3.8.egg-info\n'}
+[5.602214] (key_teleop) StdoutLine: {'line': b'Installing key_teleop script to /f1tenth_ws/install/key_teleop/lib/key_teleop\n'}
+[5.604857] (key_teleop) StdoutLine: {'line': b"writing list of installed files to '/f1tenth_ws/build/key_teleop/install.log'\n"}
+[5.608491] (new_map_saver) StdoutLine: {'line': b'running install_scripts\n'}
+[5.634852] (-) TimerEvent: {}
+[5.644209] (mouse_teleop) StdoutLine: {'line': b"reading manifest file '../../../../build/mouse_teleop/mouse_teleop.egg-info/SOURCES.txt'\n"}
+[5.650942] (mouse_teleop) StdoutLine: {'line': b"writing manifest file '../../../../build/mouse_teleop/mouse_teleop.egg-info/SOURCES.txt'\n"}
+[5.652210] (mouse_teleop) StdoutLine: {'line': b'running build\n'}
+[5.652801] (mouse_teleop) StdoutLine: {'line': b'running build_py\n'}
+[5.656801] (mouse_teleop) StdoutLine: {'line': b'running install\n'}
+[5.661015] (mouse_teleop) StdoutLine: {'line': b'running install_lib\n'}
+[5.672166] (mouse_teleop) StdoutLine: {'line': b'running install_data\n'}
+[5.677785] (mouse_teleop) StdoutLine: {'line': b'running install_egg_info\n'}
+[5.690148] (mouse_teleop) StdoutLine: {'line': b"removing '/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages/mouse_teleop-0.3.0-py3.8.egg-info' (and everything under it)\n"}
+[5.694816] (mouse_teleop) StdoutLine: {'line': b'Copying ../../../../build/mouse_teleop/mouse_teleop.egg-info to /f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages/mouse_teleop-0.3.0-py3.8.egg-info\n'}
+[5.703162] (mouse_teleop) StdoutLine: {'line': b'running install_scripts\n'}
+[5.705225] (new_map_saver) StdoutLine: {'line': b"writing list of installed files to '/f1tenth_ws/build/new_map_saver/install.log'\n"}
+[5.724511] (key_teleop) JobEnded: {'identifier': 'key_teleop', 'rc': 'SIGINT'}
+[5.735114] (-) TimerEvent: {}
+[5.812654] (mouse_teleop) StdoutLine: {'line': b'Installing mouse_teleop script to /f1tenth_ws/install/mouse_teleop/lib/mouse_teleop\n'}
+[5.816022] (mouse_teleop) StdoutLine: {'line': b"writing list of installed files to '/f1tenth_ws/build/mouse_teleop/install.log'\n"}
+[5.823536] (new_map_saver) JobEnded: {'identifier': 'new_map_saver', 'rc': 'SIGINT'}
+[5.835364] (-) TimerEvent: {}
+[5.933378] (mouse_teleop) JobEnded: {'identifier': 'mouse_teleop', 'rc': 'SIGINT'}
+[5.936206] (-) TimerEvent: {}
+[5.946799] (joy_teleop) JobSkipped: {'identifier': 'joy_teleop'}
+[5.947378] (vesc_ackermann) JobSkipped: {'identifier': 'vesc_ackermann'}
+[5.948427] (vesc_driver) JobSkipped: {'identifier': 'vesc_driver'}
+[5.948583] (teleop_tools) JobSkipped: {'identifier': 'teleop_tools'}
+[5.948744] (vesc) JobSkipped: {'identifier': 'vesc'}
+[5.948870] (f1tenth_stack) JobSkipped: {'identifier': 'f1tenth_stack'}
+[5.948994] (-) EventReactorShutdown: {}

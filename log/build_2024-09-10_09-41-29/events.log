@@ -1,0 +1,800 @@
+[0.000000] (-) TimerEvent: {}
+[0.002242] (ackermann_mux) JobQueued: {'identifier': 'ackermann_mux', 'dependencies': OrderedDict()}
+[0.002918] (key_teleop) JobQueued: {'identifier': 'key_teleop', 'dependencies': OrderedDict()}
+[0.003057] (mapping) JobQueued: {'identifier': 'mapping', 'dependencies': OrderedDict()}
+[0.003183] (mouse_teleop) JobQueued: {'identifier': 'mouse_teleop', 'dependencies': OrderedDict()}
+[0.003312] (new_map_saver) JobQueued: {'identifier': 'new_map_saver', 'dependencies': OrderedDict()}
+[0.003524] (teleop_tools_msgs) JobQueued: {'identifier': 'teleop_tools_msgs', 'dependencies': OrderedDict()}
+[0.004023] (vesc_msgs) JobQueued: {'identifier': 'vesc_msgs', 'dependencies': OrderedDict()}
+[0.004182] (joy_teleop) JobQueued: {'identifier': 'joy_teleop', 'dependencies': OrderedDict([('teleop_tools_msgs', '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs')])}
+[0.004343] (vesc_ackermann) JobQueued: {'identifier': 'vesc_ackermann', 'dependencies': OrderedDict([('vesc_msgs', '/home/nvidia/f1tenth_ws/install/vesc_msgs')])}
+[0.004518] (vesc_driver) JobQueued: {'identifier': 'vesc_driver', 'dependencies': OrderedDict([('vesc_msgs', '/home/nvidia/f1tenth_ws/install/vesc_msgs')])}
+[0.004668] (teleop_tools) JobQueued: {'identifier': 'teleop_tools', 'dependencies': OrderedDict([('key_teleop', '/home/nvidia/f1tenth_ws/install/key_teleop'), ('teleop_tools_msgs', '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs'), ('joy_teleop', '/home/nvidia/f1tenth_ws/install/joy_teleop')])}
+[0.004966] (vesc) JobQueued: {'identifier': 'vesc', 'dependencies': OrderedDict([('vesc_msgs', '/home/nvidia/f1tenth_ws/install/vesc_msgs'), ('vesc_ackermann', '/home/nvidia/f1tenth_ws/install/vesc_ackermann'), ('vesc_driver', '/home/nvidia/f1tenth_ws/install/vesc_driver')])}
+[0.005104] (f1tenth_stack) JobQueued: {'identifier': 'f1tenth_stack', 'dependencies': OrderedDict([('ackermann_mux', '/home/nvidia/f1tenth_ws/install/ackermann_mux'), ('teleop_tools_msgs', '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs'), ('vesc_msgs', '/home/nvidia/f1tenth_ws/install/vesc_msgs'), ('joy_teleop', '/home/nvidia/f1tenth_ws/install/joy_teleop'), ('vesc_ackermann', '/home/nvidia/f1tenth_ws/install/vesc_ackermann'), ('vesc_driver', '/home/nvidia/f1tenth_ws/install/vesc_driver'), ('vesc', '/home/nvidia/f1tenth_ws/install/vesc')])}
+[0.005554] (vesc_msgs) JobStarted: {'identifier': 'vesc_msgs'}
+[0.034262] (teleop_tools_msgs) JobStarted: {'identifier': 'teleop_tools_msgs'}
+[0.061148] (ackermann_mux) JobStarted: {'identifier': 'ackermann_mux'}
+[0.087582] (key_teleop) JobStarted: {'identifier': 'key_teleop'}
+[0.098154] (-) TimerEvent: {}
+[0.134754] (mapping) JobStarted: {'identifier': 'mapping'}
+[0.176291] (mouse_teleop) JobStarted: {'identifier': 'mouse_teleop'}
+[0.200123] (-) TimerEvent: {}
+[0.230059] (vesc_msgs) JobProgress: {'identifier': 'vesc_msgs', 'progress': 'cmake'}
+[0.234929] (vesc_msgs) JobProgress: {'identifier': 'vesc_msgs', 'progress': 'build'}
+[0.240033] (vesc_msgs) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/nvidia/f1tenth_ws/build/vesc_msgs', '--', '-j6', '-l6'], 'cwd': '/home/nvidia/f1tenth_ws/build/vesc_msgs', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/vesc_msgs'), ('COLCON', '1')]), 'shell': False}
+[0.269379] (teleop_tools_msgs) JobProgress: {'identifier': 'teleop_tools_msgs', 'progress': 'cmake'}
+[0.274328] (teleop_tools_msgs) JobProgress: {'identifier': 'teleop_tools_msgs', 'progress': 'build'}
+[0.277541] (teleop_tools_msgs) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs', '--', '-j6', '-l6'], 'cwd': '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs'), ('COLCON', '1')]), 'shell': False}
+[0.298538] (ackermann_mux) JobProgress: {'identifier': 'ackermann_mux', 'progress': 'cmake'}
+[0.300095] (-) TimerEvent: {}
+[0.302746] (ackermann_mux) JobProgress: {'identifier': 'ackermann_mux', 'progress': 'build'}
+[0.304447] (ackermann_mux) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/nvidia/f1tenth_ws/build/ackermann_mux', '--', '-j6', '-l6'], 'cwd': '/home/nvidia/f1tenth_ws/build/ackermann_mux', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/ackermann_mux'), ('COLCON', '1')]), 'shell': False}
+[0.401405] (-) TimerEvent: {}
+[0.504981] (-) TimerEvent: {}
+[0.607633] (-) TimerEvent: {}
+[0.709437] (-) TimerEvent: {}
+[0.810674] (-) TimerEvent: {}
+[0.912061] (-) TimerEvent: {}
+[1.013388] (-) TimerEvent: {}
+[1.114830] (-) TimerEvent: {}
+[1.217107] (-) TimerEvent: {}
+[1.319181] (-) TimerEvent: {}
+[1.421461] (-) TimerEvent: {}
+[1.523151] (-) TimerEvent: {}
+[1.625696] (-) TimerEvent: {}
+[1.730206] (-) TimerEvent: {}
+[1.833216] (-) TimerEvent: {}
+[1.934377] (-) TimerEvent: {}
+[2.035653] (-) TimerEvent: {}
+[2.136908] (-) TimerEvent: {}
+[2.238221] (-) TimerEvent: {}
+[2.339438] (-) TimerEvent: {}
+[2.440755] (-) TimerEvent: {}
+[2.541854] (-) TimerEvent: {}
+[2.642983] (-) TimerEvent: {}
+[2.745754] (-) TimerEvent: {}
+[2.848489] (-) TimerEvent: {}
+[2.949351] (-) TimerEvent: {}
+[3.050153] (-) TimerEvent: {}
+[3.150986] (-) TimerEvent: {}
+[3.251917] (-) TimerEvent: {}
+[3.352938] (-) TimerEvent: {}
+[3.453819] (-) TimerEvent: {}
+[3.554796] (-) TimerEvent: {}
+[3.656144] (-) TimerEvent: {}
+[3.720781] (vesc_msgs) StdoutLine: {'line': b'[  1%] Built target vesc_msgs__cpp\n'}
+[3.726542] (vesc_msgs) StdoutLine: {'line': b'[ 12%] Built target vesc_msgs__rosidl_generator_c\n'}
+[3.730011] (vesc_msgs) StdoutLine: {'line': b'[ 23%] Built target vesc_msgs__rosidl_typesupport_introspection_cpp\n'}
+[3.732643] (vesc_msgs) StdoutLine: {'line': b'[ 34%] Built target vesc_msgs__rosidl_typesupport_fastrtps_cpp\n'}
+[3.733594] (vesc_msgs) StdoutLine: {'line': b'[ 45%] Built target vesc_msgs__rosidl_typesupport_cpp\n'}
+[3.735708] (vesc_msgs) StdoutLine: {'line': b'[ 56%] Built target vesc_msgs__rosidl_typesupport_introspection_c\n'}
+[3.737283] (vesc_msgs) StdoutLine: {'line': b'[ 67%] Built target vesc_msgs__rosidl_typesupport_c\n'}
+[3.739116] (vesc_msgs) StdoutLine: {'line': b'[ 78%] Built target vesc_msgs__rosidl_typesupport_fastrtps_c\n'}
+[3.739816] (vesc_msgs) StdoutLine: {'line': b'[ 78%] Built target vesc_msgs\n'}
+[3.747802] (vesc_msgs) StdoutLine: {'line': b'[ 80%] Built target vesc_msgs__py\n'}
+[3.753482] (vesc_msgs) StdoutLine: {'line': b'[ 89%] Built target vesc_msgs__python\n'}
+[3.754706] (vesc_msgs) StdoutLine: {'line': b'[ 92%] Built target vesc_msgs__rosidl_typesupport_fastrtps_c__pyext\n'}
+[3.757758] (-) TimerEvent: {}
+[3.769203] (vesc_msgs) StdoutLine: {'line': b'[ 96%] Built target vesc_msgs__rosidl_typesupport_c__pyext\n'}
+[3.773893] (vesc_msgs) StdoutLine: {'line': b'[100%] Built target vesc_msgs__rosidl_typesupport_introspection_c__pyext\n'}
+[3.776757] (teleop_tools_msgs) StdoutLine: {'line': b'[  3%] Built target teleop_tools_msgs__cpp\n'}
+[3.785571] (teleop_tools_msgs) StdoutLine: {'line': b'[ 12%] Built target teleop_tools_msgs__rosidl_generator_c\n'}
+[3.793032] (teleop_tools_msgs) StdoutLine: {'line': b'[ 22%] Built target teleop_tools_msgs__rosidl_typesupport_introspection_cpp\n'}
+[3.797662] (teleop_tools_msgs) StdoutLine: {'line': b'[ 32%] Built target teleop_tools_msgs__rosidl_typesupport_introspection_c\n'}
+[3.798842] (teleop_tools_msgs) StdoutLine: {'line': b'[ 51%] Built target teleop_tools_msgs__rosidl_typesupport_fastrtps_cpp\n'}
+[3.801504] (teleop_tools_msgs) StdoutLine: {'line': b'[ 41%] Built target teleop_tools_msgs__rosidl_typesupport_cpp\n'}
+[3.802445] (teleop_tools_msgs) StdoutLine: {'line': b'[ 61%] Built target teleop_tools_msgs__rosidl_typesupport_c\n'}
+[3.805273] (teleop_tools_msgs) StdoutLine: {'line': b'[ 70%] Built target teleop_tools_msgs__rosidl_typesupport_fastrtps_c\n'}
+[3.806018] (teleop_tools_msgs) StdoutLine: {'line': b'[ 70%] Built target teleop_tools_msgs\n'}
+[3.806640] (teleop_tools_msgs) StdoutLine: {'line': b'[ 74%] Built target teleop_tools_msgs__py\n'}
+[3.807121] (teleop_tools_msgs) StdoutLine: {'line': b'[ 80%] Built target teleop_tools_msgs__python\n'}
+[3.807865] (teleop_tools_msgs) StdoutLine: {'line': b'[ 87%] Built target teleop_tools_msgs__rosidl_typesupport_c__pyext\n'}
+[3.810472] (teleop_tools_msgs) StdoutLine: {'line': b'[ 93%] Built target teleop_tools_msgs__rosidl_typesupport_fastrtps_c__pyext\n'}
+[3.811881] (teleop_tools_msgs) StdoutLine: {'line': b'[100%] Built target teleop_tools_msgs__rosidl_typesupport_introspection_c__pyext\n'}
+[3.812806] (ackermann_mux) StdoutLine: {'line': b'[100%] Built target ackermann_mux\n'}
+[3.817777] (vesc_msgs) CommandEnded: {'returncode': 0}
+[3.821693] (teleop_tools_msgs) CommandEnded: {'returncode': 0}
+[3.833786] (ackermann_mux) CommandEnded: {'returncode': 0}
+[3.859867] (-) TimerEvent: {}
+[3.925685] (ackermann_mux) JobProgress: {'identifier': 'ackermann_mux', 'progress': 'install'}
+[3.960495] (-) TimerEvent: {}
+[3.995725] (ackermann_mux) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/nvidia/f1tenth_ws/build/ackermann_mux'], 'cwd': '/home/nvidia/f1tenth_ws/build/ackermann_mux', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/ackermann_mux'), ('COLCON', '1')]), 'shell': False}
+[4.035103] (teleop_tools_msgs) JobProgress: {'identifier': 'teleop_tools_msgs', 'progress': 'install'}
+[4.039725] (teleop_tools_msgs) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs'], 'cwd': '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs'), ('COLCON', '1')]), 'shell': False}
+[4.061164] (ackermann_mux) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[4.064075] (-) TimerEvent: {}
+[4.068147] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/lib/ackermann_mux/ackermann_mux\n'}
+[4.081330] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/launch\n'}
+[4.083249] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/launch/ackermann_mux_launch.py\n'}
+[4.084646] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/config\n'}
+[4.085424] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/config/ackermann_mux_topics.yaml\n'}
+[4.085967] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/config/joystick.yaml\n'}
+[4.087299] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/config/ackermann_mux_locks.yaml\n'}
+[4.088019] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/include\n'}
+[4.088541] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/include/ackermann_mux\n'}
+[4.091398] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/include/ackermann_mux/ackermann_mux_diagnostics.hpp\n'}
+[4.092514] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/include/ackermann_mux/params_helpers.hpp\n'}
+[4.094110] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/include/ackermann_mux/ackermann_mux_diagnostics_status.hpp\n'}
+[4.094602] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/include/ackermann_mux/ackermann_mux.hpp\n'}
+[4.095103] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/include/ackermann_mux/topic_handle.hpp\n'}
+[4.112264] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/include/ackermann_mux/utils.hpp\n'}
+[4.113532] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ament_index/resource_index/package_run_dependencies/ackermann_mux\n'}
+[4.114373] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ament_index/resource_index/parent_prefix_path/ackermann_mux\n'}
+[4.116131] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/environment/ament_prefix_path.sh\n'}
+[4.118475] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/environment/ament_prefix_path.dsv\n'}
+[4.119090] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/environment/path.sh\n'}
+[4.120240] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/environment/path.dsv\n'}
+[4.120772] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/local_setup.bash\n'}
+[4.121463] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/local_setup.sh\n'}
+[4.124422] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/local_setup.zsh\n'}
+[4.124929] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/local_setup.dsv\n'}
+[4.125482] (ackermann_mux) StdoutLine: {'line': b'-- Installing: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/package.dsv\n'}
+[4.126565] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ament_index/resource_index/packages/ackermann_mux\n'}
+[4.127080] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[4.127688] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[4.129330] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/cmake/ackermann_muxConfig.cmake\n'}
+[4.129782] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/cmake/ackermann_muxConfig-version.cmake\n'}
+[4.130318] (ackermann_mux) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/package.xml\n'}
+[4.131058] (ackermann_mux) CommandEnded: {'returncode': 0}
+[4.141436] (teleop_tools_msgs) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[4.142444] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/ament_index/resource_index/rosidl_interfaces/teleop_tools_msgs\n'}
+[4.142945] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs\n'}
+[4.143416] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action\n'}
+[4.144031] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/increment.h\n'}
+[4.144468] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail\n'}
+[4.147647] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__type_support.h\n'}
+[4.149070] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__functions.c\n'}
+[4.151897] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__struct.h\n'}
+[4.152581] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__functions.h\n'}
+[4.156565] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/msg\n'}
+[4.157078] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/msg/rosidl_generator_c__visibility_control.h\n'}
+[4.157508] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/environment/library_path.sh\n'}
+[4.173676] (-) TimerEvent: {}
+[4.174424] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/environment/library_path.dsv\n'}
+[4.175009] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/libteleop_tools_msgs__rosidl_generator_c.so\n'}
+[4.175621] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs\n'}
+[4.176141] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action\n'}
+[4.176576] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail\n'}
+[4.176998] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__rosidl_typesupport_fastrtps_c.h\n'}
+[4.177453] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/msg\n'}
+[4.177863] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[4.178260] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/libteleop_tools_msgs__rosidl_typesupport_fastrtps_c.so\n'}
+[4.178718] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs\n'}
+[4.179173] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action\n'}
+[4.179676] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail\n'}
+[4.180117] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[4.180506] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/dds_fastrtps\n'}
+[4.180906] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/msg\n'}
+[4.181309] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[4.181783] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/libteleop_tools_msgs__rosidl_typesupport_fastrtps_cpp.so\n'}
+[4.182196] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs\n'}
+[4.182586] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action\n'}
+[4.182969] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail\n'}
+[4.183417] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__rosidl_typesupport_introspection_c.h\n'}
+[4.196433] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__type_support.c\n'}
+[4.196946] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/msg\n'}
+[4.197382] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[4.197806] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/libteleop_tools_msgs__rosidl_typesupport_introspection_c.so\n'}
+[4.198210] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/libteleop_tools_msgs__rosidl_typesupport_c.so\n'}
+[4.198624] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs\n'}
+[4.199020] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action\n'}
+[4.199412] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail\n'}
+[4.200039] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__type_support.hpp\n'}
+[4.200463] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__traits.hpp\n'}
+[4.200887] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__struct.hpp\n'}
+[4.201279] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__builder.hpp\n'}
+[4.201725] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/increment.hpp\n'}
+[4.202131] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/msg\n'}
+[4.202510] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/msg/rosidl_generator_cpp__visibility_control.hpp\n'}
+[4.202950] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs\n'}
+[4.203325] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action\n'}
+[4.203855] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail\n'}
+[4.204259] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__type_support.cpp\n'}
+[4.204657] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/include/teleop_tools_msgs/action/detail/increment__rosidl_typesupport_introspection_cpp.hpp\n'}
+[4.205054] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/libteleop_tools_msgs__rosidl_typesupport_introspection_cpp.so\n'}
+[4.205474] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/libteleop_tools_msgs__rosidl_typesupport_cpp.so\n'}
+[4.205852] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/environment/pythonpath.sh\n'}
+[4.206259] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/environment/pythonpath.dsv\n'}
+[4.206659] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages/teleop_tools_msgs/__init__.py\n'}
+[4.253908] (vesc_msgs) JobProgress: {'identifier': 'vesc_msgs', 'progress': 'install'}
+[4.257582] (vesc_msgs) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/nvidia/f1tenth_ws/build/vesc_msgs'], 'cwd': '/home/nvidia/f1tenth_ws/build/vesc_msgs', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/vesc_msgs'), ('COLCON', '1')]), 'shell': False}
+[4.275252] (-) TimerEvent: {}
+[4.346527] (vesc_msgs) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[4.350128] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/ament_index/resource_index/rosidl_interfaces/vesc_msgs\n'}
+[4.352024] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages/teleop_tools_msgs/action\n'}
+[4.353699] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs\n'}
+[4.355548] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages/teleop_tools_msgs/action/_increment_s.c\n'}
+[4.363247] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg\n'}
+[4.364693] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/vesc_imu.h\n'}
+[4.365219] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages/teleop_tools_msgs/action/__init__.py\n'}
+[4.365835] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages/teleop_tools_msgs/action/_increment.py\n'}
+[4.367424] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages/teleop_tools_msgs/teleop_tools_msgs_s__rosidl_typesupport_fastrtps_c.cpython-38-aarch64-linux-gnu.so\n'}
+[4.368792] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/vesc_state_stamped.h\n'}
+[4.369335] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail\n'}
+[4.374620] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__functions.c\n'}
+[4.387184] (-) TimerEvent: {}
+[4.388317] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__functions.c\n'}
+[4.388892] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__type_support.h\n'}
+[4.389341] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__functions.h\n'}
+[4.394574] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__struct.h\n'}
+[4.401536] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__functions.h\n'}
+[4.402378] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__functions.h\n'}
+[4.402969] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__functions.h\n'}
+[4.404215] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__type_support.h\n'}
+[4.404756] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__struct.h\n'}
+[4.407908] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__type_support.h\n'}
+[4.414299] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__struct.h\n'}
+[4.414946] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__type_support.h\n'}
+[4.415535] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__struct.h\n'}
+[4.416063] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__functions.c\n'}
+[4.418352] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__functions.c\n'}
+[4.418898] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/vesc_state.h\n'}
+[4.419598] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/rosidl_generator_c__visibility_control.h\n'}
+[4.420553] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/vesc_imu_stamped.h\n'}
+[4.421143] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/environment/library_path.sh\n'}
+[4.421718] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/environment/library_path.dsv\n'}
+[4.422251] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/libvesc_msgs__rosidl_generator_c.so\n'}
+[4.422804] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs\n'}
+[4.423270] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg\n'}
+[4.425021] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail\n'}
+[4.425502] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__rosidl_typesupport_fastrtps_c.h\n'}
+[4.426122] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__rosidl_typesupport_fastrtps_c.h\n'}
+[4.426662] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__rosidl_typesupport_fastrtps_c.h\n'}
+[4.427262] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__rosidl_typesupport_fastrtps_c.h\n'}
+[4.441118] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[4.441853] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/libvesc_msgs__rosidl_typesupport_fastrtps_c.so\n'}
+[4.442319] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs\n'}
+[4.442757] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg\n'}
+[4.443151] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[4.443812] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail\n'}
+[4.444218] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[4.444746] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[4.445247] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[4.445726] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages/teleop_tools_msgs/teleop_tools_msgs_s__rosidl_typesupport_introspection_c.cpython-38-aarch64-linux-gnu.so\n'}
+[4.446153] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/dds_fastrtps\n'}
+[4.446528] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[4.446989] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/libvesc_msgs__rosidl_typesupport_fastrtps_cpp.so\n'}
+[4.447378] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs\n'}
+[4.447895] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg\n'}
+[4.448297] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail\n'}
+[4.448666] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__rosidl_typesupport_introspection_c.h\n'}
+[4.449090] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__rosidl_typesupport_introspection_c.h\n'}
+[4.449459] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__type_support.c\n'}
+[4.449836] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__type_support.c\n'}
+[4.450220] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__rosidl_typesupport_introspection_c.h\n'}
+[4.450596] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__type_support.c\n'}
+[4.451015] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__rosidl_typesupport_introspection_c.h\n'}
+[4.451379] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__type_support.c\n'}
+[4.451934] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[4.452327] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/libvesc_msgs__rosidl_typesupport_introspection_c.so\n'}
+[4.452731] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages/teleop_tools_msgs/teleop_tools_msgs_s__rosidl_typesupport_c.cpython-38-aarch64-linux-gnu.so\n'}
+[4.453151] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/libteleop_tools_msgs__python.so\n'}
+[4.453514] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/libvesc_msgs__rosidl_typesupport_c.so\n'}
+[4.453871] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs\n'}
+[4.454249] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg\n'}
+[4.454671] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/vesc_imu.hpp\n'}
+[4.455113] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail\n'}
+[4.455734] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__struct.hpp\n'}
+[4.473785] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__builder.hpp\n'}
+[4.474317] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__type_support.hpp\n'}
+[4.474748] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__traits.hpp\n'}
+[4.475214] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__traits.hpp\n'}
+[4.475731] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__traits.hpp\n'}
+[4.476168] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/action/Increment.idl\n'}
+[4.476637] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/action/Increment.action\n'}
+[4.477025] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/ament_index/resource_index/package_run_dependencies/teleop_tools_msgs\n'}
+[4.477412] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__type_support.hpp\n'}
+[4.477809] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/ament_index/resource_index/parent_prefix_path/teleop_tools_msgs\n'}
+[4.478172] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__builder.hpp\n'}
+[4.478535] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__struct.hpp\n'}
+[4.478976] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__struct.hpp\n'}
+[4.479371] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__struct.hpp\n'}
+[4.479899] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/environment/ament_prefix_path.sh\n'}
+[4.480302] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__builder.hpp\n'}
+[4.480667] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__type_support.hpp\n'}
+[4.481076] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/environment/ament_prefix_path.dsv\n'}
+[4.481503] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__builder.hpp\n'}
+[4.481866] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__type_support.hpp\n'}
+[4.482217] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__traits.hpp\n'}
+[4.482617] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/rosidl_generator_cpp__visibility_control.hpp\n'}
+[4.482986] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/environment/path.sh\n'}
+[4.483423] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/vesc_state_stamped.hpp\n'}
+[4.484200] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/vesc_imu_stamped.hpp\n'}
+[4.484575] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/vesc_state.hpp\n'}
+[4.484937] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/environment/path.dsv\n'}
+[4.485335] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs\n'}
+[4.485716] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg\n'}
+[4.486132] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/local_setup.bash\n'}
+[4.486530] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail\n'}
+[4.486899] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__type_support.cpp\n'}
+[4.487261] (-) TimerEvent: {}
+[4.488059] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__rosidl_typesupport_introspection_cpp.hpp\n'}
+[4.488677] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/local_setup.sh\n'}
+[4.490101] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu_stamped__rosidl_typesupport_introspection_cpp.hpp\n'}
+[4.490536] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state__type_support.cpp\n'}
+[4.490967] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/local_setup.zsh\n'}
+[4.491389] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__rosidl_typesupport_introspection_cpp.hpp\n'}
+[4.492050] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__type_support.cpp\n'}
+[4.492481] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/local_setup.dsv\n'}
+[4.492904] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_state_stamped__rosidl_typesupport_introspection_cpp.hpp\n'}
+[4.493284] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/include/vesc_msgs/msg/detail/vesc_imu__type_support.cpp\n'}
+[4.493655] (teleop_tools_msgs) StdoutLine: {'line': b'-- Installing: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/package.dsv\n'}
+[4.494067] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/libvesc_msgs__rosidl_typesupport_introspection_cpp.so\n'}
+[4.494455] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/ament_index/resource_index/packages/teleop_tools_msgs\n'}
+[4.494841] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/teleop_tools_msgs__rosidl_generator_cExport.cmake\n'}
+[4.495276] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/teleop_tools_msgs__rosidl_generator_cExport-noconfig.cmake\n'}
+[4.495765] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/libvesc_msgs__rosidl_typesupport_cpp.so\n'}
+[4.496175] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/teleop_tools_msgs__rosidl_typesupport_introspection_cExport.cmake\n'}
+[4.496613] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/teleop_tools_msgs__rosidl_typesupport_introspection_cExport-noconfig.cmake\n'}
+[4.496983] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/environment/pythonpath.sh\n'}
+[4.497437] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/environment/pythonpath.dsv\n'}
+[4.497807] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/teleop_tools_msgs__rosidl_typesupport_cExport.cmake\n'}
+[4.498183] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/__init__.py\n'}
+[4.498547] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/teleop_tools_msgs__rosidl_typesupport_cExport-noconfig.cmake\n'}
+[4.498909] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/teleop_tools_msgs__rosidl_generator_cppExport.cmake\n'}
+[4.499320] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/teleop_tools_msgs__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[4.529308] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/teleop_tools_msgs__rosidl_typesupport_introspection_cppExport-noconfig.cmake\n'}
+[4.531078] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/teleop_tools_msgs__rosidl_typesupport_cppExport.cmake\n'}
+[4.532110] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/teleop_tools_msgs__rosidl_typesupport_cppExport-noconfig.cmake\n'}
+[4.535764] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/rosidl_cmake-extras.cmake\n'}
+[4.536435] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[4.536862] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[4.537338] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[4.537778] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[4.538255] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[4.538670] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[4.539095] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/teleop_tools_msgsConfig.cmake\n'}
+[4.539573] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/cmake/teleop_tools_msgsConfig-version.cmake\n'}
+[4.540005] (teleop_tools_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/package.xml\n'}
+[4.540561] (ackermann_mux) JobEnded: {'identifier': 'ackermann_mux', 'rc': 0}
+[4.553932] (new_map_saver) JobStarted: {'identifier': 'new_map_saver'}
+[4.554335] (teleop_tools_msgs) CommandEnded: {'returncode': 0}
+[4.587902] (-) TimerEvent: {}
+[4.619154] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/msg\n'}
+[4.620178] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/msg/_vesc_state_stamped.py\n'}
+[4.621099] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/msg/_vesc_state_s.c\n'}
+[4.621671] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/msg/__init__.py\n'}
+[4.622207] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/msg/_vesc_state_stamped_s.c\n'}
+[4.622610] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/msg/_vesc_imu.py\n'}
+[4.623012] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/msg/_vesc_imu_stamped.py\n'}
+[4.623392] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/msg/_vesc_state.py\n'}
+[4.623950] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/msg/_vesc_imu_stamped_s.c\n'}
+[4.624699] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/msg/_vesc_imu_s.c\n'}
+[4.625124] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/vesc_msgs_s__rosidl_typesupport_fastrtps_c.cpython-38-aarch64-linux-gnu.so\n'}
+[4.628006] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/vesc_msgs_s__rosidl_typesupport_introspection_c.cpython-38-aarch64-linux-gnu.so\n'}
+[4.632964] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages/vesc_msgs/vesc_msgs_s__rosidl_typesupport_c.cpython-38-aarch64-linux-gnu.so\n'}
+[4.643056] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/lib/libvesc_msgs__python.so\n'}
+[4.650378] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/msg/VescState.idl\n'}
+[4.650970] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/msg/VescStateStamped.idl\n'}
+[4.651432] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/msg/VescImu.idl\n'}
+[4.652037] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/msg/VescImuStamped.idl\n'}
+[4.652456] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/msg/VescState.msg\n'}
+[4.652858] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/msg/VescStateStamped.msg\n'}
+[4.653317] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/msg/VescImu.msg\n'}
+[4.653705] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/msg/VescImuStamped.msg\n'}
+[4.654115] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/ament_index/resource_index/package_run_dependencies/vesc_msgs\n'}
+[4.654535] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/ament_index/resource_index/parent_prefix_path/vesc_msgs\n'}
+[4.654929] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/environment/ament_prefix_path.sh\n'}
+[4.655399] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/environment/ament_prefix_path.dsv\n'}
+[4.659606] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/environment/path.sh\n'}
+[4.660138] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/environment/path.dsv\n'}
+[4.660580] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/local_setup.bash\n'}
+[4.661013] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/local_setup.sh\n'}
+[4.661544] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/local_setup.zsh\n'}
+[4.662180] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/local_setup.dsv\n'}
+[4.662763] (vesc_msgs) StdoutLine: {'line': b'-- Installing: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/package.dsv\n'}
+[4.664260] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/ament_index/resource_index/packages/vesc_msgs\n'}
+[4.666388] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/vesc_msgs__rosidl_generator_cExport.cmake\n'}
+[4.688816] (-) TimerEvent: {}
+[4.694330] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/vesc_msgs__rosidl_generator_cExport-noconfig.cmake\n'}
+[4.696182] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/vesc_msgs__rosidl_typesupport_introspection_cExport.cmake\n'}
+[4.696744] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/vesc_msgs__rosidl_typesupport_introspection_cExport-noconfig.cmake\n'}
+[4.697208] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/vesc_msgs__rosidl_typesupport_cExport.cmake\n'}
+[4.697621] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/vesc_msgs__rosidl_typesupport_cExport-noconfig.cmake\n'}
+[4.698031] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/vesc_msgs__rosidl_generator_cppExport.cmake\n'}
+[4.698500] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/vesc_msgs__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[4.698905] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/vesc_msgs__rosidl_typesupport_introspection_cppExport-noconfig.cmake\n'}
+[4.699296] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/vesc_msgs__rosidl_typesupport_cppExport.cmake\n'}
+[4.700050] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/vesc_msgs__rosidl_typesupport_cppExport-noconfig.cmake\n'}
+[4.700503] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/rosidl_cmake-extras.cmake\n'}
+[4.700908] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[4.701304] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[4.701679] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[4.703171] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[4.703700] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[4.704153] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[4.704565] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/vesc_msgsConfig.cmake\n'}
+[4.704966] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/cmake/vesc_msgsConfig-version.cmake\n'}
+[4.705395] (vesc_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/package.xml\n'}
+[4.788870] (-) TimerEvent: {}
+[4.889978] (-) TimerEvent: {}
+[4.991118] (-) TimerEvent: {}
+[5.092365] (-) TimerEvent: {}
+[5.193664] (-) TimerEvent: {}
+[5.294799] (-) TimerEvent: {}
+[5.396054] (-) TimerEvent: {}
+[5.497211] (-) TimerEvent: {}
+[5.598561] (-) TimerEvent: {}
+[5.699954] (-) TimerEvent: {}
+[5.801030] (-) TimerEvent: {}
+[5.903658] (-) TimerEvent: {}
+[5.955956] (teleop_tools_msgs) JobEnded: {'identifier': 'teleop_tools_msgs', 'rc': 0}
+[5.962519] (vesc_msgs) CommandEnded: {'returncode': 0}
+[6.003662] (-) TimerEvent: {}
+[6.067567] (joy_teleop) JobStarted: {'identifier': 'joy_teleop'}
+[6.105011] (-) TimerEvent: {}
+[6.122499] (mapping) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/mapping', 'build', '--build-base', '/home/nvidia/f1tenth_ws/build/mapping/build', 'install', '--record', '/home/nvidia/f1tenth_ws/build/mapping/install.log', '--install-scripts', '$base/lib/mapping', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/nvidia/f1tenth_ws/src/mapping', 'env': {'SUDO_GID': '1000', 'MAIL': '/var/mail/root', 'USER': 'root', 'HOME': '/root', 'COLORTERM': 'truecolor', 'SUDO_UID': '1000', 'LOGNAME': 'root', 'TERM': 'xterm-256color', 'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin', 'DISPLAY': ':1', 'LANG': 'en_US.UTF-8', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'SUDO_COMMAND': '/usr/bin/colcon build', 'SHELL': '/bin/bash', 'SUDO_USER': 'nvidia', 'LC_ALL': 'en_US.UTF-8', 'PWD': '/home/nvidia/f1tenth_ws/build/mapping', 'COLCON': '1', 'PYTHONPATH': '/home/nvidia/f1tenth_ws/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages:'}, 'shell': False}
+[6.164175] (key_teleop) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../../../build/key_teleop', 'build', '--build-base', '/home/nvidia/f1tenth_ws/build/key_teleop/build', 'install', '--record', '/home/nvidia/f1tenth_ws/build/key_teleop/install.log', '--install-scripts', '$base/lib/key_teleop', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/key_teleop', 'env': {'SUDO_GID': '1000', 'MAIL': '/var/mail/root', 'USER': 'root', 'HOME': '/root', 'COLORTERM': 'truecolor', 'SUDO_UID': '1000', 'LOGNAME': 'root', 'TERM': 'xterm-256color', 'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin', 'DISPLAY': ':1', 'LANG': 'en_US.UTF-8', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'SUDO_COMMAND': '/usr/bin/colcon build', 'SHELL': '/bin/bash', 'SUDO_USER': 'nvidia', 'LC_ALL': 'en_US.UTF-8', 'PWD': '/home/nvidia/f1tenth_ws/build/key_teleop', 'COLCON': '1', 'PYTHONPATH': '/home/nvidia/f1tenth_ws/build/key_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages:'}, 'shell': False}
+[6.187117] (mouse_teleop) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../../../build/mouse_teleop', 'build', '--build-base', '/home/nvidia/f1tenth_ws/build/mouse_teleop/build', 'install', '--record', '/home/nvidia/f1tenth_ws/build/mouse_teleop/install.log', '--install-scripts', '$base/lib/mouse_teleop', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/mouse_teleop', 'env': {'SUDO_GID': '1000', 'MAIL': '/var/mail/root', 'USER': 'root', 'HOME': '/root', 'COLORTERM': 'truecolor', 'SUDO_UID': '1000', 'LOGNAME': 'root', 'TERM': 'xterm-256color', 'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin', 'DISPLAY': ':1', 'LANG': 'en_US.UTF-8', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'SUDO_COMMAND': '/usr/bin/colcon build', 'SHELL': '/bin/bash', 'SUDO_USER': 'nvidia', 'LC_ALL': 'en_US.UTF-8', 'PWD': '/home/nvidia/f1tenth_ws/build/mouse_teleop', 'COLCON': '1', 'PYTHONPATH': '/home/nvidia/f1tenth_ws/build/mouse_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages:'}, 'shell': False}
+[6.205409] (-) TimerEvent: {}
+[6.312064] (-) TimerEvent: {}
+[6.415426] (-) TimerEvent: {}
+[6.516587] (-) TimerEvent: {}
+[6.618842] (-) TimerEvent: {}
+[6.720036] (-) TimerEvent: {}
+[6.821241] (-) TimerEvent: {}
+[6.922338] (-) TimerEvent: {}
+[7.023623] (-) TimerEvent: {}
+[7.124760] (-) TimerEvent: {}
+[7.225962] (-) TimerEvent: {}
+[7.275091] (mapping) StdoutLine: {'line': b'running egg_info\n'}
+[7.277863] (mapping) StdoutLine: {'line': b'writing ../../build/mapping/mapping.egg-info/PKG-INFO\n'}
+[7.280425] (mapping) StdoutLine: {'line': b'writing dependency_links to ../../build/mapping/mapping.egg-info/dependency_links.txt\n'}
+[7.281485] (mapping) StdoutLine: {'line': b'writing entry points to ../../build/mapping/mapping.egg-info/entry_points.txt\n'}
+[7.283391] (mapping) StdoutLine: {'line': b'writing requirements to ../../build/mapping/mapping.egg-info/requires.txt\n'}
+[7.284533] (mapping) StdoutLine: {'line': b'writing top-level names to ../../build/mapping/mapping.egg-info/top_level.txt\n'}
+[7.326207] (-) TimerEvent: {}
+[7.336049] (key_teleop) StdoutLine: {'line': b'running egg_info\n'}
+[7.340510] (key_teleop) StdoutLine: {'line': b'writing ../../../../build/key_teleop/key_teleop.egg-info/PKG-INFO\n'}
+[7.343198] (key_teleop) StdoutLine: {'line': b'writing dependency_links to ../../../../build/key_teleop/key_teleop.egg-info/dependency_links.txt\n'}
+[7.344337] (key_teleop) StdoutLine: {'line': b'writing entry points to ../../../../build/key_teleop/key_teleop.egg-info/entry_points.txt\n'}
+[7.345341] (key_teleop) StdoutLine: {'line': b'writing requirements to ../../../../build/key_teleop/key_teleop.egg-info/requires.txt\n'}
+[7.346173] (key_teleop) StdoutLine: {'line': b'writing top-level names to ../../../../build/key_teleop/key_teleop.egg-info/top_level.txt\n'}
+[7.360139] (mouse_teleop) StdoutLine: {'line': b'running egg_info\n'}
+[7.370936] (mouse_teleop) StdoutLine: {'line': b'writing ../../../../build/mouse_teleop/mouse_teleop.egg-info/PKG-INFO\n'}
+[7.372883] (mouse_teleop) StdoutLine: {'line': b'writing dependency_links to ../../../../build/mouse_teleop/mouse_teleop.egg-info/dependency_links.txt\n'}
+[7.373966] (mouse_teleop) StdoutLine: {'line': b'writing entry points to ../../../../build/mouse_teleop/mouse_teleop.egg-info/entry_points.txt\n'}
+[7.374985] (mouse_teleop) StdoutLine: {'line': b'writing requirements to ../../../../build/mouse_teleop/mouse_teleop.egg-info/requires.txt\n'}
+[7.375808] (mouse_teleop) StdoutLine: {'line': b'writing top-level names to ../../../../build/mouse_teleop/mouse_teleop.egg-info/top_level.txt\n'}
+[7.426636] (-) TimerEvent: {}
+[7.470346] (mapping) StdoutLine: {'line': b"reading manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'\n"}
+[7.474941] (mapping) StdoutLine: {'line': b"writing manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'\n"}
+[7.476247] (mapping) StdoutLine: {'line': b'running build\n'}
+[7.476879] (mapping) StdoutLine: {'line': b'running build_py\n'}
+[7.477866] (mapping) StdoutLine: {'line': b'running install\n'}
+[7.481934] (mapping) StdoutLine: {'line': b'running install_lib\n'}
+[7.490680] (mapping) StdoutLine: {'line': b'running install_data\n'}
+[7.493094] (mapping) StdoutLine: {'line': b'running install_egg_info\n'}
+[7.499344] (mapping) StdoutLine: {'line': b"removing '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info' (and everything under it)\n"}
+[7.501752] (mapping) StdoutLine: {'line': b'Copying ../../build/mapping/mapping.egg-info to /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info\n'}
+[7.511296] (mapping) StdoutLine: {'line': b'running install_scripts\n'}
+[7.533670] (-) TimerEvent: {}
+[7.537482] (key_teleop) StdoutLine: {'line': b"reading manifest file '../../../../build/key_teleop/key_teleop.egg-info/SOURCES.txt'\n"}
+[7.542538] (key_teleop) StdoutLine: {'line': b"writing manifest file '../../../../build/key_teleop/key_teleop.egg-info/SOURCES.txt'\n"}
+[7.544598] (key_teleop) StdoutLine: {'line': b'running build\n'}
+[7.545250] (key_teleop) StdoutLine: {'line': b'running build_py\n'}
+[7.545699] (key_teleop) StdoutLine: {'line': b'running install\n'}
+[7.549522] (key_teleop) StdoutLine: {'line': b'running install_lib\n'}
+[7.560013] (key_teleop) StdoutLine: {'line': b'running install_data\n'}
+[7.560658] (key_teleop) StdoutLine: {'line': b'running install_egg_info\n'}
+[7.567586] (key_teleop) StdoutLine: {'line': b"removing '/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages/key_teleop-0.3.0-py3.8.egg-info' (and everything under it)\n"}
+[7.571060] (key_teleop) StdoutLine: {'line': b'Copying ../../../../build/key_teleop/key_teleop.egg-info to /home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages/key_teleop-0.3.0-py3.8.egg-info\n'}
+[7.579066] (key_teleop) StdoutLine: {'line': b'running install_scripts\n'}
+[7.582744] (mouse_teleop) StdoutLine: {'line': b"reading manifest file '../../../../build/mouse_teleop/mouse_teleop.egg-info/SOURCES.txt'\n"}
+[7.587666] (mouse_teleop) StdoutLine: {'line': b"writing manifest file '../../../../build/mouse_teleop/mouse_teleop.egg-info/SOURCES.txt'\n"}
+[7.588628] (mouse_teleop) StdoutLine: {'line': b'running build\n'}
+[7.589105] (mouse_teleop) StdoutLine: {'line': b'running build_py\n'}
+[7.592266] (mouse_teleop) StdoutLine: {'line': b'running install\n'}
+[7.595859] (mouse_teleop) StdoutLine: {'line': b'running install_lib\n'}
+[7.602693] (mapping) StdoutLine: {'line': b'Installing local_mapping_node script to /home/nvidia/f1tenth_ws/install/mapping/lib/mapping\n'}
+[7.603936] (mouse_teleop) StdoutLine: {'line': b'running install_data\n'}
+[7.604609] (mapping) StdoutLine: {'line': b"writing list of installed files to '/home/nvidia/f1tenth_ws/build/mapping/install.log'\n"}
+[7.605476] (mouse_teleop) StdoutLine: {'line': b'running install_egg_info\n'}
+[7.614709] (mouse_teleop) StdoutLine: {'line': b"removing '/home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages/mouse_teleop-0.3.0-py3.8.egg-info' (and everything under it)\n"}
+[7.617690] (mouse_teleop) StdoutLine: {'line': b'Copying ../../../../build/mouse_teleop/mouse_teleop.egg-info to /home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages/mouse_teleop-0.3.0-py3.8.egg-info\n'}
+[7.626717] (mouse_teleop) StdoutLine: {'line': b'running install_scripts\n'}
+[7.631723] (-) TimerEvent: {}
+[7.645053] (vesc_msgs) JobEnded: {'identifier': 'vesc_msgs', 'rc': 0}
+[7.650459] (vesc_ackermann) JobStarted: {'identifier': 'vesc_ackermann'}
+[7.681249] (key_teleop) StdoutLine: {'line': b'Installing key_teleop script to /home/nvidia/f1tenth_ws/install/key_teleop/lib/key_teleop\n'}
+[7.686043] (key_teleop) StdoutLine: {'line': b"writing list of installed files to '/home/nvidia/f1tenth_ws/build/key_teleop/install.log'\n"}
+[7.732637] (-) TimerEvent: {}
+[7.742903] (vesc_ackermann) JobProgress: {'identifier': 'vesc_ackermann', 'progress': 'cmake'}
+[7.757647] (vesc_ackermann) JobProgress: {'identifier': 'vesc_ackermann', 'progress': 'build'}
+[7.759961] (vesc_ackermann) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/nvidia/f1tenth_ws/build/vesc_ackermann', '--', '-j6', '-l6'], 'cwd': '/home/nvidia/f1tenth_ws/build/vesc_ackermann', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('LD_LIBRARY_PATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('AMENT_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/vesc_ackermann'), ('PYTHONPATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs')]), 'shell': False}
+[7.776782] (mouse_teleop) StdoutLine: {'line': b'Installing mouse_teleop script to /home/nvidia/f1tenth_ws/install/mouse_teleop/lib/mouse_teleop\n'}
+[7.782316] (mouse_teleop) StdoutLine: {'line': b"writing list of installed files to '/home/nvidia/f1tenth_ws/build/mouse_teleop/install.log'\n"}
+[7.807410] (mapping) CommandEnded: {'returncode': 0}
+[7.835182] (-) TimerEvent: {}
+[7.854582] (mapping) JobEnded: {'identifier': 'mapping', 'rc': 0}
+[7.859952] (vesc_driver) JobStarted: {'identifier': 'vesc_driver'}
+[7.892492] (key_teleop) CommandEnded: {'returncode': 0}
+[7.935889] (-) TimerEvent: {}
+[7.943185] (key_teleop) JobEnded: {'identifier': 'key_teleop', 'rc': 0}
+[7.954584] (vesc_driver) JobProgress: {'identifier': 'vesc_driver', 'progress': 'cmake'}
+[7.959893] (vesc_driver) JobProgress: {'identifier': 'vesc_driver', 'progress': 'build'}
+[7.962683] (vesc_driver) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/nvidia/f1tenth_ws/build/vesc_driver', '--', '-j6', '-l6'], 'cwd': '/home/nvidia/f1tenth_ws/build/vesc_driver', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('LD_LIBRARY_PATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('AMENT_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/vesc_driver'), ('PYTHONPATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs')]), 'shell': False}
+[7.993600] (mouse_teleop) CommandEnded: {'returncode': 0}
+[8.036132] (-) TimerEvent: {}
+[8.054777] (mouse_teleop) JobEnded: {'identifier': 'mouse_teleop', 'rc': 0}
+[8.136445] (-) TimerEvent: {}
+[8.186502] (new_map_saver) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/new_map_saver', 'build', '--build-base', '/home/nvidia/f1tenth_ws/build/new_map_saver/build', 'install', '--record', '/home/nvidia/f1tenth_ws/build/new_map_saver/install.log', '--install-scripts', '$base/lib/new_map_saver', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/nvidia/f1tenth_ws/src/new_map_saver', 'env': {'SUDO_GID': '1000', 'MAIL': '/var/mail/root', 'USER': 'root', 'HOME': '/root', 'COLORTERM': 'truecolor', 'SUDO_UID': '1000', 'LOGNAME': 'root', 'TERM': 'xterm-256color', 'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin', 'DISPLAY': ':1', 'LANG': 'en_US.UTF-8', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'SUDO_COMMAND': '/usr/bin/colcon build', 'SHELL': '/bin/bash', 'SUDO_USER': 'nvidia', 'LC_ALL': 'en_US.UTF-8', 'PWD': '/home/nvidia/f1tenth_ws/build/new_map_saver', 'COLCON': '1', 'PYTHONPATH': '/home/nvidia/f1tenth_ws/build/new_map_saver/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages:'}, 'shell': False}
+[8.236909] (-) TimerEvent: {}
+[8.251331] (vesc_ackermann) StdoutLine: {'line': b'[ 28%] Built target ackermann_to_vesc_node\n'}
+[8.256428] (vesc_ackermann) StdoutLine: {'line': b'[ 57%] Built target vesc_to_odom_node\n'}
+[8.337090] (-) TimerEvent: {}
+[8.342886] (vesc_ackermann) StdoutLine: {'line': b'[100%] Built target vesc_ackermann\n'}
+[8.402682] (vesc_ackermann) CommandEnded: {'returncode': 0}
+[8.437923] (-) TimerEvent: {}
+[8.448900] (vesc_driver) StdoutLine: {'line': b'[ 20%] Built target vesc_driver_node\n'}
+[8.455378] (vesc_driver) StdoutLine: {'line': b'[ 70%] Built target vesc_driver\n'}
+[8.537866] (-) TimerEvent: {}
+[8.567394] (vesc_ackermann) JobProgress: {'identifier': 'vesc_ackermann', 'progress': 'install'}
+[8.569678] (vesc_ackermann) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/nvidia/f1tenth_ws/build/vesc_ackermann'], 'cwd': '/home/nvidia/f1tenth_ws/build/vesc_ackermann', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('LD_LIBRARY_PATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('AMENT_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/vesc_ackermann'), ('PYTHONPATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs')]), 'shell': False}
+[8.607001] (vesc_driver) StdoutLine: {'line': b'[100%] Built target vesc_device_namer\n'}
+[8.625273] (vesc_ackermann) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[8.629021] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/lib/vesc_ackermann/ackermann_to_vesc_node\n'}
+[8.633499] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/lib/vesc_ackermann/vesc_to_odom_node\n'}
+[8.635381] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/include\n'}
+[8.636351] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/include/vesc_ackermann\n'}
+[8.637370] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/include/vesc_ackermann/vesc_to_odom.hpp\n'}
+[8.637970] (-) TimerEvent: {}
+[8.639834] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/include/vesc_ackermann/ackermann_to_vesc.hpp\n'}
+[8.640467] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/environment/library_path.sh\n'}
+[8.640992] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/environment/library_path.dsv\n'}
+[8.642033] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/lib/libvesc_ackermann.so\n'}
+[8.644288] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/launch\n'}
+[8.645253] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/launch/ackermann_to_vesc_node.launch.xml\n'}
+[8.646128] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/launch/vesc_to_odom_node.launch.xml\n'}
+[8.647004] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/ament_index/resource_index/package_run_dependencies/vesc_ackermann\n'}
+[8.647685] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/ament_index/resource_index/parent_prefix_path/vesc_ackermann\n'}
+[8.648664] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/environment/ament_prefix_path.sh\n'}
+[8.649458] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/environment/ament_prefix_path.dsv\n'}
+[8.654054] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/environment/path.sh\n'}
+[8.654664] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/environment/path.dsv\n'}
+[8.655443] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/local_setup.bash\n'}
+[8.656504] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/local_setup.sh\n'}
+[8.657341] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/local_setup.zsh\n'}
+[8.657855] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/local_setup.dsv\n'}
+[8.658473] (vesc_ackermann) StdoutLine: {'line': b'-- Installing: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.dsv\n'}
+[8.658934] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/ament_index/resource_index/packages/vesc_ackermann\n'}
+[8.659679] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/ament_index/resource_index/rclcpp_components/vesc_ackermann\n'}
+[8.660118] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[8.660517] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[8.660895] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[8.661264] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/cmake/vesc_ackermannConfig.cmake\n'}
+[8.661663] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/cmake/vesc_ackermannConfig-version.cmake\n'}
+[8.662019] (vesc_ackermann) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.xml\n'}
+[8.673345] (vesc_ackermann) CommandEnded: {'returncode': 0}
+[8.739061] (-) TimerEvent: {}
+[8.744499] (vesc_driver) CommandEnded: {'returncode': 0}
+[8.839855] (-) TimerEvent: {}
+[8.934095] (vesc_ackermann) JobEnded: {'identifier': 'vesc_ackermann', 'rc': 0}
+[8.939436] (-) TimerEvent: {}
+[8.942450] (vesc_driver) JobProgress: {'identifier': 'vesc_driver', 'progress': 'install'}
+[8.945134] (vesc_driver) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/nvidia/f1tenth_ws/build/vesc_driver'], 'cwd': '/home/nvidia/f1tenth_ws/build/vesc_driver', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('LD_LIBRARY_PATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('AMENT_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/vesc_driver'), ('PYTHONPATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs')]), 'shell': False}
+[8.999899] (vesc_driver) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[9.003021] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/lib/vesc_driver/vesc_driver_node\n'}
+[9.005160] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include\n'}
+[9.006110] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver\n'}
+[9.006810] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/vesc_interface.hpp\n'}
+[9.007625] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/vesc_driver.hpp\n'}
+[9.008087] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/vesc_packet.hpp\n'}
+[9.008511] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/vesc_packet_factory.hpp\n'}
+[9.009602] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/datatypes.hpp\n'}
+[9.010057] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/crc.hpp\n'}
+[9.010487] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/vesc_device_uuid_lookup.hpp\n'}
+[9.010850] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/environment/library_path.sh\n'}
+[9.011231] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/environment/library_path.dsv\n'}
+[9.012475] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/lib/libvesc_driver.so\n'}
+[9.016682] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/lib/vesc_driver/vesc_device_namer\n'}
+[9.018518] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/launch\n'}
+[9.019378] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/launch/vesc_driver_node.launch.py\n'}
+[9.020067] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/params\n'}
+[9.020742] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/params/vesc_config.yaml\n'}
+[9.021436] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/ament_index/resource_index/package_run_dependencies/vesc_driver\n'}
+[9.022245] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/ament_index/resource_index/parent_prefix_path/vesc_driver\n'}
+[9.022984] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/environment/ament_prefix_path.sh\n'}
+[9.023895] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/environment/ament_prefix_path.dsv\n'}
+[9.024527] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/environment/path.sh\n'}
+[9.024975] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/environment/path.dsv\n'}
+[9.025740] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/local_setup.bash\n'}
+[9.026338] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/local_setup.sh\n'}
+[9.026984] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/local_setup.zsh\n'}
+[9.027368] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/local_setup.dsv\n'}
+[9.027877] (vesc_driver) StdoutLine: {'line': b'-- Installing: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.dsv\n'}
+[9.028711] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/ament_index/resource_index/packages/vesc_driver\n'}
+[9.029531] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/ament_index/resource_index/rclcpp_components/vesc_driver\n'}
+[9.030224] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[9.030847] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[9.031429] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[9.032223] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/cmake/vesc_driverConfig.cmake\n'}
+[9.032698] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/cmake/vesc_driverConfig-version.cmake\n'}
+[9.033412] (vesc_driver) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.xml\n'}
+[9.039808] (-) TimerEvent: {}
+[9.044359] (vesc_driver) CommandEnded: {'returncode': 0}
+[9.140578] (-) TimerEvent: {}
+[9.243665] (-) TimerEvent: {}
+[9.308969] (new_map_saver) StdoutLine: {'line': b'running egg_info\n'}
+[9.312043] (new_map_saver) StdoutLine: {'line': b'writing ../../build/new_map_saver/new_map_saver.egg-info/PKG-INFO\n'}
+[9.314139] (new_map_saver) StdoutLine: {'line': b'writing dependency_links to ../../build/new_map_saver/new_map_saver.egg-info/dependency_links.txt\n'}
+[9.315119] (new_map_saver) StdoutLine: {'line': b'writing entry points to ../../build/new_map_saver/new_map_saver.egg-info/entry_points.txt\n'}
+[9.316008] (new_map_saver) StdoutLine: {'line': b'writing requirements to ../../build/new_map_saver/new_map_saver.egg-info/requires.txt\n'}
+[9.316971] (new_map_saver) StdoutLine: {'line': b'writing top-level names to ../../build/new_map_saver/new_map_saver.egg-info/top_level.txt\n'}
+[9.323731] (vesc_driver) JobEnded: {'identifier': 'vesc_driver', 'rc': 0}
+[9.332996] (vesc) JobStarted: {'identifier': 'vesc'}
+[9.345295] (-) TimerEvent: {}
+[9.405541] (vesc) JobProgress: {'identifier': 'vesc', 'progress': 'cmake'}
+[9.411817] (vesc) JobProgress: {'identifier': 'vesc', 'progress': 'build'}
+[9.413528] (vesc) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/nvidia/f1tenth_ws/build/vesc', '--', '-j6', '-l6'], 'cwd': '/home/nvidia/f1tenth_ws/build/vesc', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('LD_LIBRARY_PATH', '/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('AMENT_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/vesc'), ('PYTHONPATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs')]), 'shell': False}
+[9.453417] (-) TimerEvent: {}
+[9.501918] (new_map_saver) StdoutLine: {'line': b"reading manifest file '../../build/new_map_saver/new_map_saver.egg-info/SOURCES.txt'\n"}
+[9.506909] (new_map_saver) StdoutLine: {'line': b"writing manifest file '../../build/new_map_saver/new_map_saver.egg-info/SOURCES.txt'\n"}
+[9.508015] (new_map_saver) StdoutLine: {'line': b'running build\n'}
+[9.508518] (new_map_saver) StdoutLine: {'line': b'running build_py\n'}
+[9.510187] (new_map_saver) StdoutLine: {'line': b'running install\n'}
+[9.514388] (new_map_saver) StdoutLine: {'line': b'running install_lib\n'}
+[9.522298] (new_map_saver) StdoutLine: {'line': b'running install_data\n'}
+[9.524463] (new_map_saver) StdoutLine: {'line': b'running install_egg_info\n'}
+[9.532505] (new_map_saver) StdoutLine: {'line': b"removing '/home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver-0.0.0-py3.8.egg-info' (and everything under it)\n"}
+[9.535136] (new_map_saver) StdoutLine: {'line': b'Copying ../../build/new_map_saver/new_map_saver.egg-info to /home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver-0.0.0-py3.8.egg-info\n'}
+[9.541929] (new_map_saver) StdoutLine: {'line': b'running install_scripts\n'}
+[9.553574] (-) TimerEvent: {}
+[9.626454] (new_map_saver) StdoutLine: {'line': b"writing list of installed files to '/home/nvidia/f1tenth_ws/build/new_map_saver/install.log'\n"}
+[9.650879] (vesc) CommandEnded: {'returncode': 0}
+[9.654715] (-) TimerEvent: {}
+[9.746424] (new_map_saver) CommandEnded: {'returncode': 0}
+[9.755092] (-) TimerEvent: {}
+[9.788017] (new_map_saver) JobEnded: {'identifier': 'new_map_saver', 'rc': 0}
+[9.797970] (joy_teleop) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../../../build/joy_teleop', 'build', '--build-base', '/home/nvidia/f1tenth_ws/build/joy_teleop/build', 'install', '--record', '/home/nvidia/f1tenth_ws/build/joy_teleop/install.log', '--install-scripts', '$base/lib/joy_teleop', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/joy_teleop', 'env': {'SUDO_GID': '1000', 'MAIL': '/var/mail/root', 'USER': 'root', 'LD_LIBRARY_PATH': '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib', 'HOME': '/root', 'COLORTERM': 'truecolor', 'SUDO_UID': '1000', 'LOGNAME': 'root', 'TERM': 'xterm-256color', 'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin', 'DISPLAY': ':1', 'LANG': 'en_US.UTF-8', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'SUDO_COMMAND': '/usr/bin/colcon build', 'AMENT_PREFIX_PATH': '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs', 'SHELL': '/bin/bash', 'SUDO_USER': 'nvidia', 'LC_ALL': 'en_US.UTF-8', 'PWD': '/home/nvidia/f1tenth_ws/build/joy_teleop', 'PYTHONPATH': '/home/nvidia/f1tenth_ws/build/joy_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs'}, 'shell': False}
+[9.818729] (vesc) JobProgress: {'identifier': 'vesc', 'progress': 'install'}
+[9.822379] (vesc) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/nvidia/f1tenth_ws/build/vesc'], 'cwd': '/home/nvidia/f1tenth_ws/build/vesc', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('LD_LIBRARY_PATH', '/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('AMENT_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/vesc'), ('PYTHONPATH', '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs')]), 'shell': False}
+[9.855585] (-) TimerEvent: {}
+[9.875677] (vesc) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[9.877053] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/ament_index/resource_index/package_run_dependencies/vesc\n'}
+[9.878101] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/ament_index/resource_index/parent_prefix_path/vesc\n'}
+[9.878747] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/environment/ament_prefix_path.sh\n'}
+[9.879704] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/environment/ament_prefix_path.dsv\n'}
+[9.880374] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/environment/path.sh\n'}
+[9.881150] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/environment/path.dsv\n'}
+[9.881923] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/local_setup.bash\n'}
+[9.882366] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/local_setup.sh\n'}
+[9.882772] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/local_setup.zsh\n'}
+[9.883177] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/local_setup.dsv\n'}
+[9.883709] (vesc) StdoutLine: {'line': b'-- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.dsv\n'}
+[9.884943] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/ament_index/resource_index/packages/vesc\n'}
+[9.885753] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/cmake/vescConfig.cmake\n'}
+[9.886343] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/cmake/vescConfig-version.cmake\n'}
+[9.886733] (vesc) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.xml\n'}
+[9.895969] (vesc) CommandEnded: {'returncode': 0}
+[9.956323] (-) TimerEvent: {}
+[10.058780] (-) TimerEvent: {}
+[10.075625] (vesc) JobEnded: {'identifier': 'vesc', 'rc': 0}
+[10.159034] (-) TimerEvent: {}
+[10.260048] (-) TimerEvent: {}
+[10.361018] (-) TimerEvent: {}
+[10.461994] (-) TimerEvent: {}
+[10.563017] (-) TimerEvent: {}
+[10.664082] (-) TimerEvent: {}
+[10.765115] (-) TimerEvent: {}
+[10.835015] (joy_teleop) StdoutLine: {'line': b'running egg_info\n'}
+[10.838326] (joy_teleop) StdoutLine: {'line': b'writing ../../../../build/joy_teleop/joy_teleop.egg-info/PKG-INFO\n'}
+[10.840150] (joy_teleop) StdoutLine: {'line': b'writing dependency_links to ../../../../build/joy_teleop/joy_teleop.egg-info/dependency_links.txt\n'}
+[10.841081] (joy_teleop) StdoutLine: {'line': b'writing entry points to ../../../../build/joy_teleop/joy_teleop.egg-info/entry_points.txt\n'}
+[10.841863] (joy_teleop) StdoutLine: {'line': b'writing requirements to ../../../../build/joy_teleop/joy_teleop.egg-info/requires.txt\n'}
+[10.842455] (joy_teleop) StdoutLine: {'line': b'writing top-level names to ../../../../build/joy_teleop/joy_teleop.egg-info/top_level.txt\n'}
+[10.865219] (-) TimerEvent: {}
+[10.965950] (-) TimerEvent: {}
+[11.002047] (joy_teleop) StdoutLine: {'line': b"reading manifest file '../../../../build/joy_teleop/joy_teleop.egg-info/SOURCES.txt'\n"}
+[11.007981] (joy_teleop) StdoutLine: {'line': b"writing manifest file '../../../../build/joy_teleop/joy_teleop.egg-info/SOURCES.txt'\n"}
+[11.008628] (joy_teleop) StdoutLine: {'line': b'running build\n'}
+[11.009117] (joy_teleop) StdoutLine: {'line': b'running build_py\n'}
+[11.011964] (joy_teleop) StdoutLine: {'line': b'running install\n'}
+[11.015359] (joy_teleop) StdoutLine: {'line': b'running install_lib\n'}
+[11.022674] (joy_teleop) StdoutLine: {'line': b'running install_data\n'}
+[11.024494] (joy_teleop) StdoutLine: {'line': b'running install_egg_info\n'}
+[11.031131] (joy_teleop) StdoutLine: {'line': b"removing '/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages/joy_teleop-0.3.0-py3.8.egg-info' (and everything under it)\n"}
+[11.033329] (joy_teleop) StdoutLine: {'line': b'Copying ../../../../build/joy_teleop/joy_teleop.egg-info to /home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages/joy_teleop-0.3.0-py3.8.egg-info\n'}
+[11.039273] (joy_teleop) StdoutLine: {'line': b'running install_scripts\n'}
+[11.066067] (-) TimerEvent: {}
+[11.114421] (joy_teleop) StdoutLine: {'line': b'Installing incrementer_server script to /home/nvidia/f1tenth_ws/install/joy_teleop/lib/joy_teleop\n'}
+[11.115671] (joy_teleop) StdoutLine: {'line': b'Installing joy_teleop script to /home/nvidia/f1tenth_ws/install/joy_teleop/lib/joy_teleop\n'}
+[11.117683] (joy_teleop) StdoutLine: {'line': b"writing list of installed files to '/home/nvidia/f1tenth_ws/build/joy_teleop/install.log'\n"}
+[11.166248] (-) TimerEvent: {}
+[11.211006] (joy_teleop) CommandEnded: {'returncode': 0}
+[11.246973] (joy_teleop) JobEnded: {'identifier': 'joy_teleop', 'rc': 0}
+[11.253392] (teleop_tools) JobStarted: {'identifier': 'teleop_tools'}
+[11.268549] (-) TimerEvent: {}
+[11.273735] (f1tenth_stack) JobStarted: {'identifier': 'f1tenth_stack'}
+[11.323890] (teleop_tools) JobProgress: {'identifier': 'teleop_tools', 'progress': 'cmake'}
+[11.328953] (teleop_tools) JobProgress: {'identifier': 'teleop_tools', 'progress': 'build'}
+[11.331759] (teleop_tools) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/nvidia/f1tenth_ws/build/teleop_tools', '--', '-j6', '-l6'], 'cwd': '/home/nvidia/f1tenth_ws/build/teleop_tools', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('LD_LIBRARY_PATH', '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('AMENT_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/joy_teleop:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs:/home/nvidia/f1tenth_ws/install/key_teleop'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/teleop_tools'), ('PYTHONPATH', '/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs')]), 'shell': False}
+[11.437265] (-) TimerEvent: {}
+[11.539802] (-) TimerEvent: {}
+[11.642561] (-) TimerEvent: {}
+[11.743564] (-) TimerEvent: {}
+[11.844567] (-) TimerEvent: {}
+[11.945560] (-) TimerEvent: {}
+[12.046656] (-) TimerEvent: {}
+[12.147782] (-) TimerEvent: {}
+[12.248837] (-) TimerEvent: {}
+[12.349787] (-) TimerEvent: {}
+[12.450775] (-) TimerEvent: {}
+[12.505555] (teleop_tools) CommandEnded: {'returncode': 0}
+[12.551733] (-) TimerEvent: {}
+[12.612786] (teleop_tools) JobProgress: {'identifier': 'teleop_tools', 'progress': 'install'}
+[12.616337] (teleop_tools) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/nvidia/f1tenth_ws/build/teleop_tools'], 'cwd': '/home/nvidia/f1tenth_ws/build/teleop_tools', 'env': OrderedDict([('SUDO_GID', '1000'), ('MAIL', '/var/mail/root'), ('USER', 'root'), ('LD_LIBRARY_PATH', '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib'), ('HOME', '/root'), ('COLORTERM', 'truecolor'), ('SUDO_UID', '1000'), ('LOGNAME', 'root'), ('TERM', 'xterm-256color'), ('PATH', '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SUDO_COMMAND', '/usr/bin/colcon build'), ('AMENT_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/joy_teleop:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs:/home/nvidia/f1tenth_ws/install/key_teleop'), ('SHELL', '/bin/bash'), ('SUDO_USER', 'nvidia'), ('LC_ALL', 'en_US.UTF-8'), ('PWD', '/home/nvidia/f1tenth_ws/build/teleop_tools'), ('PYTHONPATH', '/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs')]), 'shell': False}
+[12.652225] (-) TimerEvent: {}
+[12.666245] (teleop_tools) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[12.668119] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/ament_index/resource_index/package_run_dependencies/teleop_tools\n'}
+[12.669355] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/ament_index/resource_index/parent_prefix_path/teleop_tools\n'}
+[12.670324] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/environment/ament_prefix_path.sh\n'}
+[12.671316] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/environment/ament_prefix_path.dsv\n'}
+[12.672304] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/environment/path.sh\n'}
+[12.672982] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/environment/path.dsv\n'}
+[12.673396] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/local_setup.bash\n'}
+[12.673786] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/local_setup.sh\n'}
+[12.674205] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/local_setup.zsh\n'}
+[12.674916] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/local_setup.dsv\n'}
+[12.675779] (teleop_tools) StdoutLine: {'line': b'-- Installing: /home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/package.dsv\n'}
+[12.676450] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/ament_index/resource_index/packages/teleop_tools\n'}
+[12.676932] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/cmake/teleop_toolsConfig.cmake\n'}
+[12.677390] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/cmake/teleop_toolsConfig-version.cmake\n'}
+[12.677837] (teleop_tools) StdoutLine: {'line': b'-- Up-to-date: /home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/package.xml\n'}
+[12.686825] (teleop_tools) CommandEnded: {'returncode': 0}
+[12.752962] (-) TimerEvent: {}
+[12.855889] (-) TimerEvent: {}
+[12.859780] (teleop_tools) JobEnded: {'identifier': 'teleop_tools', 'rc': 0}
+[12.956110] (-) TimerEvent: {}
+[13.057114] (-) TimerEvent: {}
+[13.158169] (-) TimerEvent: {}
+[13.259185] (-) TimerEvent: {}
+[13.360319] (-) TimerEvent: {}
+[13.461373] (-) TimerEvent: {}
+[13.562418] (-) TimerEvent: {}
+[13.663406] (-) TimerEvent: {}
+[13.764519] (-) TimerEvent: {}
+[13.865608] (-) TimerEvent: {}
+[13.966619] (-) TimerEvent: {}
+[14.067683] (-) TimerEvent: {}
+[14.168672] (-) TimerEvent: {}
+[14.269733] (-) TimerEvent: {}
+[14.347648] (f1tenth_stack) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../../build/f1tenth_stack', 'build', '--build-base', '/home/nvidia/f1tenth_ws/build/f1tenth_stack/build', 'install', '--record', '/home/nvidia/f1tenth_ws/build/f1tenth_stack/install.log', '--install-scripts', '$base/lib/f1tenth_stack', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/nvidia/f1tenth_ws/src/f1tenth_system/f1tenth_stack', 'env': {'SUDO_GID': '1000', 'MAIL': '/var/mail/root', 'USER': 'root', 'LD_LIBRARY_PATH': '/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib', 'HOME': '/root', 'COLORTERM': 'truecolor', 'SUDO_UID': '1000', 'LOGNAME': 'root', 'TERM': 'xterm-256color', 'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin', 'DISPLAY': ':1', 'LANG': 'en_US.UTF-8', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'SUDO_COMMAND': '/usr/bin/colcon build', 'AMENT_PREFIX_PATH': '/home/nvidia/f1tenth_ws/install/vesc:/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/joy_teleop:/home/nvidia/f1tenth_ws/install/vesc_msgs:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs:/home/nvidia/f1tenth_ws/install/ackermann_mux', 'SHELL': '/bin/bash', 'SUDO_USER': 'nvidia', 'LC_ALL': 'en_US.UTF-8', 'PWD': '/home/nvidia/f1tenth_ws/build/f1tenth_stack', 'PYTHONPATH': '/home/nvidia/f1tenth_ws/build/f1tenth_stack/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/home/nvidia/f1tenth_ws/install/vesc:/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs:/home/nvidia/f1tenth_ws/install/ackermann_mux'}, 'shell': False}
+[14.370436] (-) TimerEvent: {}
+[14.471637] (-) TimerEvent: {}
+[14.572493] (-) TimerEvent: {}
+[14.673258] (-) TimerEvent: {}
+[14.774003] (-) TimerEvent: {}
+[14.874814] (-) TimerEvent: {}
+[14.975608] (-) TimerEvent: {}
+[15.076418] (-) TimerEvent: {}
+[15.177170] (-) TimerEvent: {}
+[15.277960] (-) TimerEvent: {}
+[15.332377] (f1tenth_stack) StdoutLine: {'line': b'running egg_info\n'}
+[15.335710] (f1tenth_stack) StdoutLine: {'line': b'writing ../../../build/f1tenth_stack/f1tenth_stack.egg-info/PKG-INFO\n'}
+[15.337188] (f1tenth_stack) StdoutLine: {'line': b'writing dependency_links to ../../../build/f1tenth_stack/f1tenth_stack.egg-info/dependency_links.txt\n'}
+[15.338134] (f1tenth_stack) StdoutLine: {'line': b'writing entry points to ../../../build/f1tenth_stack/f1tenth_stack.egg-info/entry_points.txt\n'}
+[15.338877] (f1tenth_stack) StdoutLine: {'line': b'writing requirements to ../../../build/f1tenth_stack/f1tenth_stack.egg-info/requires.txt\n'}
+[15.339659] (f1tenth_stack) StdoutLine: {'line': b'writing top-level names to ../../../build/f1tenth_stack/f1tenth_stack.egg-info/top_level.txt\n'}
+[15.378142] (-) TimerEvent: {}
+[15.479185] (-) TimerEvent: {}
+[15.502768] (f1tenth_stack) StdoutLine: {'line': b"reading manifest file '../../../build/f1tenth_stack/f1tenth_stack.egg-info/SOURCES.txt'\n"}
+[15.507838] (f1tenth_stack) StdoutLine: {'line': b"writing manifest file '../../../build/f1tenth_stack/f1tenth_stack.egg-info/SOURCES.txt'\n"}
+[15.508837] (f1tenth_stack) StdoutLine: {'line': b'running build\n'}
+[15.509284] (f1tenth_stack) StdoutLine: {'line': b'running build_py\n'}
+[15.511545] (f1tenth_stack) StdoutLine: {'line': b'running install\n'}
+[15.515328] (f1tenth_stack) StdoutLine: {'line': b'running install_lib\n'}
+[15.523286] (f1tenth_stack) StdoutLine: {'line': b'running install_data\n'}
+[15.526071] (f1tenth_stack) StdoutLine: {'line': b'running install_egg_info\n'}
+[15.533040] (f1tenth_stack) StdoutLine: {'line': b"removing '/home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/python3.8/site-packages/f1tenth_stack-0.0.1-py3.8.egg-info' (and everything under it)\n"}
+[15.535246] (f1tenth_stack) StdoutLine: {'line': b'Copying ../../../build/f1tenth_stack/f1tenth_stack.egg-info to /home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/python3.8/site-packages/f1tenth_stack-0.0.1-py3.8.egg-info\n'}
+[15.541310] (f1tenth_stack) StdoutLine: {'line': b'running install_scripts\n'}
+[15.579389] (-) TimerEvent: {}
+[15.617273] (f1tenth_stack) StdoutLine: {'line': b'Installing tf_publisher script to /home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/f1tenth_stack\n'}
+[15.618604] (f1tenth_stack) StdoutLine: {'line': b'Installing throttle_interpolator script to /home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/f1tenth_stack\n'}
+[15.620631] (f1tenth_stack) StdoutLine: {'line': b"writing list of installed files to '/home/nvidia/f1tenth_ws/build/f1tenth_stack/install.log'\n"}
+[15.679630] (-) TimerEvent: {}
+[15.711964] (f1tenth_stack) CommandEnded: {'returncode': 0}
+[15.751108] (f1tenth_stack) JobEnded: {'identifier': 'f1tenth_stack', 'rc': 0}
+[15.756477] (-) EventReactorShutdown: {}

@@ -1,0 +1,45 @@
+[0.258s] Invoking command in '/home/nvidia/f1tenth_ws/build/vesc_driver': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc_driver -- -j6 -l6
+[1.067s] [ 20%] Built target vesc_driver_node
+[1.136s] [ 70%] Built target vesc_driver
+[1.361s] [100%] Built target vesc_device_namer
+[1.460s] Invoked command in '/home/nvidia/f1tenth_ws/build/vesc_driver' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc_driver -- -j6 -l6
+[2.041s] Invoking command in '/home/nvidia/f1tenth_ws/build/vesc_driver': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc_driver
+[2.128s] -- Install configuration: ""
+[2.132s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/lib/vesc_driver/vesc_driver_node
+[2.137s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include
+[2.139s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver
+[2.143s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/vesc_interface.hpp
+[2.144s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/vesc_driver.hpp
+[2.145s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/vesc_packet.hpp
+[2.145s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/vesc_packet_factory.hpp
+[2.146s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/datatypes.hpp
+[2.153s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/crc.hpp
+[2.161s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/include/vesc_driver/vesc_device_uuid_lookup.hpp
+[2.165s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/environment/library_path.sh
+[2.166s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/environment/library_path.dsv
+[2.170s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/lib/libvesc_driver.so
+[2.170s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/lib/vesc_driver/vesc_device_namer
+[2.171s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/launch
+[2.171s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/launch/vesc_driver_node.launch.py
+[2.172s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/params
+[2.177s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/params/vesc_config.yaml
+[2.188s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/ament_index/resource_index/package_run_dependencies/vesc_driver
+[2.189s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/ament_index/resource_index/parent_prefix_path/vesc_driver
+[2.189s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/environment/ament_prefix_path.sh
+[2.190s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/environment/ament_prefix_path.dsv
+[2.190s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/environment/path.sh
+[2.191s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/environment/path.dsv
+[2.191s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/local_setup.bash
+[2.191s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/local_setup.sh
+[2.192s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/local_setup.zsh
+[2.196s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/local_setup.dsv
+[2.201s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.dsv
+[2.202s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/ament_index/resource_index/packages/vesc_driver
+[2.221s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/ament_index/resource_index/rclcpp_components/vesc_driver
+[2.223s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/cmake/ament_cmake_export_dependencies-extras.cmake
+[2.224s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/cmake/ament_cmake_export_include_directories-extras.cmake
+[2.224s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/cmake/ament_cmake_export_libraries-extras.cmake
+[2.225s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/cmake/vesc_driverConfig.cmake
+[2.226s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/cmake/vesc_driverConfig-version.cmake
+[2.226s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.xml
+[2.227s] Invoked command in '/home/nvidia/f1tenth_ws/build/vesc_driver' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc_driver

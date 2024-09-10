@@ -1,0 +1,24 @@
+[0.099s] Invoking command in '/home/nvidia/f1tenth_ws/build/range_lib': /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/range_lib -- -j6 -l6
+[0.804s] -- Configuring done
+[0.915s] -- Generating done
+[0.932s] -- Build files have been written to: /home/nvidia/f1tenth_ws/build/range_lib
+[1.309s] [ 33%] Built target gflags_static
+[1.344s] [ 66%] Built target gflags_nothreads_static
+[1.834s] [ 75%] [32m[1mLinking CXX executable bin/range_lib[0m
+[2.576s] [100%] Built target range_lib
+[3.546s] Invoked command in '/home/nvidia/f1tenth_ws/build/range_lib' returned '0': /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/range_lib -- -j6 -l6
+[4.031s] Invoking command in '/home/nvidia/f1tenth_ws/build/range_lib': /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/range_lib
+[4.179s] -- Install configuration: "Release"
+[4.182s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/range_lib/lib/libgflags.a
+[4.182s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/range_lib/lib/libgflags_nothreads.a
+[4.183s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/range_lib/include/gflags/gflags.h
+[4.184s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/range_lib/include/gflags/gflags_declare.h
+[4.185s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/range_lib/include/gflags/gflags_completions.h
+[4.185s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/range_lib/include/gflags/gflags_gflags.h
+[4.185s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/range_lib/lib/cmake/gflags/gflags-config.cmake
+[4.186s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/range_lib/lib/cmake/gflags/gflags-config-version.cmake
+[4.186s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/range_lib/lib/cmake/gflags/gflags-targets.cmake
+[4.187s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/range_lib/bin/gflags_completions.sh
+[4.187s] -- Up-to-date: /home/nvidia/f1tenth_ws/install/range_lib/lib/pkgconfig/gflags.pc
+[4.188s] -- Installing: /home/nvidia/.cmake/packages/gflags/2028594a0ebd649dfc76e879e5d10b3f
+[4.258s] Invoked command in '/home/nvidia/f1tenth_ws/build/range_lib' returned '0': /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/range_lib

@@ -1,0 +1,21 @@
+[7.588s] Invoking command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/key_teleop': PYTHONPATH=/home/nvidia/f1tenth_ws/build/key_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/key_teleop build --build-base /home/nvidia/f1tenth_ws/build/key_teleop/build install --record /home/nvidia/f1tenth_ws/build/key_teleop/install.log --install-scripts $base/lib/key_teleop --single-version-externally-managed install_data
+[9.131s] running egg_info
+[9.149s] writing ../../../../build/key_teleop/key_teleop.egg-info/PKG-INFO
+[9.149s] writing dependency_links to ../../../../build/key_teleop/key_teleop.egg-info/dependency_links.txt
+[9.150s] writing entry points to ../../../../build/key_teleop/key_teleop.egg-info/entry_points.txt
+[9.150s] writing requirements to ../../../../build/key_teleop/key_teleop.egg-info/requires.txt
+[9.151s] writing top-level names to ../../../../build/key_teleop/key_teleop.egg-info/top_level.txt
+[9.320s] reading manifest file '../../../../build/key_teleop/key_teleop.egg-info/SOURCES.txt'
+[9.324s] writing manifest file '../../../../build/key_teleop/key_teleop.egg-info/SOURCES.txt'
+[9.325s] running build
+[9.325s] running build_py
+[9.327s] running install
+[9.346s] running install_lib
+[9.380s] running install_data
+[9.381s] running install_egg_info
+[9.392s] removing '/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages/key_teleop-0.3.0-py3.8.egg-info' (and everything under it)
+[9.393s] Copying ../../../../build/key_teleop/key_teleop.egg-info to /home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages/key_teleop-0.3.0-py3.8.egg-info
+[9.396s] running install_scripts
+[9.457s] Installing key_teleop script to /home/nvidia/f1tenth_ws/install/key_teleop/lib/key_teleop
+[9.458s] writing list of installed files to '/home/nvidia/f1tenth_ws/build/key_teleop/install.log'
+[9.610s] Invoked command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/key_teleop' returned '0': PYTHONPATH=/home/nvidia/f1tenth_ws/build/key_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/key_teleop build --build-base /home/nvidia/f1tenth_ws/build/key_teleop/build install --record /home/nvidia/f1tenth_ws/build/key_teleop/install.log --install-scripts $base/lib/key_teleop --single-version-externally-managed install_data

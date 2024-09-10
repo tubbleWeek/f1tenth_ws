@@ -1,0 +1,31 @@
+running egg_info
+creating ../../build/new_map_saver/new_map_saver.egg-info
+writing ../../build/new_map_saver/new_map_saver.egg-info/PKG-INFO
+writing dependency_links to ../../build/new_map_saver/new_map_saver.egg-info/dependency_links.txt
+writing entry points to ../../build/new_map_saver/new_map_saver.egg-info/entry_points.txt
+writing requirements to ../../build/new_map_saver/new_map_saver.egg-info/requires.txt
+writing top-level names to ../../build/new_map_saver/new_map_saver.egg-info/top_level.txt
+writing manifest file '../../build/new_map_saver/new_map_saver.egg-info/SOURCES.txt'
+reading manifest file '../../build/new_map_saver/new_map_saver.egg-info/SOURCES.txt'
+writing manifest file '../../build/new_map_saver/new_map_saver.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/nvidia/f1tenth_ws/build/new_map_saver/build
+creating /home/nvidia/f1tenth_ws/build/new_map_saver/build/lib
+creating /home/nvidia/f1tenth_ws/build/new_map_saver/build/lib/new_map_saver
+copying new_map_saver/__init__.py -> /home/nvidia/f1tenth_ws/build/new_map_saver/build/lib/new_map_saver
+running install
+running install_lib
+creating /home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver
+copying /home/nvidia/f1tenth_ws/build/new_map_saver/build/lib/new_map_saver/__init__.py -> /home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver
+byte-compiling /home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver/__init__.py to __init__.cpython-38.pyc
+running install_data
+creating /home/nvidia/f1tenth_ws/install/new_map_saver/share/ament_index
+creating /home/nvidia/f1tenth_ws/install/new_map_saver/share/ament_index/resource_index
+creating /home/nvidia/f1tenth_ws/install/new_map_saver/share/ament_index/resource_index/packages
+copying resource/new_map_saver -> /home/nvidia/f1tenth_ws/install/new_map_saver/share/ament_index/resource_index/packages
+copying package.xml -> /home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver
+running install_egg_info
+Copying ../../build/new_map_saver/new_map_saver.egg-info to /home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver-0.0.0-py3.8.egg-info
+running install_scripts
+writing list of installed files to '/home/nvidia/f1tenth_ws/build/new_map_saver/install.log'

@@ -1,0 +1,6 @@
+[0.336s] Invoking command in '/f1tenth_ws/build/ackermann_mux': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/f1tenth_ws/install/f1tenth_stack:/f1tenth_ws/install/joy_teleop:/f1tenth_ws/install/particle_filter:/f1tenth_ws/install/new_map_saver:/f1tenth_ws/install/mouse_teleop:/f1tenth_ws/install/key_teleop:/opt/ros/foxy /usr/bin/cmake --build /f1tenth_ws/build/ackermann_mux -- -j6 -l6
+[4.093s] CMake Error: The current CMakeCache.txt directory /f1tenth_ws/build/ackermann_mux/CMakeCache.txt is different than the directory /home/nvidia/f1tenth_ws/build/ackermann_mux where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt
+[4.109s] CMake Error: The source directory "/home/nvidia/f1tenth_ws/src/f1tenth_system/ackermann_mux" does not exist.
+[4.110s] Specify --help for usage, or press the help button on the CMake GUI.
+[4.112s] make: *** [Makefile:326: cmake_check_build_system] Error 1
+[4.134s] Invoked command in '/f1tenth_ws/build/ackermann_mux' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/f1tenth_ws/install/f1tenth_stack:/f1tenth_ws/install/joy_teleop:/f1tenth_ws/install/particle_filter:/f1tenth_ws/install/new_map_saver:/f1tenth_ws/install/mouse_teleop:/f1tenth_ws/install/key_teleop:/opt/ros/foxy /usr/bin/cmake --build /f1tenth_ws/build/ackermann_mux -- -j6 -l6

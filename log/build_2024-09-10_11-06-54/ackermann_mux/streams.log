@@ -1,0 +1,2 @@
+[0.282s] Invoking command in '/home/nvidia/f1tenth_ws/build/ackermann_mux': /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/ackermann_mux -- -j6 -l6
+[4.668s] [100%] Built target ackermann_mux

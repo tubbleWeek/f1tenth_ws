@@ -1,0 +1,4 @@
+[console_scripts]
+local_gradient_node = mapping.local_mapping_gradient:main
+local_mapping_node = mapping.local_mapping:main
+

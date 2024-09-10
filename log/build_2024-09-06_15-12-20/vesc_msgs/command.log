@@ -1,0 +1,2 @@
+Invoking command in '/f1tenth_ws/build/vesc_msgs': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /f1tenth_ws/build/vesc_msgs -- -j6 -l6
+Invoked command in '/f1tenth_ws/build/vesc_msgs' returned '2': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /f1tenth_ws/build/vesc_msgs -- -j6 -l6

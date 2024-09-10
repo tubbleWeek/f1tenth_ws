@@ -1,0 +1,937 @@
+[0.847s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.847s] DEBUG:colcon:Parsed command line arguments: Namespace(allow_overriding=[], ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0xffffb45acc70>>, merge_install=False, metas=['./colcon.meta'], mixin=None, mixin_files=None, mixin_verb=('build',), packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=6, paths=None, symlink_install=False, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0xffffb45acc70>, verb_name='build', verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0xffffb4457760>)
+[1.474s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[1.475s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[1.475s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[1.476s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[1.476s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[1.476s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[1.477s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/nvidia/f1tenth_ws'
+[1.477s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[1.478s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[1.478s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[1.478s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[1.478s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[1.479s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[1.479s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[1.479s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[1.479s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[1.534s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[1.534s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[1.534s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[1.535s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[1.535s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[1.536s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[1.536s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[1.536s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[1.537s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[1.537s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[1.537s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[1.538s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[1.538s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[1.538s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[1.539s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extensions ['ignore', 'ignore_ament_install']
+[1.539s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extension 'ignore'
+[1.540s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extension 'ignore_ament_install'
+[1.540s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extensions ['colcon_pkg']
+[1.540s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extension 'colcon_pkg'
+[1.540s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extensions ['colcon_meta']
+[1.540s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extension 'colcon_meta'
+[1.541s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extensions ['ros']
+[1.541s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extension 'ros'
+[1.541s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extensions ['cmake', 'python']
+[1.541s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extension 'cmake'
+[1.542s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extension 'python'
+[1.542s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extensions ['python_setup_py']
+[1.542s] Level 1:colcon.colcon_core.package_identification:_identify(scripts) by extension 'python_setup_py'
+[1.542s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[1.543s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[1.543s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[1.543s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[1.544s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[1.544s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[1.544s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[1.544s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[1.544s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[1.545s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[1.545s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[1.545s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[1.545s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[1.546s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[1.546s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extensions ['ignore', 'ignore_ament_install']
+[1.546s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extension 'ignore'
+[1.547s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extension 'ignore_ament_install'
+[1.547s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extensions ['colcon_pkg']
+[1.547s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extension 'colcon_pkg'
+[1.547s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extensions ['colcon_meta']
+[1.548s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extension 'colcon_meta'
+[1.548s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extensions ['ros']
+[1.548s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extension 'ros'
+[1.548s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extensions ['cmake', 'python']
+[1.549s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extension 'cmake'
+[1.549s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extension 'python'
+[1.549s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extensions ['python_setup_py']
+[1.549s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system) by extension 'python_setup_py'
+[1.550s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/ackermann_mux) by extensions ['ignore', 'ignore_ament_install']
+[1.550s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/ackermann_mux) by extension 'ignore'
+[1.550s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/ackermann_mux) by extension 'ignore_ament_install'
+[1.551s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/ackermann_mux) by extensions ['colcon_pkg']
+[1.551s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/ackermann_mux) by extension 'colcon_pkg'
+[1.551s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/ackermann_mux) by extensions ['colcon_meta']
+[1.551s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/ackermann_mux) by extension 'colcon_meta'
+[1.552s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/ackermann_mux) by extensions ['ros']
+[1.552s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/ackermann_mux) by extension 'ros'
+[1.565s] DEBUG:colcon.colcon_core.package_identification:Package 'src/f1tenth_system/ackermann_mux' with type 'ros.ament_cmake' and name 'ackermann_mux'
+[1.565s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/f1tenth_stack) by extensions ['ignore', 'ignore_ament_install']
+[1.566s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/f1tenth_stack) by extension 'ignore'
+[1.566s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/f1tenth_stack) by extension 'ignore_ament_install'
+[1.566s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/f1tenth_stack) by extensions ['colcon_pkg']
+[1.566s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/f1tenth_stack) by extension 'colcon_pkg'
+[1.567s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/f1tenth_stack) by extensions ['colcon_meta']
+[1.567s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/f1tenth_stack) by extension 'colcon_meta'
+[1.567s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/f1tenth_stack) by extensions ['ros']
+[1.567s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/f1tenth_stack) by extension 'ros'
+[1.572s] DEBUG:colcon.colcon_core.package_identification:Package 'src/f1tenth_system/f1tenth_stack' with type 'ros.ament_python' and name 'f1tenth_stack'
+[1.573s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extensions ['ignore', 'ignore_ament_install']
+[1.573s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extension 'ignore'
+[1.573s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extension 'ignore_ament_install'
+[1.574s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extensions ['colcon_pkg']
+[1.574s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extension 'colcon_pkg'
+[1.574s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extensions ['colcon_meta']
+[1.574s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extension 'colcon_meta'
+[1.575s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extensions ['ros']
+[1.575s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extension 'ros'
+[1.575s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extensions ['cmake', 'python']
+[1.576s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extension 'cmake'
+[1.576s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extension 'python'
+[1.576s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extensions ['python_setup_py']
+[1.576s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/scripts) by extension 'python_setup_py'
+[1.577s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extensions ['ignore', 'ignore_ament_install']
+[1.577s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extension 'ignore'
+[1.577s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extension 'ignore_ament_install'
+[1.578s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extensions ['colcon_pkg']
+[1.578s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extension 'colcon_pkg'
+[1.578s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extensions ['colcon_meta']
+[1.578s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extension 'colcon_meta'
+[1.579s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extensions ['ros']
+[1.579s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extension 'ros'
+[1.579s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extensions ['cmake', 'python']
+[1.579s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extension 'cmake'
+[1.580s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extension 'python'
+[1.580s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extensions ['python_setup_py']
+[1.580s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools) by extension 'python_setup_py'
+[1.581s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/joy_teleop) by extensions ['ignore', 'ignore_ament_install']
+[1.581s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/joy_teleop) by extension 'ignore'
+[1.581s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/joy_teleop) by extension 'ignore_ament_install'
+[1.582s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/joy_teleop) by extensions ['colcon_pkg']
+[1.582s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/joy_teleop) by extension 'colcon_pkg'
+[1.582s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/joy_teleop) by extensions ['colcon_meta']
+[1.582s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/joy_teleop) by extension 'colcon_meta'
+[1.582s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/joy_teleop) by extensions ['ros']
+[1.583s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/joy_teleop) by extension 'ros'
+[1.586s] DEBUG:colcon.colcon_core.package_identification:Package 'src/f1tenth_system/teleop_tools/joy_teleop' with type 'ros.ament_python' and name 'joy_teleop'
+[1.586s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/key_teleop) by extensions ['ignore', 'ignore_ament_install']
+[1.587s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/key_teleop) by extension 'ignore'
+[1.587s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/key_teleop) by extension 'ignore_ament_install'
+[1.587s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/key_teleop) by extensions ['colcon_pkg']
+[1.588s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/key_teleop) by extension 'colcon_pkg'
+[1.588s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/key_teleop) by extensions ['colcon_meta']
+[1.588s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/key_teleop) by extension 'colcon_meta'
+[1.588s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/key_teleop) by extensions ['ros']
+[1.588s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/key_teleop) by extension 'ros'
+[1.591s] DEBUG:colcon.colcon_core.package_identification:Package 'src/f1tenth_system/teleop_tools/key_teleop' with type 'ros.ament_python' and name 'key_teleop'
+[1.591s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/mouse_teleop) by extensions ['ignore', 'ignore_ament_install']
+[1.592s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/mouse_teleop) by extension 'ignore'
+[1.592s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/mouse_teleop) by extension 'ignore_ament_install'
+[1.592s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/mouse_teleop) by extensions ['colcon_pkg']
+[1.593s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/mouse_teleop) by extension 'colcon_pkg'
+[1.593s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/mouse_teleop) by extensions ['colcon_meta']
+[1.593s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/mouse_teleop) by extension 'colcon_meta'
+[1.593s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/mouse_teleop) by extensions ['ros']
+[1.593s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/mouse_teleop) by extension 'ros'
+[1.597s] DEBUG:colcon.colcon_core.package_identification:Package 'src/f1tenth_system/teleop_tools/mouse_teleop' with type 'ros.ament_python' and name 'mouse_teleop'
+[1.597s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools) by extensions ['ignore', 'ignore_ament_install']
+[1.598s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools) by extension 'ignore'
+[1.598s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools) by extension 'ignore_ament_install'
+[1.598s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools) by extensions ['colcon_pkg']
+[1.598s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools) by extension 'colcon_pkg'
+[1.599s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools) by extensions ['colcon_meta']
+[1.599s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools) by extension 'colcon_meta'
+[1.599s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools) by extensions ['ros']
+[1.599s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools) by extension 'ros'
+[1.601s] DEBUG:colcon.colcon_core.package_identification:Package 'src/f1tenth_system/teleop_tools/teleop_tools' with type 'ros.ament_cmake' and name 'teleop_tools'
+[1.602s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools_msgs) by extensions ['ignore', 'ignore_ament_install']
+[1.602s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools_msgs) by extension 'ignore'
+[1.603s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools_msgs) by extension 'ignore_ament_install'
+[1.603s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools_msgs) by extensions ['colcon_pkg']
+[1.603s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools_msgs) by extension 'colcon_pkg'
+[1.603s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools_msgs) by extensions ['colcon_meta']
+[1.604s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools_msgs) by extension 'colcon_meta'
+[1.604s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools_msgs) by extensions ['ros']
+[1.604s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/teleop_tools/teleop_tools_msgs) by extension 'ros'
+[1.606s] DEBUG:colcon.colcon_core.package_identification:Package 'src/f1tenth_system/teleop_tools/teleop_tools_msgs' with type 'ros.ament_cmake' and name 'teleop_tools_msgs'
+[1.607s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extensions ['ignore', 'ignore_ament_install']
+[1.608s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extension 'ignore'
+[1.608s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extension 'ignore_ament_install'
+[1.608s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extensions ['colcon_pkg']
+[1.609s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extension 'colcon_pkg'
+[1.609s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extensions ['colcon_meta']
+[1.609s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extension 'colcon_meta'
+[1.609s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extensions ['ros']
+[1.610s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extension 'ros'
+[1.610s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extensions ['cmake', 'python']
+[1.610s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extension 'cmake'
+[1.611s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extension 'python'
+[1.611s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extensions ['python_setup_py']
+[1.611s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc) by extension 'python_setup_py'
+[1.612s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc) by extensions ['ignore', 'ignore_ament_install']
+[1.612s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc) by extension 'ignore'
+[1.612s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc) by extension 'ignore_ament_install'
+[1.613s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc) by extensions ['colcon_pkg']
+[1.613s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc) by extension 'colcon_pkg'
+[1.613s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc) by extensions ['colcon_meta']
+[1.613s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc) by extension 'colcon_meta'
+[1.614s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc) by extensions ['ros']
+[1.614s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc) by extension 'ros'
+[1.617s] DEBUG:colcon.colcon_core.package_identification:Package 'src/f1tenth_system/vesc/vesc' with type 'ros.ament_cmake' and name 'vesc'
+[1.617s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_ackermann) by extensions ['ignore', 'ignore_ament_install']
+[1.618s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_ackermann) by extension 'ignore'
+[1.618s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_ackermann) by extension 'ignore_ament_install'
+[1.618s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_ackermann) by extensions ['colcon_pkg']
+[1.618s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_ackermann) by extension 'colcon_pkg'
+[1.619s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_ackermann) by extensions ['colcon_meta']
+[1.619s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_ackermann) by extension 'colcon_meta'
+[1.619s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_ackermann) by extensions ['ros']
+[1.619s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_ackermann) by extension 'ros'
+[1.625s] DEBUG:colcon.colcon_core.package_identification:Package 'src/f1tenth_system/vesc/vesc_ackermann' with type 'ros.ament_cmake' and name 'vesc_ackermann'
+[1.626s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_driver) by extensions ['ignore', 'ignore_ament_install']
+[1.626s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_driver) by extension 'ignore'
+[1.626s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_driver) by extension 'ignore_ament_install'
+[1.626s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_driver) by extensions ['colcon_pkg']
+[1.627s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_driver) by extension 'colcon_pkg'
+[1.627s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_driver) by extensions ['colcon_meta']
+[1.627s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_driver) by extension 'colcon_meta'
+[1.627s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_driver) by extensions ['ros']
+[1.628s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_driver) by extension 'ros'
+[1.633s] DEBUG:colcon.colcon_core.package_identification:Package 'src/f1tenth_system/vesc/vesc_driver' with type 'ros.ament_cmake' and name 'vesc_driver'
+[1.634s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_msgs) by extensions ['ignore', 'ignore_ament_install']
+[1.634s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_msgs) by extension 'ignore'
+[1.634s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_msgs) by extension 'ignore_ament_install'
+[1.635s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_msgs) by extensions ['colcon_pkg']
+[1.635s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_msgs) by extension 'colcon_pkg'
+[1.635s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_msgs) by extensions ['colcon_meta']
+[1.635s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_msgs) by extension 'colcon_meta'
+[1.636s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_msgs) by extensions ['ros']
+[1.636s] Level 1:colcon.colcon_core.package_identification:_identify(src/f1tenth_system/vesc/vesc_msgs) by extension 'ros'
+[1.639s] DEBUG:colcon.colcon_core.package_identification:Package 'src/f1tenth_system/vesc/vesc_msgs' with type 'ros.ament_cmake' and name 'vesc_msgs'
+[1.640s] Level 1:colcon.colcon_core.package_identification:_identify(src/mapping) by extensions ['ignore', 'ignore_ament_install']
+[1.640s] Level 1:colcon.colcon_core.package_identification:_identify(src/mapping) by extension 'ignore'
+[1.640s] Level 1:colcon.colcon_core.package_identification:_identify(src/mapping) by extension 'ignore_ament_install'
+[1.641s] Level 1:colcon.colcon_core.package_identification:_identify(src/mapping) by extensions ['colcon_pkg']
+[1.641s] Level 1:colcon.colcon_core.package_identification:_identify(src/mapping) by extension 'colcon_pkg'
+[1.641s] Level 1:colcon.colcon_core.package_identification:_identify(src/mapping) by extensions ['colcon_meta']
+[1.641s] Level 1:colcon.colcon_core.package_identification:_identify(src/mapping) by extension 'colcon_meta'
+[1.641s] Level 1:colcon.colcon_core.package_identification:_identify(src/mapping) by extensions ['ros']
+[1.642s] Level 1:colcon.colcon_core.package_identification:_identify(src/mapping) by extension 'ros'
+[1.644s] DEBUG:colcon.colcon_core.package_identification:Package 'src/mapping' with type 'ros.ament_python' and name 'mapping'
+[1.644s] Level 1:colcon.colcon_core.package_identification:_identify(src/new_map_saver) by extensions ['ignore', 'ignore_ament_install']
+[1.644s] Level 1:colcon.colcon_core.package_identification:_identify(src/new_map_saver) by extension 'ignore'
+[1.645s] Level 1:colcon.colcon_core.package_identification:_identify(src/new_map_saver) by extension 'ignore_ament_install'
+[1.645s] Level 1:colcon.colcon_core.package_identification:_identify(src/new_map_saver) by extensions ['colcon_pkg']
+[1.645s] Level 1:colcon.colcon_core.package_identification:_identify(src/new_map_saver) by extension 'colcon_pkg'
+[1.645s] Level 1:colcon.colcon_core.package_identification:_identify(src/new_map_saver) by extensions ['colcon_meta']
+[1.646s] Level 1:colcon.colcon_core.package_identification:_identify(src/new_map_saver) by extension 'colcon_meta'
+[1.646s] Level 1:colcon.colcon_core.package_identification:_identify(src/new_map_saver) by extensions ['ros']
+[1.646s] Level 1:colcon.colcon_core.package_identification:_identify(src/new_map_saver) by extension 'ros'
+[1.648s] DEBUG:colcon.colcon_core.package_identification:Package 'src/new_map_saver' with type 'ros.ament_python' and name 'new_map_saver'
+[1.648s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[1.649s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[1.649s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[1.649s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[1.649s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[1.737s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[1.737s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[1.741s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[1.746s] Level 5:colcon.colcon_core.verb:set package 'ackermann_mux' build argument 'cmake_args' from command line to 'None'
+[1.746s] Level 5:colcon.colcon_core.verb:set package 'ackermann_mux' build argument 'cmake_target' from command line to 'None'
+[1.746s] Level 5:colcon.colcon_core.verb:set package 'ackermann_mux' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.746s] Level 5:colcon.colcon_core.verb:set package 'ackermann_mux' build argument 'cmake_clean_cache' from command line to 'False'
+[1.746s] Level 5:colcon.colcon_core.verb:set package 'ackermann_mux' build argument 'cmake_clean_first' from command line to 'False'
+[1.747s] Level 5:colcon.colcon_core.verb:set package 'ackermann_mux' build argument 'cmake_force_configure' from command line to 'False'
+[1.747s] Level 5:colcon.colcon_core.verb:set package 'ackermann_mux' build argument 'ament_cmake_args' from command line to 'None'
+[1.747s] Level 5:colcon.colcon_core.verb:set package 'ackermann_mux' build argument 'catkin_cmake_args' from command line to 'None'
+[1.747s] Level 5:colcon.colcon_core.verb:set package 'ackermann_mux' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.747s] DEBUG:colcon.colcon_core.verb:Building package 'ackermann_mux' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/build/ackermann_mux', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/install/ackermann_mux', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/f1tenth_system/ackermann_mux', 'symlink_install': False, 'test_result_base': None}
+[1.749s] Level 5:colcon.colcon_core.verb:set package 'key_teleop' build argument 'cmake_args' from command line to 'None'
+[1.749s] Level 5:colcon.colcon_core.verb:set package 'key_teleop' build argument 'cmake_target' from command line to 'None'
+[1.749s] Level 5:colcon.colcon_core.verb:set package 'key_teleop' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.749s] Level 5:colcon.colcon_core.verb:set package 'key_teleop' build argument 'cmake_clean_cache' from command line to 'False'
+[1.750s] Level 5:colcon.colcon_core.verb:set package 'key_teleop' build argument 'cmake_clean_first' from command line to 'False'
+[1.750s] Level 5:colcon.colcon_core.verb:set package 'key_teleop' build argument 'cmake_force_configure' from command line to 'False'
+[1.750s] Level 5:colcon.colcon_core.verb:set package 'key_teleop' build argument 'ament_cmake_args' from command line to 'None'
+[1.750s] Level 5:colcon.colcon_core.verb:set package 'key_teleop' build argument 'catkin_cmake_args' from command line to 'None'
+[1.750s] Level 5:colcon.colcon_core.verb:set package 'key_teleop' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.750s] DEBUG:colcon.colcon_core.verb:Building package 'key_teleop' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/build/key_teleop', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/install/key_teleop', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/key_teleop', 'symlink_install': False, 'test_result_base': None}
+[1.752s] Level 5:colcon.colcon_core.verb:set package 'mapping' build argument 'cmake_args' from command line to 'None'
+[1.753s] Level 5:colcon.colcon_core.verb:set package 'mapping' build argument 'cmake_target' from command line to 'None'
+[1.753s] Level 5:colcon.colcon_core.verb:set package 'mapping' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.753s] Level 5:colcon.colcon_core.verb:set package 'mapping' build argument 'cmake_clean_cache' from command line to 'False'
+[1.753s] Level 5:colcon.colcon_core.verb:set package 'mapping' build argument 'cmake_clean_first' from command line to 'False'
+[1.753s] Level 5:colcon.colcon_core.verb:set package 'mapping' build argument 'cmake_force_configure' from command line to 'False'
+[1.753s] Level 5:colcon.colcon_core.verb:set package 'mapping' build argument 'ament_cmake_args' from command line to 'None'
+[1.753s] Level 5:colcon.colcon_core.verb:set package 'mapping' build argument 'catkin_cmake_args' from command line to 'None'
+[1.754s] Level 5:colcon.colcon_core.verb:set package 'mapping' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.754s] DEBUG:colcon.colcon_core.verb:Building package 'mapping' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/build/mapping', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/install/mapping', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/mapping', 'symlink_install': False, 'test_result_base': None}
+[1.756s] Level 5:colcon.colcon_core.verb:set package 'mouse_teleop' build argument 'cmake_args' from command line to 'None'
+[1.756s] Level 5:colcon.colcon_core.verb:set package 'mouse_teleop' build argument 'cmake_target' from command line to 'None'
+[1.756s] Level 5:colcon.colcon_core.verb:set package 'mouse_teleop' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.756s] Level 5:colcon.colcon_core.verb:set package 'mouse_teleop' build argument 'cmake_clean_cache' from command line to 'False'
+[1.756s] Level 5:colcon.colcon_core.verb:set package 'mouse_teleop' build argument 'cmake_clean_first' from command line to 'False'
+[1.756s] Level 5:colcon.colcon_core.verb:set package 'mouse_teleop' build argument 'cmake_force_configure' from command line to 'False'
+[1.757s] Level 5:colcon.colcon_core.verb:set package 'mouse_teleop' build argument 'ament_cmake_args' from command line to 'None'
+[1.757s] Level 5:colcon.colcon_core.verb:set package 'mouse_teleop' build argument 'catkin_cmake_args' from command line to 'None'
+[1.757s] Level 5:colcon.colcon_core.verb:set package 'mouse_teleop' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.757s] DEBUG:colcon.colcon_core.verb:Building package 'mouse_teleop' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/build/mouse_teleop', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/install/mouse_teleop', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/mouse_teleop', 'symlink_install': False, 'test_result_base': None}
+[1.759s] Level 5:colcon.colcon_core.verb:set package 'new_map_saver' build argument 'cmake_args' from command line to 'None'
+[1.759s] Level 5:colcon.colcon_core.verb:set package 'new_map_saver' build argument 'cmake_target' from command line to 'None'
+[1.759s] Level 5:colcon.colcon_core.verb:set package 'new_map_saver' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.759s] Level 5:colcon.colcon_core.verb:set package 'new_map_saver' build argument 'cmake_clean_cache' from command line to 'False'
+[1.759s] Level 5:colcon.colcon_core.verb:set package 'new_map_saver' build argument 'cmake_clean_first' from command line to 'False'
+[1.759s] Level 5:colcon.colcon_core.verb:set package 'new_map_saver' build argument 'cmake_force_configure' from command line to 'False'
+[1.760s] Level 5:colcon.colcon_core.verb:set package 'new_map_saver' build argument 'ament_cmake_args' from command line to 'None'
+[1.760s] Level 5:colcon.colcon_core.verb:set package 'new_map_saver' build argument 'catkin_cmake_args' from command line to 'None'
+[1.760s] Level 5:colcon.colcon_core.verb:set package 'new_map_saver' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.760s] DEBUG:colcon.colcon_core.verb:Building package 'new_map_saver' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/build/new_map_saver', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/install/new_map_saver', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/new_map_saver', 'symlink_install': False, 'test_result_base': None}
+[1.762s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools_msgs' build argument 'cmake_args' from command line to 'None'
+[1.762s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools_msgs' build argument 'cmake_target' from command line to 'None'
+[1.762s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools_msgs' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.762s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools_msgs' build argument 'cmake_clean_cache' from command line to 'False'
+[1.762s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools_msgs' build argument 'cmake_clean_first' from command line to 'False'
+[1.762s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools_msgs' build argument 'cmake_force_configure' from command line to 'False'
+[1.762s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools_msgs' build argument 'ament_cmake_args' from command line to 'None'
+[1.763s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools_msgs' build argument 'catkin_cmake_args' from command line to 'None'
+[1.763s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools_msgs' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.763s] DEBUG:colcon.colcon_core.verb:Building package 'teleop_tools_msgs' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/teleop_tools_msgs', 'symlink_install': False, 'test_result_base': None}
+[1.765s] Level 5:colcon.colcon_core.verb:set package 'vesc_msgs' build argument 'cmake_args' from command line to 'None'
+[1.765s] Level 5:colcon.colcon_core.verb:set package 'vesc_msgs' build argument 'cmake_target' from command line to 'None'
+[1.765s] Level 5:colcon.colcon_core.verb:set package 'vesc_msgs' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.765s] Level 5:colcon.colcon_core.verb:set package 'vesc_msgs' build argument 'cmake_clean_cache' from command line to 'False'
+[1.765s] Level 5:colcon.colcon_core.verb:set package 'vesc_msgs' build argument 'cmake_clean_first' from command line to 'False'
+[1.765s] Level 5:colcon.colcon_core.verb:set package 'vesc_msgs' build argument 'cmake_force_configure' from command line to 'False'
+[1.766s] Level 5:colcon.colcon_core.verb:set package 'vesc_msgs' build argument 'ament_cmake_args' from command line to 'None'
+[1.766s] Level 5:colcon.colcon_core.verb:set package 'vesc_msgs' build argument 'catkin_cmake_args' from command line to 'None'
+[1.766s] Level 5:colcon.colcon_core.verb:set package 'vesc_msgs' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.766s] DEBUG:colcon.colcon_core.verb:Building package 'vesc_msgs' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/build/vesc_msgs', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/install/vesc_msgs', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc_msgs', 'symlink_install': False, 'test_result_base': None}
+[1.768s] Level 5:colcon.colcon_core.verb:set package 'joy_teleop' build argument 'cmake_args' from command line to 'None'
+[1.768s] Level 5:colcon.colcon_core.verb:set package 'joy_teleop' build argument 'cmake_target' from command line to 'None'
+[1.768s] Level 5:colcon.colcon_core.verb:set package 'joy_teleop' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.768s] Level 5:colcon.colcon_core.verb:set package 'joy_teleop' build argument 'cmake_clean_cache' from command line to 'False'
+[1.768s] Level 5:colcon.colcon_core.verb:set package 'joy_teleop' build argument 'cmake_clean_first' from command line to 'False'
+[1.768s] Level 5:colcon.colcon_core.verb:set package 'joy_teleop' build argument 'cmake_force_configure' from command line to 'False'
+[1.769s] Level 5:colcon.colcon_core.verb:set package 'joy_teleop' build argument 'ament_cmake_args' from command line to 'None'
+[1.769s] Level 5:colcon.colcon_core.verb:set package 'joy_teleop' build argument 'catkin_cmake_args' from command line to 'None'
+[1.769s] Level 5:colcon.colcon_core.verb:set package 'joy_teleop' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.769s] DEBUG:colcon.colcon_core.verb:Building package 'joy_teleop' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/build/joy_teleop', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/install/joy_teleop', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/joy_teleop', 'symlink_install': False, 'test_result_base': None}
+[1.771s] Level 5:colcon.colcon_core.verb:set package 'vesc_ackermann' build argument 'cmake_args' from command line to 'None'
+[1.771s] Level 5:colcon.colcon_core.verb:set package 'vesc_ackermann' build argument 'cmake_target' from command line to 'None'
+[1.771s] Level 5:colcon.colcon_core.verb:set package 'vesc_ackermann' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.771s] Level 5:colcon.colcon_core.verb:set package 'vesc_ackermann' build argument 'cmake_clean_cache' from command line to 'False'
+[1.771s] Level 5:colcon.colcon_core.verb:set package 'vesc_ackermann' build argument 'cmake_clean_first' from command line to 'False'
+[1.771s] Level 5:colcon.colcon_core.verb:set package 'vesc_ackermann' build argument 'cmake_force_configure' from command line to 'False'
+[1.772s] Level 5:colcon.colcon_core.verb:set package 'vesc_ackermann' build argument 'ament_cmake_args' from command line to 'None'
+[1.772s] Level 5:colcon.colcon_core.verb:set package 'vesc_ackermann' build argument 'catkin_cmake_args' from command line to 'None'
+[1.772s] Level 5:colcon.colcon_core.verb:set package 'vesc_ackermann' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.772s] DEBUG:colcon.colcon_core.verb:Building package 'vesc_ackermann' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/build/vesc_ackermann', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/install/vesc_ackermann', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc_ackermann', 'symlink_install': False, 'test_result_base': None}
+[1.774s] Level 5:colcon.colcon_core.verb:set package 'vesc_driver' build argument 'cmake_args' from command line to 'None'
+[1.774s] Level 5:colcon.colcon_core.verb:set package 'vesc_driver' build argument 'cmake_target' from command line to 'None'
+[1.774s] Level 5:colcon.colcon_core.verb:set package 'vesc_driver' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.774s] Level 5:colcon.colcon_core.verb:set package 'vesc_driver' build argument 'cmake_clean_cache' from command line to 'False'
+[1.774s] Level 5:colcon.colcon_core.verb:set package 'vesc_driver' build argument 'cmake_clean_first' from command line to 'False'
+[1.774s] Level 5:colcon.colcon_core.verb:set package 'vesc_driver' build argument 'cmake_force_configure' from command line to 'False'
+[1.775s] Level 5:colcon.colcon_core.verb:set package 'vesc_driver' build argument 'ament_cmake_args' from command line to 'None'
+[1.775s] Level 5:colcon.colcon_core.verb:set package 'vesc_driver' build argument 'catkin_cmake_args' from command line to 'None'
+[1.775s] Level 5:colcon.colcon_core.verb:set package 'vesc_driver' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.775s] DEBUG:colcon.colcon_core.verb:Building package 'vesc_driver' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/build/vesc_driver', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/install/vesc_driver', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc_driver', 'symlink_install': False, 'test_result_base': None}
+[1.777s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools' build argument 'cmake_args' from command line to 'None'
+[1.777s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools' build argument 'cmake_target' from command line to 'None'
+[1.777s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.777s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools' build argument 'cmake_clean_cache' from command line to 'False'
+[1.777s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools' build argument 'cmake_clean_first' from command line to 'False'
+[1.778s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools' build argument 'cmake_force_configure' from command line to 'False'
+[1.778s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools' build argument 'ament_cmake_args' from command line to 'None'
+[1.778s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools' build argument 'catkin_cmake_args' from command line to 'None'
+[1.778s] Level 5:colcon.colcon_core.verb:set package 'teleop_tools' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.778s] DEBUG:colcon.colcon_core.verb:Building package 'teleop_tools' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/build/teleop_tools', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/install/teleop_tools', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/teleop_tools', 'symlink_install': False, 'test_result_base': None}
+[1.780s] Level 5:colcon.colcon_core.verb:set package 'vesc' build argument 'cmake_args' from command line to 'None'
+[1.780s] Level 5:colcon.colcon_core.verb:set package 'vesc' build argument 'cmake_target' from command line to 'None'
+[1.780s] Level 5:colcon.colcon_core.verb:set package 'vesc' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.780s] Level 5:colcon.colcon_core.verb:set package 'vesc' build argument 'cmake_clean_cache' from command line to 'False'
+[1.781s] Level 5:colcon.colcon_core.verb:set package 'vesc' build argument 'cmake_clean_first' from command line to 'False'
+[1.781s] Level 5:colcon.colcon_core.verb:set package 'vesc' build argument 'cmake_force_configure' from command line to 'False'
+[1.781s] Level 5:colcon.colcon_core.verb:set package 'vesc' build argument 'ament_cmake_args' from command line to 'None'
+[1.781s] Level 5:colcon.colcon_core.verb:set package 'vesc' build argument 'catkin_cmake_args' from command line to 'None'
+[1.781s] Level 5:colcon.colcon_core.verb:set package 'vesc' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.781s] DEBUG:colcon.colcon_core.verb:Building package 'vesc' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/build/vesc', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/install/vesc', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc', 'symlink_install': False, 'test_result_base': None}
+[1.783s] Level 5:colcon.colcon_core.verb:set package 'f1tenth_stack' build argument 'cmake_args' from command line to 'None'
+[1.783s] Level 5:colcon.colcon_core.verb:set package 'f1tenth_stack' build argument 'cmake_target' from command line to 'None'
+[1.783s] Level 5:colcon.colcon_core.verb:set package 'f1tenth_stack' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[1.783s] Level 5:colcon.colcon_core.verb:set package 'f1tenth_stack' build argument 'cmake_clean_cache' from command line to 'False'
+[1.784s] Level 5:colcon.colcon_core.verb:set package 'f1tenth_stack' build argument 'cmake_clean_first' from command line to 'False'
+[1.784s] Level 5:colcon.colcon_core.verb:set package 'f1tenth_stack' build argument 'cmake_force_configure' from command line to 'False'
+[1.784s] Level 5:colcon.colcon_core.verb:set package 'f1tenth_stack' build argument 'ament_cmake_args' from command line to 'None'
+[1.784s] Level 5:colcon.colcon_core.verb:set package 'f1tenth_stack' build argument 'catkin_cmake_args' from command line to 'None'
+[1.784s] Level 5:colcon.colcon_core.verb:set package 'f1tenth_stack' build argument 'catkin_skip_building_tests' from command line to 'False'
+[1.784s] DEBUG:colcon.colcon_core.verb:Building package 'f1tenth_stack' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/build/f1tenth_stack', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/install/f1tenth_stack', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/f1tenth_system/f1tenth_stack', 'symlink_install': False, 'test_result_base': None}
+[1.785s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[1.790s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[1.792s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc_msgs' with build type 'ament_cmake'
+[1.793s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc_msgs'
+[1.803s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[1.805s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.805s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.820s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/teleop_tools_msgs' with build type 'ament_cmake'
+[1.824s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/teleop_tools_msgs'
+[1.828s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.829s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.847s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/ackermann_mux' with build type 'ament_cmake'
+[1.850s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/ackermann_mux'
+[1.854s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.855s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.874s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/key_teleop' with build type 'ament_python'
+[1.877s] Level 1:colcon.colcon_core.shell:create_environment_hook('key_teleop', 'ament_prefix_path')
+[1.881s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/key_teleop/share/key_teleop/hook/ament_prefix_path.ps1'
+[1.889s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/key_teleop/share/key_teleop/hook/ament_prefix_path.dsv'
+[1.892s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/key_teleop/share/key_teleop/hook/ament_prefix_path.sh'
+[1.896s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.897s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.911s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/mapping' with build type 'ament_python'
+[1.917s] Level 1:colcon.colcon_core.shell:create_environment_hook('mapping', 'ament_prefix_path')
+[1.921s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/mapping/share/mapping/hook/ament_prefix_path.ps1'
+[1.926s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/mapping/share/mapping/hook/ament_prefix_path.dsv'
+[1.928s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/mapping/share/mapping/hook/ament_prefix_path.sh'
+[1.931s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.931s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.946s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/mouse_teleop' with build type 'ament_python'
+[1.950s] Level 1:colcon.colcon_core.shell:create_environment_hook('mouse_teleop', 'ament_prefix_path')
+[1.954s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/hook/ament_prefix_path.ps1'
+[1.959s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/hook/ament_prefix_path.dsv'
+[1.961s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/hook/ament_prefix_path.sh'
+[1.964s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.965s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.030s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/vesc_msgs': /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc_msgs -- -j6 -l6
+[2.059s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs': /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/teleop_tools_msgs -- -j6 -l6
+[2.092s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/ackermann_mux': /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/ackermann_mux -- -j6 -l6
+[3.376s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/key_teleop'
+[3.381s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[3.381s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[4.421s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/nvidia/f1tenth_ws/src/mapping'
+[4.426s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[4.426s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[5.448s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/mouse_teleop'
+[5.452s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[5.453s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[5.616s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/vesc_msgs' returned '0': /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc_msgs -- -j6 -l6
+[5.619s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs' returned '0': /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/teleop_tools_msgs -- -j6 -l6
+[5.623s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/ackermann_mux' returned '0': /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/ackermann_mux -- -j6 -l6
+[5.770s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/ackermann_mux': /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/ackermann_mux
+[5.820s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs': /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/teleop_tools_msgs
+[5.875s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ackermann_mux)
+[5.924s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/ackermann_mux' returned '0': /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/ackermann_mux
+[5.928s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux' for CMake module files
+[5.940s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux' for CMake config files
+[5.943s] Level 1:colcon.colcon_core.shell:create_environment_hook('ackermann_mux', 'cmake_prefix_path')
+[5.945s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/hook/cmake_prefix_path.ps1'
+[5.964s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/hook/cmake_prefix_path.dsv'
+[5.966s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/hook/cmake_prefix_path.sh'
+[5.972s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux/lib'
+[5.973s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux/bin'
+[5.973s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux/lib/pkgconfig/ackermann_mux.pc'
+[5.975s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux/lib/python3.8/site-packages'
+[5.976s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux/bin'
+[5.977s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/package.ps1'
+[5.989s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/package.dsv'
+[6.002s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/package.sh'
+[6.007s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/package.bash'
+[6.011s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/package.zsh'
+[6.019s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/ackermann_mux/share/colcon-core/packages/ackermann_mux)
+[6.057s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/vesc_msgs': /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc_msgs
+[6.175s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(teleop_tools_msgs)
+[6.183s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs' for CMake module files
+[6.193s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs' for CMake config files
+[6.216s] Level 1:colcon.colcon_core.shell:create_environment_hook('teleop_tools_msgs', 'cmake_prefix_path')
+[6.218s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/cmake_prefix_path.ps1'
+[6.226s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs' returned '0': /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/teleop_tools_msgs
+[6.236s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/cmake_prefix_path.dsv'
+[6.238s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/cmake_prefix_path.sh'
+[6.242s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib'
+[6.243s] Level 1:colcon.colcon_core.shell:create_environment_hook('teleop_tools_msgs', 'ld_library_path_lib')
+[6.244s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/ld_library_path_lib.ps1'
+[6.246s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/ld_library_path_lib.dsv'
+[6.252s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/ld_library_path_lib.sh'
+[6.259s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/bin'
+[6.260s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/pkgconfig/teleop_tools_msgs.pc'
+[6.264s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages'
+[6.265s] Level 1:colcon.colcon_core.shell:create_environment_hook('teleop_tools_msgs', 'pythonpath')
+[6.266s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/pythonpath.ps1'
+[6.272s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/pythonpath.dsv'
+[6.281s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/pythonpath.sh'
+[6.288s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/bin'
+[6.291s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/package.ps1'
+[6.304s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/package.dsv'
+[6.316s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/package.sh'
+[6.323s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/package.bash'
+[6.325s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/package.zsh'
+[6.328s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/colcon-core/packages/teleop_tools_msgs)
+[6.353s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ackermann_mux)
+[6.356s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux' for CMake module files
+[6.360s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux' for CMake config files
+[6.363s] Level 1:colcon.colcon_core.shell:create_environment_hook('ackermann_mux', 'cmake_prefix_path')
+[6.366s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/hook/cmake_prefix_path.ps1'
+[6.373s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/hook/cmake_prefix_path.dsv'
+[6.375s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/hook/cmake_prefix_path.sh'
+[6.379s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux/lib'
+[6.380s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux/bin'
+[6.380s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux/lib/pkgconfig/ackermann_mux.pc'
+[6.384s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux/lib/python3.8/site-packages'
+[6.385s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/ackermann_mux/bin'
+[6.388s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/package.ps1'
+[6.391s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/package.dsv'
+[6.394s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/package.sh'
+[6.396s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/package.bash'
+[6.401s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/ackermann_mux/share/ackermann_mux/package.zsh'
+[6.404s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/ackermann_mux/share/colcon-core/packages/ackermann_mux)
+[6.425s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/new_map_saver' with build type 'ament_python'
+[6.426s] Level 1:colcon.colcon_core.shell:create_environment_hook('new_map_saver', 'ament_prefix_path')
+[6.429s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/hook/ament_prefix_path.ps1'
+[6.455s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/hook/ament_prefix_path.dsv'
+[6.458s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/hook/ament_prefix_path.sh'
+[6.477s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[6.477s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[6.507s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(vesc_msgs)
+[6.513s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs' for CMake module files
+[6.519s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/vesc_msgs' returned '0': /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc_msgs
+[6.523s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs' for CMake config files
+[6.528s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_msgs', 'cmake_prefix_path')
+[6.530s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/cmake_prefix_path.ps1'
+[6.534s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/cmake_prefix_path.dsv'
+[6.537s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/cmake_prefix_path.sh'
+[6.541s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib'
+[6.542s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_msgs', 'ld_library_path_lib')
+[6.543s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/ld_library_path_lib.ps1'
+[6.545s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/ld_library_path_lib.dsv'
+[6.547s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/ld_library_path_lib.sh'
+[6.549s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs/bin'
+[6.550s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/pkgconfig/vesc_msgs.pc'
+[6.552s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages'
+[6.553s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_msgs', 'pythonpath')
+[6.554s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/pythonpath.ps1'
+[6.557s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/pythonpath.dsv'
+[6.560s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/pythonpath.sh'
+[6.563s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs/bin'
+[6.565s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/package.ps1'
+[6.568s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/package.dsv'
+[6.571s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/package.sh'
+[6.576s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/package.bash'
+[6.579s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/package.zsh'
+[6.582s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/vesc_msgs/share/colcon-core/packages/vesc_msgs)
+[7.764s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/nvidia/f1tenth_ws/src/new_map_saver'
+[7.768s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[7.769s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[7.804s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(teleop_tools_msgs)
+[7.807s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs' for CMake module files
+[7.811s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs' for CMake config files
+[7.814s] Level 1:colcon.colcon_core.shell:create_environment_hook('teleop_tools_msgs', 'cmake_prefix_path')
+[7.815s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/cmake_prefix_path.ps1'
+[7.819s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/cmake_prefix_path.dsv'
+[7.821s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/cmake_prefix_path.sh'
+[7.824s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib'
+[7.825s] Level 1:colcon.colcon_core.shell:create_environment_hook('teleop_tools_msgs', 'ld_library_path_lib')
+[7.826s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/ld_library_path_lib.ps1'
+[7.829s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/ld_library_path_lib.dsv'
+[7.831s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/ld_library_path_lib.sh'
+[7.833s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/bin'
+[7.834s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/pkgconfig/teleop_tools_msgs.pc'
+[7.835s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages'
+[7.836s] Level 1:colcon.colcon_core.shell:create_environment_hook('teleop_tools_msgs', 'pythonpath')
+[7.837s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/pythonpath.ps1'
+[7.839s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/pythonpath.dsv'
+[7.840s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/hook/pythonpath.sh'
+[7.842s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/bin'
+[7.844s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/package.ps1'
+[7.847s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/package.dsv'
+[7.850s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/package.sh'
+[7.853s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/package.bash'
+[7.855s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/teleop_tools_msgs/package.zsh'
+[7.857s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/share/colcon-core/packages/teleop_tools_msgs)
+[7.859s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(vesc_msgs)
+[7.860s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs' for CMake module files
+[7.867s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs' for CMake config files
+[7.871s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_msgs', 'cmake_prefix_path')
+[7.872s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/cmake_prefix_path.ps1'
+[7.874s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/cmake_prefix_path.dsv'
+[7.876s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/cmake_prefix_path.sh'
+[7.878s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib'
+[7.879s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_msgs', 'ld_library_path_lib')
+[7.880s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/ld_library_path_lib.ps1'
+[7.882s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/ld_library_path_lib.dsv'
+[7.884s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/ld_library_path_lib.sh'
+[7.885s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs/bin'
+[7.886s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/pkgconfig/vesc_msgs.pc'
+[7.887s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages'
+[7.887s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_msgs', 'pythonpath')
+[7.888s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/pythonpath.ps1'
+[7.890s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/pythonpath.dsv'
+[7.892s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/hook/pythonpath.sh'
+[7.894s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_msgs/bin'
+[7.896s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/package.ps1'
+[7.901s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/package.dsv'
+[7.904s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/package.sh'
+[7.906s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/package.bash'
+[7.908s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_msgs/share/vesc_msgs/package.zsh'
+[7.910s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/vesc_msgs/share/colcon-core/packages/vesc_msgs)
+[7.939s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/src/mapping': PYTHONPATH=/home/nvidia/f1tenth_ws/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/mapping build --build-base /home/nvidia/f1tenth_ws/build/mapping/build install --record /home/nvidia/f1tenth_ws/build/mapping/install.log --install-scripts $base/lib/mapping --single-version-externally-managed install_data
+[7.966s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/mouse_teleop': PYTHONPATH=/home/nvidia/f1tenth_ws/build/mouse_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/mouse_teleop build --build-base /home/nvidia/f1tenth_ws/build/mouse_teleop/build install --record /home/nvidia/f1tenth_ws/build/mouse_teleop/install.log --install-scripts $base/lib/mouse_teleop --single-version-externally-managed install_data
+[7.994s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/joy_teleop' with build type 'ament_python'
+[7.999s] Level 1:colcon.colcon_core.shell:create_environment_hook('joy_teleop', 'ament_prefix_path')
+[8.002s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/joy_teleop/share/joy_teleop/hook/ament_prefix_path.ps1'
+[8.010s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/joy_teleop/share/joy_teleop/hook/ament_prefix_path.dsv'
+[8.013s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/joy_teleop/share/joy_teleop/hook/ament_prefix_path.sh'
+[8.016s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[8.017s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[8.045s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc_ackermann' with build type 'ament_cmake'
+[8.048s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc_ackermann'
+[8.061s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[8.062s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[8.138s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/key_teleop': PYTHONPATH=/home/nvidia/f1tenth_ws/build/key_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/key_teleop build --build-base /home/nvidia/f1tenth_ws/build/key_teleop/build install --record /home/nvidia/f1tenth_ws/build/key_teleop/install.log --install-scripts $base/lib/key_teleop --single-version-externally-managed install_data
+[9.400s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/joy_teleop'
+[9.404s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[9.405s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[9.463s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/vesc_ackermann': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc_ackermann -- -j6 -l6
+[9.514s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mapping' for CMake module files
+[9.517s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/src/mapping' returned '0': PYTHONPATH=/home/nvidia/f1tenth_ws/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/mapping build --build-base /home/nvidia/f1tenth_ws/build/mapping/build install --record /home/nvidia/f1tenth_ws/build/mapping/install.log --install-scripts $base/lib/mapping --single-version-externally-managed install_data
+[9.523s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mapping' for CMake config files
+[9.527s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mapping/lib'
+[9.530s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mapping/bin'
+[9.530s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mapping/lib/pkgconfig/mapping.pc'
+[9.532s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages'
+[9.533s] Level 1:colcon.colcon_core.shell:create_environment_hook('mapping', 'pythonpath')
+[9.535s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/mapping/share/mapping/hook/pythonpath.ps1'
+[9.539s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/mapping/share/mapping/hook/pythonpath.dsv'
+[9.541s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/mapping/share/mapping/hook/pythonpath.sh'
+[9.545s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mapping/bin'
+[9.545s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(mapping)
+[9.548s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/mapping/share/mapping/package.ps1'
+[9.552s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/mapping/share/mapping/package.dsv'
+[9.555s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/mapping/share/mapping/package.sh'
+[9.557s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/mapping/share/mapping/package.bash'
+[9.560s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/mapping/share/mapping/package.zsh'
+[9.563s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/mapping/share/colcon-core/packages/mapping)
+[9.599s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc_driver' with build type 'ament_cmake'
+[9.606s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc_driver'
+[9.612s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[9.612s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[9.666s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mouse_teleop' for CMake module files
+[9.670s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/mouse_teleop' returned '0': PYTHONPATH=/home/nvidia/f1tenth_ws/build/mouse_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/mouse_teleop build --build-base /home/nvidia/f1tenth_ws/build/mouse_teleop/build install --record /home/nvidia/f1tenth_ws/build/mouse_teleop/install.log --install-scripts $base/lib/mouse_teleop --single-version-externally-managed install_data
+[9.675s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mouse_teleop' for CMake config files
+[9.681s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mouse_teleop/lib'
+[9.682s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mouse_teleop/bin'
+[9.682s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mouse_teleop/lib/pkgconfig/mouse_teleop.pc'
+[9.684s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages'
+[9.685s] Level 1:colcon.colcon_core.shell:create_environment_hook('mouse_teleop', 'pythonpath')
+[9.687s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/hook/pythonpath.ps1'
+[9.692s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/hook/pythonpath.dsv'
+[9.695s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/hook/pythonpath.sh'
+[9.700s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/mouse_teleop/bin'
+[9.701s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(mouse_teleop)
+[9.703s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/package.ps1'
+[9.707s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/package.dsv'
+[9.710s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/package.sh'
+[9.714s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/package.bash'
+[9.717s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/package.zsh'
+[9.720s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/mouse_teleop/share/colcon-core/packages/mouse_teleop)
+[9.744s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/vesc_driver': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc_driver -- -j6 -l6
+[9.795s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/key_teleop' for CMake module files
+[9.802s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/key_teleop' returned '0': PYTHONPATH=/home/nvidia/f1tenth_ws/build/key_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/key_teleop build --build-base /home/nvidia/f1tenth_ws/build/key_teleop/build install --record /home/nvidia/f1tenth_ws/build/key_teleop/install.log --install-scripts $base/lib/key_teleop --single-version-externally-managed install_data
+[9.816s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/key_teleop' for CMake config files
+[9.821s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/key_teleop/lib'
+[9.822s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/key_teleop/bin'
+[9.822s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/key_teleop/lib/pkgconfig/key_teleop.pc'
+[9.824s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages'
+[9.825s] Level 1:colcon.colcon_core.shell:create_environment_hook('key_teleop', 'pythonpath')
+[9.827s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/key_teleop/share/key_teleop/hook/pythonpath.ps1'
+[9.833s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/key_teleop/share/key_teleop/hook/pythonpath.dsv'
+[9.836s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/key_teleop/share/key_teleop/hook/pythonpath.sh'
+[9.839s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/key_teleop/bin'
+[9.839s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(key_teleop)
+[9.841s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/key_teleop/share/key_teleop/package.ps1'
+[9.844s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/key_teleop/share/key_teleop/package.dsv'
+[9.847s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/key_teleop/share/key_teleop/package.sh'
+[9.850s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/key_teleop/share/key_teleop/package.bash'
+[9.852s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/key_teleop/share/key_teleop/package.zsh'
+[9.857s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/key_teleop/share/colcon-core/packages/key_teleop)
+[10.065s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/vesc_ackermann' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc_ackermann -- -j6 -l6
+[10.134s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/src/new_map_saver': PYTHONPATH=/home/nvidia/f1tenth_ws/build/new_map_saver/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/new_map_saver build --build-base /home/nvidia/f1tenth_ws/build/new_map_saver/build install --record /home/nvidia/f1tenth_ws/build/new_map_saver/install.log --install-scripts $base/lib/new_map_saver --single-version-externally-managed install_data
+[10.269s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/vesc_ackermann': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc_ackermann
+[10.345s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(vesc_ackermann)
+[10.349s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann' for CMake module files
+[10.352s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/vesc_ackermann' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc_ackermann
+[10.354s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann' for CMake config files
+[10.359s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_ackermann', 'cmake_prefix_path')
+[10.361s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/hook/cmake_prefix_path.ps1'
+[10.365s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/hook/cmake_prefix_path.dsv'
+[10.367s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/hook/cmake_prefix_path.sh'
+[10.371s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib'
+[10.372s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_ackermann', 'ld_library_path_lib')
+[10.373s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/hook/ld_library_path_lib.ps1'
+[10.375s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/hook/ld_library_path_lib.dsv'
+[10.377s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/hook/ld_library_path_lib.sh'
+[10.379s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann/bin'
+[10.380s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib/pkgconfig/vesc_ackermann.pc'
+[10.382s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib/python3.8/site-packages'
+[10.383s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann/bin'
+[10.384s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.ps1'
+[10.388s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.dsv'
+[10.391s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.sh'
+[10.393s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.bash'
+[10.396s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.zsh'
+[10.398s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/colcon-core/packages/vesc_ackermann)
+[10.427s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/vesc_driver' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc_driver -- -j6 -l6
+[10.557s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(vesc_ackermann)
+[10.560s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann' for CMake module files
+[10.564s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann' for CMake config files
+[10.568s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_ackermann', 'cmake_prefix_path')
+[10.569s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/hook/cmake_prefix_path.ps1'
+[10.573s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/hook/cmake_prefix_path.dsv'
+[10.576s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/hook/cmake_prefix_path.sh'
+[10.582s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib'
+[10.582s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_ackermann', 'ld_library_path_lib')
+[10.584s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/hook/ld_library_path_lib.ps1'
+[10.586s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/hook/ld_library_path_lib.dsv'
+[10.588s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/hook/ld_library_path_lib.sh'
+[10.590s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann/bin'
+[10.591s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib/pkgconfig/vesc_ackermann.pc'
+[10.592s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib/python3.8/site-packages'
+[10.593s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_ackermann/bin'
+[10.595s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.ps1'
+[10.598s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.dsv'
+[10.602s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.sh'
+[10.606s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.bash'
+[10.609s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/vesc_ackermann/package.zsh'
+[10.612s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/vesc_ackermann/share/colcon-core/packages/vesc_ackermann)
+[10.644s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/vesc_driver': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc_driver
+[10.725s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(vesc_driver)
+[10.728s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver' for CMake module files
+[10.730s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/vesc_driver' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc_driver
+[10.734s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver' for CMake config files
+[10.737s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_driver', 'cmake_prefix_path')
+[10.739s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/hook/cmake_prefix_path.ps1'
+[10.743s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/hook/cmake_prefix_path.dsv'
+[10.745s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/hook/cmake_prefix_path.sh'
+[10.750s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver/lib'
+[10.750s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_driver', 'ld_library_path_lib')
+[10.752s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/hook/ld_library_path_lib.ps1'
+[10.754s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/hook/ld_library_path_lib.dsv'
+[10.755s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/hook/ld_library_path_lib.sh'
+[10.757s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver/bin'
+[10.758s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver/lib/pkgconfig/vesc_driver.pc'
+[10.759s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver/lib/python3.8/site-packages'
+[10.760s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver/bin'
+[10.762s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.ps1'
+[10.765s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.dsv'
+[10.768s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.sh'
+[10.770s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.bash'
+[10.772s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.zsh'
+[10.774s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/vesc_driver/share/colcon-core/packages/vesc_driver)
+[10.943s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(vesc_driver)
+[10.945s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver' for CMake module files
+[10.949s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver' for CMake config files
+[10.954s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_driver', 'cmake_prefix_path')
+[10.955s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/hook/cmake_prefix_path.ps1'
+[10.960s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/hook/cmake_prefix_path.dsv'
+[10.961s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/hook/cmake_prefix_path.sh'
+[10.965s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver/lib'
+[10.966s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc_driver', 'ld_library_path_lib')
+[10.967s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/hook/ld_library_path_lib.ps1'
+[10.969s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/hook/ld_library_path_lib.dsv'
+[10.971s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/hook/ld_library_path_lib.sh'
+[10.973s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver/bin'
+[10.973s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver/lib/pkgconfig/vesc_driver.pc'
+[10.975s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver/lib/python3.8/site-packages'
+[10.976s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc_driver/bin'
+[10.977s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.ps1'
+[10.981s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.dsv'
+[10.984s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.sh'
+[10.987s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.bash'
+[10.990s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc_driver/share/vesc_driver/package.zsh'
+[10.992s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/vesc_driver/share/colcon-core/packages/vesc_driver)
+[10.996s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc' with build type 'ament_cmake'
+[10.998s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc'
+[10.999s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[10.999s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[11.119s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/vesc': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc -- -j6 -l6
+[11.319s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/vesc' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc -- -j6 -l6
+[11.422s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/vesc': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc
+[11.482s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(vesc)
+[11.488s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc' for CMake module files
+[11.492s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/vesc' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc
+[11.498s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc' for CMake config files
+[11.501s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc', 'cmake_prefix_path')
+[11.502s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/hook/cmake_prefix_path.ps1'
+[11.506s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/hook/cmake_prefix_path.dsv'
+[11.509s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/hook/cmake_prefix_path.sh'
+[11.512s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc/bin'
+[11.513s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc/lib/pkgconfig/vesc.pc'
+[11.515s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc/lib/python3.8/site-packages'
+[11.516s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc/bin'
+[11.517s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.ps1'
+[11.520s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.dsv'
+[11.522s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.sh'
+[11.525s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.bash'
+[11.527s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.zsh'
+[11.529s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/vesc/share/colcon-core/packages/vesc)
+[11.666s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(vesc)
+[11.672s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc' for CMake module files
+[11.675s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/joy_teleop': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/build/joy_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/joy_teleop build --build-base /home/nvidia/f1tenth_ws/build/joy_teleop/build install --record /home/nvidia/f1tenth_ws/build/joy_teleop/install.log --install-scripts $base/lib/joy_teleop --single-version-externally-managed install_data
+[11.681s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc' for CMake config files
+[11.684s] Level 1:colcon.colcon_core.shell:create_environment_hook('vesc', 'cmake_prefix_path')
+[11.685s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/hook/cmake_prefix_path.ps1'
+[11.691s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/hook/cmake_prefix_path.dsv'
+[11.694s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/hook/cmake_prefix_path.sh'
+[11.697s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc/bin'
+[11.698s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc/lib/pkgconfig/vesc.pc'
+[11.699s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc/lib/python3.8/site-packages'
+[11.700s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/vesc/bin'
+[11.701s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.ps1'
+[11.704s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.dsv'
+[11.707s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.sh'
+[11.709s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.bash'
+[11.712s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.zsh'
+[11.714s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/vesc/share/colcon-core/packages/vesc)
+[11.723s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/new_map_saver' for CMake module files
+[11.726s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/src/new_map_saver' returned '0': PYTHONPATH=/home/nvidia/f1tenth_ws/build/new_map_saver/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/new_map_saver build --build-base /home/nvidia/f1tenth_ws/build/new_map_saver/build install --record /home/nvidia/f1tenth_ws/build/new_map_saver/install.log --install-scripts $base/lib/new_map_saver --single-version-externally-managed install_data
+[11.728s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/new_map_saver' for CMake config files
+[11.731s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/new_map_saver/lib'
+[11.732s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/new_map_saver/bin'
+[11.732s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/new_map_saver/lib/pkgconfig/new_map_saver.pc'
+[11.733s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages'
+[11.733s] Level 1:colcon.colcon_core.shell:create_environment_hook('new_map_saver', 'pythonpath')
+[11.734s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/hook/pythonpath.ps1'
+[11.737s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/hook/pythonpath.dsv'
+[11.738s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/hook/pythonpath.sh'
+[11.741s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/new_map_saver/bin'
+[11.741s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(new_map_saver)
+[11.743s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/package.ps1'
+[11.745s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/package.dsv'
+[11.748s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/package.sh'
+[11.750s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/package.bash'
+[11.752s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/new_map_saver/share/new_map_saver/package.zsh'
+[11.754s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/new_map_saver/share/colcon-core/packages/new_map_saver)
+[12.984s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/joy_teleop' for CMake module files
+[12.987s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/joy_teleop' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/build/joy_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/joy_teleop build --build-base /home/nvidia/f1tenth_ws/build/joy_teleop/build install --record /home/nvidia/f1tenth_ws/build/joy_teleop/install.log --install-scripts $base/lib/joy_teleop --single-version-externally-managed install_data
+[12.990s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/joy_teleop' for CMake config files
+[12.994s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/joy_teleop/lib'
+[12.994s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/joy_teleop/bin'
+[12.994s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/joy_teleop/lib/pkgconfig/joy_teleop.pc'
+[12.995s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages'
+[12.996s] Level 1:colcon.colcon_core.shell:create_environment_hook('joy_teleop', 'pythonpath')
+[12.997s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/joy_teleop/share/joy_teleop/hook/pythonpath.ps1'
+[12.999s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/joy_teleop/share/joy_teleop/hook/pythonpath.dsv'
+[13.001s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/joy_teleop/share/joy_teleop/hook/pythonpath.sh'
+[13.004s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/joy_teleop/bin'
+[13.004s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(joy_teleop)
+[13.005s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/joy_teleop/share/joy_teleop/package.ps1'
+[13.008s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/joy_teleop/share/joy_teleop/package.dsv'
+[13.010s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/joy_teleop/share/joy_teleop/package.sh'
+[13.013s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/joy_teleop/share/joy_teleop/package.bash'
+[13.014s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/joy_teleop/share/joy_teleop/package.zsh'
+[13.016s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/joy_teleop/share/colcon-core/packages/joy_teleop)
+[13.018s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/teleop_tools' with build type 'ament_cmake'
+[13.019s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/teleop_tools'
+[13.020s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[13.021s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[13.041s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/f1tenth_stack' with build type 'ament_python'
+[13.044s] Level 1:colcon.colcon_core.shell:create_environment_hook('f1tenth_stack', 'ament_prefix_path')
+[13.048s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/hook/ament_prefix_path.ps1'
+[13.052s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/hook/ament_prefix_path.dsv'
+[13.055s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/hook/ament_prefix_path.sh'
+[13.058s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[13.059s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[13.121s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/teleop_tools': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/joy_teleop:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs:/home/nvidia/f1tenth_ws/install/key_teleop CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/teleop_tools -- -j6 -l6
+[14.271s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/nvidia/f1tenth_ws/src/f1tenth_system/f1tenth_stack'
+[14.274s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[14.274s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[14.309s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/teleop_tools' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/joy_teleop:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs:/home/nvidia/f1tenth_ws/install/key_teleop CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/teleop_tools -- -j6 -l6
+[14.430s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/build/teleop_tools': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/joy_teleop:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs:/home/nvidia/f1tenth_ws/install/key_teleop CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/teleop_tools
+[14.483s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(teleop_tools)
+[14.486s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools' for CMake module files
+[14.489s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/build/teleop_tools' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/joy_teleop:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs:/home/nvidia/f1tenth_ws/install/key_teleop CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/teleop_tools
+[14.491s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools' for CMake config files
+[14.493s] Level 1:colcon.colcon_core.shell:create_environment_hook('teleop_tools', 'cmake_prefix_path')
+[14.495s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/hook/cmake_prefix_path.ps1'
+[14.499s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/hook/cmake_prefix_path.dsv'
+[14.501s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/hook/cmake_prefix_path.sh'
+[14.505s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools/bin'
+[14.505s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools/lib/pkgconfig/teleop_tools.pc'
+[14.506s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools/lib/python3.8/site-packages'
+[14.507s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools/bin'
+[14.509s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/package.ps1'
+[14.512s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/package.dsv'
+[14.514s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/package.sh'
+[14.517s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/package.bash'
+[14.519s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/package.zsh'
+[14.521s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/teleop_tools/share/colcon-core/packages/teleop_tools)
+[14.621s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(teleop_tools)
+[14.624s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools' for CMake module files
+[14.627s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools' for CMake config files
+[14.629s] Level 1:colcon.colcon_core.shell:create_environment_hook('teleop_tools', 'cmake_prefix_path')
+[14.630s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/hook/cmake_prefix_path.ps1'
+[14.634s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/hook/cmake_prefix_path.dsv'
+[14.636s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/hook/cmake_prefix_path.sh'
+[14.639s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools/bin'
+[14.640s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools/lib/pkgconfig/teleop_tools.pc'
+[14.641s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools/lib/python3.8/site-packages'
+[14.642s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/teleop_tools/bin'
+[14.643s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/package.ps1'
+[14.646s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/package.dsv'
+[14.649s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/package.sh'
+[14.651s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/package.bash'
+[14.653s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/teleop_tools/share/teleop_tools/package.zsh'
+[14.656s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/teleop_tools/share/colcon-core/packages/teleop_tools)
+[16.182s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/f1tenth_stack': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc:/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/joy_teleop:/home/nvidia/f1tenth_ws/install/vesc_msgs:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs:/home/nvidia/f1tenth_ws/install/ackermann_mux CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc:/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs:/home/nvidia/f1tenth_ws/install/ackermann_mux LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/build/f1tenth_stack/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../build/f1tenth_stack build --build-base /home/nvidia/f1tenth_ws/build/f1tenth_stack/build install --record /home/nvidia/f1tenth_ws/build/f1tenth_stack/install.log --install-scripts $base/lib/f1tenth_stack --single-version-externally-managed install_data
+[17.514s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/f1tenth_stack' for CMake module files
+[17.517s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/f1tenth_stack' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc:/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/joy_teleop:/home/nvidia/f1tenth_ws/install/vesc_msgs:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs:/home/nvidia/f1tenth_ws/install/ackermann_mux CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc:/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs:/home/nvidia/f1tenth_ws/install/ackermann_mux LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/build/f1tenth_stack/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../build/f1tenth_stack build --build-base /home/nvidia/f1tenth_ws/build/f1tenth_stack/build install --record /home/nvidia/f1tenth_ws/build/f1tenth_stack/install.log --install-scripts $base/lib/f1tenth_stack --single-version-externally-managed install_data
+[17.520s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/f1tenth_stack' for CMake config files
+[17.525s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/f1tenth_stack/lib'
+[17.525s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/f1tenth_stack/bin'
+[17.526s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/pkgconfig/f1tenth_stack.pc'
+[17.527s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/python3.8/site-packages'
+[17.528s] Level 1:colcon.colcon_core.shell:create_environment_hook('f1tenth_stack', 'pythonpath')
+[17.530s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/hook/pythonpath.ps1'
+[17.533s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/hook/pythonpath.dsv'
+[17.535s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/hook/pythonpath.sh'
+[17.538s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/install/f1tenth_stack/bin'
+[17.538s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(f1tenth_stack)
+[17.540s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/package.ps1'
+[17.543s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/package.dsv'
+[17.545s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/package.sh'
+[17.548s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/package.bash'
+[17.549s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/install/f1tenth_stack/share/f1tenth_stack/package.zsh'
+[17.551s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/install/f1tenth_stack/share/colcon-core/packages/f1tenth_stack)
+[17.553s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[17.556s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[17.557s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[17.558s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[17.594s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[17.595s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[17.595s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[17.713s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[17.719s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/nvidia/f1tenth_ws/install/local_setup.ps1'
+[17.727s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/nvidia/f1tenth_ws/install/_local_setup_util_ps1.py'
+[17.735s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/nvidia/f1tenth_ws/install/setup.ps1'
+[17.740s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/nvidia/f1tenth_ws/install/local_setup.sh'
+[17.742s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/nvidia/f1tenth_ws/install/_local_setup_util_sh.py'
+[17.745s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/nvidia/f1tenth_ws/install/setup.sh'
+[17.749s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/nvidia/f1tenth_ws/install/local_setup.bash'
+[17.752s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/nvidia/f1tenth_ws/install/setup.bash'
+[17.756s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/nvidia/f1tenth_ws/install/local_setup.zsh'
+[17.758s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/nvidia/f1tenth_ws/install/setup.zsh'

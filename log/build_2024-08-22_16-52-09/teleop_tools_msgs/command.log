@@ -1,0 +1,1 @@
+Invoking command in '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/teleop_tools_msgs -DCMAKE_INSTALL_PREFIX=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs

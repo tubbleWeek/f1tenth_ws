@@ -1,0 +1,22 @@
+[4.639s] Invoking command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/joy_teleop': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/build/joy_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/joy_teleop build --build-base /home/nvidia/f1tenth_ws/build/joy_teleop/build install --record /home/nvidia/f1tenth_ws/build/joy_teleop/install.log --install-scripts $base/lib/joy_teleop --single-version-externally-managed install_data
+[5.697s] running egg_info
+[5.700s] writing ../../../../build/joy_teleop/joy_teleop.egg-info/PKG-INFO
+[5.702s] writing dependency_links to ../../../../build/joy_teleop/joy_teleop.egg-info/dependency_links.txt
+[5.706s] writing entry points to ../../../../build/joy_teleop/joy_teleop.egg-info/entry_points.txt
+[5.707s] writing requirements to ../../../../build/joy_teleop/joy_teleop.egg-info/requires.txt
+[5.707s] writing top-level names to ../../../../build/joy_teleop/joy_teleop.egg-info/top_level.txt
+[5.875s] reading manifest file '../../../../build/joy_teleop/joy_teleop.egg-info/SOURCES.txt'
+[5.880s] writing manifest file '../../../../build/joy_teleop/joy_teleop.egg-info/SOURCES.txt'
+[5.881s] running build
+[5.881s] running build_py
+[5.883s] running install
+[5.887s] running install_lib
+[5.895s] running install_data
+[5.896s] running install_egg_info
+[5.906s] removing '/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages/joy_teleop-0.3.0-py3.8.egg-info' (and everything under it)
+[5.908s] Copying ../../../../build/joy_teleop/joy_teleop.egg-info to /home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages/joy_teleop-0.3.0-py3.8.egg-info
+[5.915s] running install_scripts
+[5.994s] Installing incrementer_server script to /home/nvidia/f1tenth_ws/install/joy_teleop/lib/joy_teleop
+[5.996s] Installing joy_teleop script to /home/nvidia/f1tenth_ws/install/joy_teleop/lib/joy_teleop
+[5.997s] writing list of installed files to '/home/nvidia/f1tenth_ws/build/joy_teleop/install.log'
+[6.103s] Invoked command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/joy_teleop' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib PYTHONPATH=/home/nvidia/f1tenth_ws/build/joy_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages:/home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/joy_teleop build --build-base /home/nvidia/f1tenth_ws/build/joy_teleop/build install --record /home/nvidia/f1tenth_ws/build/joy_teleop/install.log --install-scripts $base/lib/joy_teleop --single-version-externally-managed install_data

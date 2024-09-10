@@ -1,0 +1,42 @@
+[0.108s] Invoking command in '/home/nvidia/f1tenth_ws/build/vesc': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:/opt/ros/foxy LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-11.4/lib64 PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/cmake /home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc -DCMAKE_INSTALL_PREFIX=/home/nvidia/f1tenth_ws/install/vesc
+[0.454s] -- The C compiler identification is GNU 9.4.0
+[0.786s] -- The CXX compiler identification is GNU 9.4.0
+[0.810s] -- Check for working C compiler: /usr/bin/cc
+[1.231s] -- Check for working C compiler: /usr/bin/cc -- works
+[1.236s] -- Detecting C compiler ABI info
+[1.657s] -- Detecting C compiler ABI info - done
+[1.717s] -- Detecting C compile features
+[1.718s] -- Detecting C compile features - done
+[1.731s] -- Check for working CXX compiler: /usr/bin/c++
+[2.200s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[2.205s] -- Detecting CXX compiler ABI info
+[2.678s] -- Detecting CXX compiler ABI info - done
+[2.737s] -- Detecting CXX compile features
+[2.739s] -- Detecting CXX compile features - done
+[2.750s] -- Found ament_cmake_auto: 0.9.12 (/opt/ros/foxy/share/ament_cmake_auto/cmake)
+[2.913s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[2.913s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[4.503s] -- Configuring done
+[4.516s] -- Generating done
+[4.521s] -- Build files have been written to: /home/nvidia/f1tenth_ws/build/vesc
+[4.540s] Invoked command in '/home/nvidia/f1tenth_ws/build/vesc' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:/opt/ros/foxy LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-11.4/lib64 PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/cmake /home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc -DCMAKE_INSTALL_PREFIX=/home/nvidia/f1tenth_ws/install/vesc
+[4.556s] Invoking command in '/home/nvidia/f1tenth_ws/build/vesc': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:/opt/ros/foxy LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-11.4/lib64 PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc -- -j6 -l6
+[4.782s] Invoked command in '/home/nvidia/f1tenth_ws/build/vesc' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:/opt/ros/foxy LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-11.4/lib64 PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/nvidia/f1tenth_ws/build/vesc -- -j6 -l6
+[4.926s] Invoking command in '/home/nvidia/f1tenth_ws/build/vesc': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:/opt/ros/foxy LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-11.4/lib64 PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc
+[4.970s] -- Install configuration: ""
+[4.972s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/ament_index/resource_index/package_run_dependencies/vesc
+[4.973s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/ament_index/resource_index/parent_prefix_path/vesc
+[4.974s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/environment/ament_prefix_path.sh
+[4.975s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/environment/ament_prefix_path.dsv
+[4.976s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/environment/path.sh
+[4.977s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/environment/path.dsv
+[4.978s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/local_setup.bash
+[4.979s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/local_setup.sh
+[4.980s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/local_setup.zsh
+[4.981s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/local_setup.dsv
+[4.982s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.dsv
+[4.983s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/ament_index/resource_index/packages/vesc
+[4.985s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/cmake/vescConfig.cmake
+[4.986s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/cmake/vescConfig-version.cmake
+[4.986s] -- Installing: /home/nvidia/f1tenth_ws/install/vesc/share/vesc/package.xml
+[5.002s] Invoked command in '/home/nvidia/f1tenth_ws/build/vesc' returned '0': AMENT_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver:/home/nvidia/f1tenth_ws/install/vesc_ackermann:/home/nvidia/f1tenth_ws/install/vesc_msgs:/opt/ros/foxy LD_LIBRARY_PATH=/home/nvidia/f1tenth_ws/install/vesc_driver/lib:/home/nvidia/f1tenth_ws/install/vesc_ackermann/lib:/home/nvidia/f1tenth_ws/install/vesc_msgs/lib:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-11.4/lib64 PYTHONPATH=/home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/nvidia/f1tenth_ws/build/vesc

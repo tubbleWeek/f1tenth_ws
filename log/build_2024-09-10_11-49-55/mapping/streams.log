@@ -1,0 +1,25 @@
+[7.940s] Invoking command in '/home/nvidia/f1tenth_ws/src/mapping': PYTHONPATH=/home/nvidia/f1tenth_ws/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/mapping build --build-base /home/nvidia/f1tenth_ws/build/mapping/build install --record /home/nvidia/f1tenth_ws/build/mapping/install.log --install-scripts $base/lib/mapping --single-version-externally-managed install_data
+[10.280s] running egg_info
+[10.284s] writing ../../build/mapping/mapping.egg-info/PKG-INFO
+[10.289s] writing dependency_links to ../../build/mapping/mapping.egg-info/dependency_links.txt
+[10.292s] writing entry points to ../../build/mapping/mapping.egg-info/entry_points.txt
+[10.293s] writing requirements to ../../build/mapping/mapping.egg-info/requires.txt
+[10.294s] writing top-level names to ../../build/mapping/mapping.egg-info/top_level.txt
+[10.887s] reading manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'
+[10.901s] writing manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'
+[10.906s] running build
+[10.907s] running build_py
+[10.913s] copying mapping/local_mapping_gradient.py -> /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping
+[10.920s] running install
+[10.932s] running install_lib
+[10.939s] copying /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping/local_mapping_gradient.py -> /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping
+[10.947s] byte-compiling /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping/local_mapping_gradient.py to local_mapping_gradient.cpython-38.pyc
+[10.970s] running install_data
+[10.971s] running install_egg_info
+[10.982s] removing '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info' (and everything under it)
+[10.984s] Copying ../../build/mapping/mapping.egg-info to /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info
+[11.011s] running install_scripts
+[11.207s] Installing local_gradient_node script to /home/nvidia/f1tenth_ws/install/mapping/lib/mapping
+[11.209s] Installing local_mapping_node script to /home/nvidia/f1tenth_ws/install/mapping/lib/mapping
+[11.213s] writing list of installed files to '/home/nvidia/f1tenth_ws/build/mapping/install.log'
+[11.719s] Invoked command in '/home/nvidia/f1tenth_ws/src/mapping' returned '0': PYTHONPATH=/home/nvidia/f1tenth_ws/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/mapping build --build-base /home/nvidia/f1tenth_ws/build/mapping/build install --record /home/nvidia/f1tenth_ws/build/mapping/install.log --install-scripts $base/lib/mapping --single-version-externally-managed install_data

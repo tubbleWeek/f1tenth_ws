@@ -1,0 +1,20 @@
+[4.099s] Invoking command in '/f1tenth_ws/src/f1tenth_system/teleop_tools/key_teleop': PYTHONPATH=/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../../../build/key_teleop build --build-base /f1tenth_ws/build/key_teleop/build install --prefix /f1tenth_ws/install/key_teleop --record /f1tenth_ws/build/key_teleop/install.log --single-version-externally-managed
+[5.421s] running egg_info
+[5.429s] writing ../../../../build/key_teleop/key_teleop.egg-info/PKG-INFO
+[5.431s] writing dependency_links to ../../../../build/key_teleop/key_teleop.egg-info/dependency_links.txt
+[5.434s] writing entry points to ../../../../build/key_teleop/key_teleop.egg-info/entry_points.txt
+[5.434s] writing requirements to ../../../../build/key_teleop/key_teleop.egg-info/requires.txt
+[5.435s] writing top-level names to ../../../../build/key_teleop/key_teleop.egg-info/top_level.txt
+[5.620s] reading manifest file '../../../../build/key_teleop/key_teleop.egg-info/SOURCES.txt'
+[5.625s] writing manifest file '../../../../build/key_teleop/key_teleop.egg-info/SOURCES.txt'
+[5.626s] running build
+[5.627s] running build_py
+[5.628s] running install
+[5.632s] running install_lib
+[5.640s] running install_data
+[5.643s] running install_egg_info
+[5.651s] removing '/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages/key_teleop-0.3.0-py3.8.egg-info' (and everything under it)
+[5.653s] Copying ../../../../build/key_teleop/key_teleop.egg-info to /f1tenth_ws/install/key_teleop/lib/python3.8/site-packages/key_teleop-0.3.0-py3.8.egg-info
+[5.659s] running install_scripts
+[5.753s] Installing key_teleop script to /f1tenth_ws/install/key_teleop/lib/key_teleop
+[5.759s] writing list of installed files to '/f1tenth_ws/build/key_teleop/install.log'

@@ -1,0 +1,19 @@
+[4.028s] Invoking command in '/f1tenth_ws/src/new_map_saver': PYTHONPATH=/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/new_map_saver build --build-base /f1tenth_ws/build/new_map_saver/build install --prefix /f1tenth_ws/install/new_map_saver --record /f1tenth_ws/build/new_map_saver/install.log --single-version-externally-managed
+[5.291s] running egg_info
+[5.294s] writing ../../build/new_map_saver/new_map_saver.egg-info/PKG-INFO
+[5.299s] writing dependency_links to ../../build/new_map_saver/new_map_saver.egg-info/dependency_links.txt
+[5.301s] writing entry points to ../../build/new_map_saver/new_map_saver.egg-info/entry_points.txt
+[5.303s] writing requirements to ../../build/new_map_saver/new_map_saver.egg-info/requires.txt
+[5.305s] writing top-level names to ../../build/new_map_saver/new_map_saver.egg-info/top_level.txt
+[5.486s] reading manifest file '../../build/new_map_saver/new_map_saver.egg-info/SOURCES.txt'
+[5.492s] writing manifest file '../../build/new_map_saver/new_map_saver.egg-info/SOURCES.txt'
+[5.494s] running build
+[5.494s] running build_py
+[5.495s] running install
+[5.499s] running install_lib
+[5.506s] running install_data
+[5.509s] running install_egg_info
+[5.517s] removing '/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver-0.0.0-py3.8.egg-info' (and everything under it)
+[5.520s] Copying ../../build/new_map_saver/new_map_saver.egg-info to /f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages/new_map_saver-0.0.0-py3.8.egg-info
+[5.527s] running install_scripts
+[5.622s] writing list of installed files to '/f1tenth_ws/build/new_map_saver/install.log'

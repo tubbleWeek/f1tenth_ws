@@ -1,0 +1,20 @@
+[3.855s] Invoking command in '/f1tenth_ws/src/f1tenth_system/teleop_tools/mouse_teleop': PYTHONPATH=/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../../../build/mouse_teleop build --build-base /f1tenth_ws/build/mouse_teleop/build install --prefix /f1tenth_ws/install/mouse_teleop --record /f1tenth_ws/build/mouse_teleop/install.log --single-version-externally-managed
+[5.231s] running egg_info
+[5.235s] writing ../../../../build/mouse_teleop/mouse_teleop.egg-info/PKG-INFO
+[5.237s] writing dependency_links to ../../../../build/mouse_teleop/mouse_teleop.egg-info/dependency_links.txt
+[5.238s] writing entry points to ../../../../build/mouse_teleop/mouse_teleop.egg-info/entry_points.txt
+[5.239s] writing requirements to ../../../../build/mouse_teleop/mouse_teleop.egg-info/requires.txt
+[5.240s] writing top-level names to ../../../../build/mouse_teleop/mouse_teleop.egg-info/top_level.txt
+[5.452s] reading manifest file '../../../../build/mouse_teleop/mouse_teleop.egg-info/SOURCES.txt'
+[5.459s] writing manifest file '../../../../build/mouse_teleop/mouse_teleop.egg-info/SOURCES.txt'
+[5.460s] running build
+[5.461s] running build_py
+[5.465s] running install
+[5.469s] running install_lib
+[5.480s] running install_data
+[5.486s] running install_egg_info
+[5.498s] removing '/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages/mouse_teleop-0.3.0-py3.8.egg-info' (and everything under it)
+[5.503s] Copying ../../../../build/mouse_teleop/mouse_teleop.egg-info to /f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages/mouse_teleop-0.3.0-py3.8.egg-info
+[5.511s] running install_scripts
+[5.621s] Installing mouse_teleop script to /f1tenth_ws/install/mouse_teleop/lib/mouse_teleop
+[5.624s] writing list of installed files to '/f1tenth_ws/build/mouse_teleop/install.log'

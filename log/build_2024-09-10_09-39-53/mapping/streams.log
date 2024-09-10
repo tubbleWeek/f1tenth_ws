@@ -1,0 +1,36 @@
+[7.588s] Invoking command in '/home/nvidia/f1tenth_ws/src/mapping': PYTHONPATH=/home/nvidia/f1tenth_ws/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/mapping build --build-base /home/nvidia/f1tenth_ws/build/mapping/build install --record /home/nvidia/f1tenth_ws/build/mapping/install.log --install-scripts $base/lib/mapping --single-version-externally-managed install_data
+[8.969s] running egg_info
+[8.972s] creating ../../build/mapping/mapping.egg-info
+[8.978s] writing ../../build/mapping/mapping.egg-info/PKG-INFO
+[8.980s] writing dependency_links to ../../build/mapping/mapping.egg-info/dependency_links.txt
+[8.981s] writing entry points to ../../build/mapping/mapping.egg-info/entry_points.txt
+[8.981s] writing requirements to ../../build/mapping/mapping.egg-info/requires.txt
+[8.983s] writing top-level names to ../../build/mapping/mapping.egg-info/top_level.txt
+[8.993s] writing manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'
+[9.197s] reading manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'
+[9.202s] writing manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'
+[9.203s] running build
+[9.203s] running build_py
+[9.204s] creating /home/nvidia/f1tenth_ws/build/mapping/build
+[9.205s] creating /home/nvidia/f1tenth_ws/build/mapping/build/lib
+[9.205s] creating /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping
+[9.206s] copying mapping/local_mapping.py -> /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping
+[9.206s] copying mapping/__init__.py -> /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping
+[9.207s] running install
+[9.211s] running install_lib
+[9.216s] creating /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping
+[9.217s] copying /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping/local_mapping.py -> /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping
+[9.217s] copying /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping/__init__.py -> /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping
+[9.221s] byte-compiling /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping/local_mapping.py to local_mapping.cpython-38.pyc
+[9.233s] byte-compiling /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping/__init__.py to __init__.cpython-38.pyc
+[9.234s] running install_data
+[9.235s] creating /home/nvidia/f1tenth_ws/install/mapping/share/ament_index
+[9.236s] creating /home/nvidia/f1tenth_ws/install/mapping/share/ament_index/resource_index
+[9.236s] creating /home/nvidia/f1tenth_ws/install/mapping/share/ament_index/resource_index/packages
+[9.237s] copying resource/mapping -> /home/nvidia/f1tenth_ws/install/mapping/share/ament_index/resource_index/packages
+[9.237s] copying package.xml -> /home/nvidia/f1tenth_ws/install/mapping/share/mapping
+[9.238s] running install_egg_info
+[9.246s] Copying ../../build/mapping/mapping.egg-info to /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info
+[9.253s] running install_scripts
+[9.363s] Installing local_mapping_node script to /home/nvidia/f1tenth_ws/install/mapping/lib/mapping
+[9.365s] writing list of installed files to '/home/nvidia/f1tenth_ws/build/mapping/install.log'

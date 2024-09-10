@@ -1,0 +1,35 @@
+[0.199s] Invoking command in '/home/nvidia/f1tenth_ws/build/vesc_msgs': /usr/bin/cmake /home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc_msgs -DCMAKE_INSTALL_PREFIX=/home/nvidia/f1tenth_ws/install/vesc_msgs
+[2.657s] -- The C compiler identification is GNU 9.4.0
+[2.661s] -- The CXX compiler identification is GNU 9.4.0
+[2.662s] -- Check for working C compiler: /usr/bin/cc
+[2.662s] -- Check for working C compiler: /usr/bin/cc -- works
+[2.663s] -- Detecting C compiler ABI info
+[2.663s] -- Detecting C compiler ABI info - done
+[2.664s] -- Detecting C compile features
+[2.664s] -- Detecting C compile features - done
+[2.665s] -- Check for working CXX compiler: /usr/bin/c++
+[2.870s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[2.878s] -- Detecting CXX compiler ABI info
+[3.423s] -- Detecting CXX compiler ABI info - done
+[3.514s] -- Detecting CXX compile features
+[3.518s] -- Detecting CXX compile features - done
+[3.578s] CMake Error at CMakeLists.txt:4 (find_package):
+[3.579s]   By not providing "Findament_cmake_auto.cmake" in CMAKE_MODULE_PATH this
+[3.580s]   project has asked CMake to find a package configuration file provided by
+[3.580s]   "ament_cmake_auto", but CMake did not find one.
+[3.581s] 
+[3.585s]   Could not find a package configuration file provided by "ament_cmake_auto"
+[3.585s]   with any of the following names:
+[3.586s] 
+[3.586s]     ament_cmake_autoConfig.cmake
+[3.587s]     ament_cmake_auto-config.cmake
+[3.588s] 
+[3.588s]   Add the installation prefix of "ament_cmake_auto" to CMAKE_PREFIX_PATH or
+[3.588s]   set "ament_cmake_auto_DIR" to a directory containing one of the above
+[3.589s]   files.  If "ament_cmake_auto" provides a separate development package or
+[3.589s]   SDK, be sure it has been installed.
+[3.590s] 
+[3.590s] 
+[3.591s] -- Configuring incomplete, errors occurred!
+[3.591s] See also "/home/nvidia/f1tenth_ws/build/vesc_msgs/CMakeFiles/CMakeOutput.log".
+[3.687s] Invoked command in '/home/nvidia/f1tenth_ws/build/vesc_msgs' returned '1': /usr/bin/cmake /home/nvidia/f1tenth_ws/src/f1tenth_system/vesc/vesc_msgs -DCMAKE_INSTALL_PREFIX=/home/nvidia/f1tenth_ws/install/vesc_msgs

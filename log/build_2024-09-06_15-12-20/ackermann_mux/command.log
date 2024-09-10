@@ -1,0 +1,2 @@
+Invoking command in '/f1tenth_ws/build/ackermann_mux': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /f1tenth_ws/build/ackermann_mux -- -j6 -l6
+Invoked command in '/f1tenth_ws/build/ackermann_mux' returned '2': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /f1tenth_ws/build/ackermann_mux -- -j6 -l6

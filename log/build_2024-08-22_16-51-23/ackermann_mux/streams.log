@@ -1,0 +1,35 @@
+[0.202s] Invoking command in '/home/nvidia/f1tenth_ws/build/ackermann_mux': /usr/bin/cmake /home/nvidia/f1tenth_ws/src/f1tenth_system/ackermann_mux -DCMAKE_INSTALL_PREFIX=/home/nvidia/f1tenth_ws/install/ackermann_mux
+[2.617s] -- The C compiler identification is GNU 9.4.0
+[2.617s] -- The CXX compiler identification is GNU 9.4.0
+[2.618s] -- Check for working C compiler: /usr/bin/cc
+[2.621s] -- Check for working C compiler: /usr/bin/cc -- works
+[2.624s] -- Detecting C compiler ABI info
+[2.629s] -- Detecting C compiler ABI info - done
+[2.630s] -- Detecting C compile features
+[2.630s] -- Detecting C compile features - done
+[2.630s] -- Check for working CXX compiler: /usr/bin/c++
+[2.813s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[2.821s] -- Detecting CXX compiler ABI info
+[3.372s] -- Detecting CXX compiler ABI info - done
+[3.466s] -- Detecting CXX compile features
+[3.472s] -- Detecting CXX compile features - done
+[3.537s] CMake Error at CMakeLists.txt:13 (find_package):
+[3.537s]   By not providing "Findament_cmake.cmake" in CMAKE_MODULE_PATH this project
+[3.537s]   has asked CMake to find a package configuration file provided by
+[3.539s]   "ament_cmake", but CMake did not find one.
+[3.547s] 
+[3.549s]   Could not find a package configuration file provided by "ament_cmake" with
+[3.553s]   any of the following names:
+[3.565s] 
+[3.568s]     ament_cmakeConfig.cmake
+[3.573s]     ament_cmake-config.cmake
+[3.574s] 
+[3.579s]   Add the installation prefix of "ament_cmake" to CMAKE_PREFIX_PATH or set
+[3.580s]   "ament_cmake_DIR" to a directory containing one of the above files.  If
+[3.581s]   "ament_cmake" provides a separate development package or SDK, be sure it
+[3.581s]   has been installed.
+[3.590s] 
+[3.593s] 
+[3.594s] -- Configuring incomplete, errors occurred!
+[3.595s] See also "/home/nvidia/f1tenth_ws/build/ackermann_mux/CMakeFiles/CMakeOutput.log".
+[3.641s] Invoked command in '/home/nvidia/f1tenth_ws/build/ackermann_mux' returned '1': /usr/bin/cmake /home/nvidia/f1tenth_ws/src/f1tenth_system/ackermann_mux -DCMAKE_INSTALL_PREFIX=/home/nvidia/f1tenth_ws/install/ackermann_mux

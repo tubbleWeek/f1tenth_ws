@@ -1,0 +1,35 @@
+[0.204s] Invoking command in '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs': /usr/bin/cmake /home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/teleop_tools_msgs -DCMAKE_INSTALL_PREFIX=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs
+[2.636s] -- The C compiler identification is GNU 9.4.0
+[2.636s] -- The CXX compiler identification is GNU 9.4.0
+[2.637s] -- Check for working C compiler: /usr/bin/cc
+[2.637s] -- Check for working C compiler: /usr/bin/cc -- works
+[2.638s] -- Detecting C compiler ABI info
+[2.638s] -- Detecting C compiler ABI info - done
+[2.639s] -- Detecting C compile features
+[2.639s] -- Detecting C compile features - done
+[2.640s] -- Check for working CXX compiler: /usr/bin/c++
+[2.851s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[2.857s] -- Detecting CXX compiler ABI info
+[3.412s] -- Detecting CXX compiler ABI info - done
+[3.506s] -- Detecting CXX compile features
+[3.509s] -- Detecting CXX compile features - done
+[3.621s] CMake Error at CMakeLists.txt:18 (find_package):
+[3.622s]   By not providing "Findament_cmake.cmake" in CMAKE_MODULE_PATH this project
+[3.622s]   has asked CMake to find a package configuration file provided by
+[3.623s]   "ament_cmake", but CMake did not find one.
+[3.623s] 
+[3.624s]   Could not find a package configuration file provided by "ament_cmake" with
+[3.624s]   any of the following names:
+[3.625s] 
+[3.644s]     ament_cmakeConfig.cmake
+[3.649s]     ament_cmake-config.cmake
+[3.650s] 
+[3.651s]   Add the installation prefix of "ament_cmake" to CMAKE_PREFIX_PATH or set
+[3.651s]   "ament_cmake_DIR" to a directory containing one of the above files.  If
+[3.652s]   "ament_cmake" provides a separate development package or SDK, be sure it
+[3.652s]   has been installed.
+[3.655s] 
+[3.656s] 
+[3.660s] -- Configuring incomplete, errors occurred!
+[3.665s] See also "/home/nvidia/f1tenth_ws/build/teleop_tools_msgs/CMakeFiles/CMakeOutput.log".
+[3.669s] Invoked command in '/home/nvidia/f1tenth_ws/build/teleop_tools_msgs' returned '1': /usr/bin/cmake /home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/teleop_tools_msgs -DCMAKE_INSTALL_PREFIX=/home/nvidia/f1tenth_ws/install/teleop_tools_msgs

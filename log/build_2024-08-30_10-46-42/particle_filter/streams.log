@@ -1,0 +1,49 @@
+[5.672s] Invoking command in '/home/nvidia/f1tenth_ws/src/particle_filter': PYTHONPATH=/home/nvidia/f1tenth_ws/build/particle_filter/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/particle_filter/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/particle_filter build --build-base /home/nvidia/f1tenth_ws/build/particle_filter/build install --record /home/nvidia/f1tenth_ws/build/particle_filter/install.log --install-scripts $base/lib/particle_filter --single-version-externally-managed install_data
+[7.402s] running egg_info
+[7.404s] creating ../../build/particle_filter/particle_filter.egg-info
+[7.404s] writing ../../build/particle_filter/particle_filter.egg-info/PKG-INFO
+[7.420s] writing dependency_links to ../../build/particle_filter/particle_filter.egg-info/dependency_links.txt
+[7.430s] writing entry points to ../../build/particle_filter/particle_filter.egg-info/entry_points.txt
+[7.431s] writing requirements to ../../build/particle_filter/particle_filter.egg-info/requires.txt
+[7.436s] writing top-level names to ../../build/particle_filter/particle_filter.egg-info/top_level.txt
+[7.442s] writing manifest file '../../build/particle_filter/particle_filter.egg-info/SOURCES.txt'
+[7.660s] reading manifest file '../../build/particle_filter/particle_filter.egg-info/SOURCES.txt'
+[7.666s] writing manifest file '../../build/particle_filter/particle_filter.egg-info/SOURCES.txt'
+[7.668s] running build
+[7.670s] running build_py
+[7.678s] creating /home/nvidia/f1tenth_ws/build/particle_filter/build
+[7.682s] creating /home/nvidia/f1tenth_ws/build/particle_filter/build/lib
+[7.684s] creating /home/nvidia/f1tenth_ws/build/particle_filter/build/lib/particle_filter
+[7.684s] copying particle_filter/utils.py -> /home/nvidia/f1tenth_ws/build/particle_filter/build/lib/particle_filter
+[7.686s] copying particle_filter/__init__.py -> /home/nvidia/f1tenth_ws/build/particle_filter/build/lib/particle_filter
+[7.689s] copying particle_filter/particle_filter.py -> /home/nvidia/f1tenth_ws/build/particle_filter/build/lib/particle_filter
+[7.690s] running install
+[7.691s] running install_lib
+[7.692s] creating /home/nvidia/f1tenth_ws/install/particle_filter/lib/python3.8/site-packages/particle_filter
+[7.694s] copying /home/nvidia/f1tenth_ws/build/particle_filter/build/lib/particle_filter/utils.py -> /home/nvidia/f1tenth_ws/install/particle_filter/lib/python3.8/site-packages/particle_filter
+[7.694s] copying /home/nvidia/f1tenth_ws/build/particle_filter/build/lib/particle_filter/__init__.py -> /home/nvidia/f1tenth_ws/install/particle_filter/lib/python3.8/site-packages/particle_filter
+[7.695s] copying /home/nvidia/f1tenth_ws/build/particle_filter/build/lib/particle_filter/particle_filter.py -> /home/nvidia/f1tenth_ws/install/particle_filter/lib/python3.8/site-packages/particle_filter
+[7.698s] byte-compiling /home/nvidia/f1tenth_ws/install/particle_filter/lib/python3.8/site-packages/particle_filter/utils.py to utils.cpython-38.pyc
+[7.722s] byte-compiling /home/nvidia/f1tenth_ws/install/particle_filter/lib/python3.8/site-packages/particle_filter/__init__.py to __init__.cpython-38.pyc
+[7.741s] byte-compiling /home/nvidia/f1tenth_ws/install/particle_filter/lib/python3.8/site-packages/particle_filter/particle_filter.py to particle_filter.cpython-38.pyc
+[7.744s] running install_data
+[7.744s] creating /home/nvidia/f1tenth_ws/install/particle_filter/share/ament_index
+[7.745s] creating /home/nvidia/f1tenth_ws/install/particle_filter/share/ament_index/resource_index
+[7.745s] creating /home/nvidia/f1tenth_ws/install/particle_filter/share/ament_index/resource_index/packages
+[7.746s] copying resource/particle_filter -> /home/nvidia/f1tenth_ws/install/particle_filter/share/ament_index/resource_index/packages
+[7.746s] copying package.xml -> /home/nvidia/f1tenth_ws/install/particle_filter/share/particle_filter
+[7.747s] creating /home/nvidia/f1tenth_ws/install/particle_filter/share/particle_filter/maps
+[7.748s] copying maps/levine.pgm -> /home/nvidia/f1tenth_ws/install/particle_filter/share/particle_filter/maps
+[7.782s] copying maps/basement_fixed.png -> /home/nvidia/f1tenth_ws/install/particle_filter/share/particle_filter/maps
+[7.785s] copying maps/basement_fixed.map.yaml -> /home/nvidia/f1tenth_ws/install/particle_filter/share/particle_filter/maps
+[7.785s] copying maps/levine.yaml -> /home/nvidia/f1tenth_ws/install/particle_filter/share/particle_filter/maps
+[7.786s] creating /home/nvidia/f1tenth_ws/install/particle_filter/share/particle_filter/launch
+[7.786s] copying launch/localize_launch.py -> /home/nvidia/f1tenth_ws/install/particle_filter/share/particle_filter/launch
+[7.787s] creating /home/nvidia/f1tenth_ws/install/particle_filter/share/particle_filter/config
+[7.787s] copying config/localize.yaml -> /home/nvidia/f1tenth_ws/install/particle_filter/share/particle_filter/config
+[7.788s] running install_egg_info
+[7.789s] Copying ../../build/particle_filter/particle_filter.egg-info to /home/nvidia/f1tenth_ws/install/particle_filter/lib/python3.8/site-packages/particle_filter-0.2.0-py3.8.egg-info
+[7.790s] running install_scripts
+[7.888s] Installing particle_filter script to /home/nvidia/f1tenth_ws/install/particle_filter/lib/particle_filter
+[7.890s] writing list of installed files to '/home/nvidia/f1tenth_ws/build/particle_filter/install.log'
+[8.015s] Invoked command in '/home/nvidia/f1tenth_ws/src/particle_filter' returned '0': PYTHONPATH=/home/nvidia/f1tenth_ws/build/particle_filter/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/particle_filter/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/particle_filter build --build-base /home/nvidia/f1tenth_ws/build/particle_filter/build install --record /home/nvidia/f1tenth_ws/build/particle_filter/install.log --install-scripts $base/lib/particle_filter --single-version-externally-managed install_data
