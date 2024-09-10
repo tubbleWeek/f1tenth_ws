@@ -1,0 +1,102 @@
+[0.000000] (-) TimerEvent: {}
+[0.001412] (-) JobUnselected: {'identifier': 'ackermann_mux'}
+[0.002256] (-) JobUnselected: {'identifier': 'f1tenth_stack'}
+[0.003436] (-) JobUnselected: {'identifier': 'joy_teleop'}
+[0.005038] (-) JobUnselected: {'identifier': 'key_teleop'}
+[0.006937] (-) JobUnselected: {'identifier': 'mouse_teleop'}
+[0.007672] (-) JobUnselected: {'identifier': 'new_map_saver'}
+[0.008465] (-) JobUnselected: {'identifier': 'teleop_tools'}
+[0.009691] (-) JobUnselected: {'identifier': 'teleop_tools_msgs'}
+[0.009938] (-) JobUnselected: {'identifier': 'vesc'}
+[0.010173] (-) JobUnselected: {'identifier': 'vesc_ackermann'}
+[0.010312] (-) JobUnselected: {'identifier': 'vesc_driver'}
+[0.010963] (-) JobUnselected: {'identifier': 'vesc_msgs'}
+[0.011210] (mapping) JobQueued: {'identifier': 'mapping', 'dependencies': OrderedDict()}
+[0.011394] (mapping) JobStarted: {'identifier': 'mapping'}
+[0.098831] (-) TimerEvent: {}
+[0.201511] (-) TimerEvent: {}
+[0.302633] (-) TimerEvent: {}
+[0.403812] (-) TimerEvent: {}
+[0.504859] (-) TimerEvent: {}
+[0.605917] (-) TimerEvent: {}
+[0.706939] (-) TimerEvent: {}
+[0.808110] (-) TimerEvent: {}
+[0.909058] (-) TimerEvent: {}
+[1.010045] (-) TimerEvent: {}
+[1.111337] (-) TimerEvent: {}
+[1.212418] (-) TimerEvent: {}
+[1.313344] (-) TimerEvent: {}
+[1.414927] (-) TimerEvent: {}
+[1.519243] (-) TimerEvent: {}
+[1.621825] (-) TimerEvent: {}
+[1.722861] (-) TimerEvent: {}
+[1.823810] (-) TimerEvent: {}
+[1.924691] (-) TimerEvent: {}
+[2.025617] (-) TimerEvent: {}
+[2.126542] (-) TimerEvent: {}
+[2.227488] (-) TimerEvent: {}
+[2.328493] (-) TimerEvent: {}
+[2.430218] (-) TimerEvent: {}
+[2.531201] (-) TimerEvent: {}
+[2.633022] (-) TimerEvent: {}
+[2.733909] (-) TimerEvent: {}
+[2.834900] (-) TimerEvent: {}
+[2.936245] (-) TimerEvent: {}
+[3.038439] (-) TimerEvent: {}
+[3.139521] (-) TimerEvent: {}
+[3.240630] (-) TimerEvent: {}
+[3.341630] (-) TimerEvent: {}
+[3.442717] (-) TimerEvent: {}
+[3.543924] (-) TimerEvent: {}
+[3.645031] (-) TimerEvent: {}
+[3.745953] (-) TimerEvent: {}
+[3.846925] (-) TimerEvent: {}
+[3.948018] (-) TimerEvent: {}
+[4.041983] (mapping) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/mapping', 'build', '--build-base', '/home/nvidia/f1tenth_ws/build/mapping/build', 'install', '--record', '/home/nvidia/f1tenth_ws/build/mapping/install.log', '--install-scripts', '$base/lib/mapping', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/nvidia/f1tenth_ws/src/mapping', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'nvidia', 'SSH_CLIENT': '10.131.209.193 45000 22', 'XDG_SESSION_TYPE': 'tty', 'GIT_ASKPASS': '/home/nvidia/.vscode-server/cli/servers/Stable-4849ca9bdf9666755eb463db297b69e5385090e3/server/extensions/git/dist/askpass.sh', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/usr/local/cuda-11.4/lib64://home/nvidia/f1tenth_ws/install/vesc_driver/lib://home/nvidia/f1tenth_ws/install/vesc_ackermann/lib://home/nvidia/f1tenth_ws/install/vesc_msgs/lib://home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib:/usr/lib/aarch64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-11.4/lib64:', 'BROWSER': '/home/nvidia/.vscode-server/cli/servers/Stable-4849ca9bdf9666755eb463db297b69e5385090e3/server/bin/helpers/browser.sh', 'MOTD_SHOWN': 'pam', 'HOME': '/home/nvidia', 'TERM_PROGRAM_VERSION': '1.93.0', 'VSCODE_IPC_HOOK_CLI': '/run/user/1000/vscode-ipc-b4544531-9505-442b-8793-3087c32e17a8.sock', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/home/nvidia/.vscode-server/cli/servers/Stable-4849ca9bdf9666755eb463db297b69e5385090e3/server/extensions/git/dist/askpass-main.js', 'VSCODE_GIT_ASKPASS_NODE': '/home/nvidia/.vscode-server/cli/servers/Stable-4849ca9bdf9666755eb463db297b69e5385090e3/server/node', 'SSL_CERT_FILE': '/usr/lib/ssl/certs/ca-certificates.crt', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'COLCON_PREFIX_PATH': '//home/nvidia/f1tenth_ws/install', 'ROS_DISTRO': 'foxy', 'LOGNAME': 'nvidia', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': '5', 'GAZEBO_MODEL_PATH': ':/opt/ros/foxy/share/turtlebot3_gazebo/models:/opt/ros/foxy/share/turtlebot3_gazebo/models', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/usr/local/cuda-11.4/bin:/home/nvidia/.vscode-server/cli/servers/Stable-4849ca9bdf9666755eb463db297b69e5385090e3/server/bin/remote-cli:/home/nvidia/.local/bin://home/nvidia/f1tenth_ws/install/range_lib/bin:/opt/ros/foxy/bin:/usr/local/cuda-11.4/bin:/home/nvidia/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1000/vscode-git-b500d53350.sock', 'TERM_PROGRAM': 'vscode', 'ROS_DOMAIN_ID': '4', 'AMENT_PREFIX_PATH': '//home/nvidia/f1tenth_ws/install/f1tenth_stack://home/nvidia/f1tenth_ws/install/vesc://home/nvidia/f1tenth_ws/install/vesc_driver://home/nvidia/f1tenth_ws/install/vesc_ackermann://home/nvidia/f1tenth_ws/install/vesc_msgs://home/nvidia/f1tenth_ws/install/teleop_tools://home/nvidia/f1tenth_ws/install/joy_teleop://home/nvidia/f1tenth_ws/install/teleop_tools_msgs://home/nvidia/f1tenth_ws/install/particle_filter://home/nvidia/f1tenth_ws/install/new_map_saver://home/nvidia/f1tenth_ws/install/mouse_teleop://home/nvidia/f1tenth_ws/install/mapping://home/nvidia/f1tenth_ws/install/key_teleop://home/nvidia/f1tenth_ws/install/ackermann_mux:/opt/ros/foxy', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/home/nvidia/f1tenth_ws/build/mapping', 'TURTLEBOT3_MODEL': 'waffle', 'LC_ALL': 'en_US.UTF-8', 'SSH_CONNECTION': '10.131.209.193 45000 10.131.11.195 22', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/nvidia/f1tenth_ws/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/particle_filter/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '//home/nvidia/f1tenth_ws/install/vesc://home/nvidia/f1tenth_ws/install/vesc_driver://home/nvidia/f1tenth_ws/install/vesc_ackermann://home/nvidia/f1tenth_ws/install/vesc_msgs://home/nvidia/f1tenth_ws/install/teleop_tools://home/nvidia/f1tenth_ws/install/teleop_tools_msgs://home/nvidia/f1tenth_ws/install/range_lib://home/nvidia/f1tenth_ws/install/ackermann_mux'}, 'shell': False}
+[4.055831] (-) TimerEvent: {}
+[4.157372] (-) TimerEvent: {}
+[4.260128] (-) TimerEvent: {}
+[4.361059] (-) TimerEvent: {}
+[4.462021] (-) TimerEvent: {}
+[4.562933] (-) TimerEvent: {}
+[4.663940] (-) TimerEvent: {}
+[4.764851] (-) TimerEvent: {}
+[4.865921] (-) TimerEvent: {}
+[4.966807] (-) TimerEvent: {}
+[5.067902] (-) TimerEvent: {}
+[5.168933] (-) TimerEvent: {}
+[5.269964] (-) TimerEvent: {}
+[5.370899] (-) TimerEvent: {}
+[5.473073] (-) TimerEvent: {}
+[5.543333] (mapping) StdoutLine: {'line': b'running egg_info\n'}
+[5.547634] (mapping) StdoutLine: {'line': b'writing ../../build/mapping/mapping.egg-info/PKG-INFO\n'}
+[5.549057] (mapping) StdoutLine: {'line': b'writing dependency_links to ../../build/mapping/mapping.egg-info/dependency_links.txt\n'}
+[5.550158] (mapping) StdoutLine: {'line': b'writing entry points to ../../build/mapping/mapping.egg-info/entry_points.txt\n'}
+[5.550945] (mapping) StdoutLine: {'line': b'writing requirements to ../../build/mapping/mapping.egg-info/requires.txt\n'}
+[5.551654] (mapping) StdoutLine: {'line': b'writing top-level names to ../../build/mapping/mapping.egg-info/top_level.txt\n'}
+[5.573305] (-) TimerEvent: {}
+[5.674935] (-) TimerEvent: {}
+[5.737524] (mapping) StdoutLine: {'line': b"reading manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'\n"}
+[5.742374] (mapping) StdoutLine: {'line': b"writing manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'\n"}
+[5.743808] (mapping) StdoutLine: {'line': b'running build\n'}
+[5.744452] (mapping) StdoutLine: {'line': b'running build_py\n'}
+[5.745535] (mapping) StdoutLine: {'line': b'copying mapping/local_mapping_gradient.py -> /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping\n'}
+[5.747896] (mapping) StdoutLine: {'line': b'running install\n'}
+[5.753422] (mapping) StdoutLine: {'line': b'running install_lib\n'}
+[5.762072] (mapping) StdoutLine: {'line': b'copying /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping/local_mapping_gradient.py -> /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping\n'}
+[5.767783] (mapping) StdoutLine: {'line': b'byte-compiling /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping/local_mapping_gradient.py to local_mapping_gradient.cpython-38.pyc\n'}
+[5.775531] (-) TimerEvent: {}
+[5.784727] (mapping) StdoutLine: {'line': b'running install_data\n'}
+[5.786936] (mapping) StdoutLine: {'line': b'running install_egg_info\n'}
+[5.796573] (mapping) StdoutLine: {'line': b"removing '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info' (and everything under it)\n"}
+[5.798791] (mapping) StdoutLine: {'line': b'Copying ../../build/mapping/mapping.egg-info to /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info\n'}
+[5.806875] (mapping) StdoutLine: {'line': b'running install_scripts\n'}
+[5.876126] (-) TimerEvent: {}
+[5.918007] (mapping) StdoutLine: {'line': b'Installing local_gradient_node script to /home/nvidia/f1tenth_ws/install/mapping/lib/mapping\n'}
+[5.919410] (mapping) StdoutLine: {'line': b'Installing local_mapping_node script to /home/nvidia/f1tenth_ws/install/mapping/lib/mapping\n'}
+[5.922661] (mapping) StdoutLine: {'line': b"writing list of installed files to '/home/nvidia/f1tenth_ws/build/mapping/install.log'\n"}
+[5.975965] (-) TimerEvent: {}
+[6.042124] (mapping) CommandEnded: {'returncode': 0}
+[6.078257] (-) TimerEvent: {}
+[6.121363] (mapping) JobEnded: {'identifier': 'mapping', 'rc': 0}
+[6.125772] (-) EventReactorShutdown: {}

@@ -1,0 +1,33 @@
+[8.074s] Invoking command in '/home/nvidia/f1tenth_ws/src/mapping': PYTHONPATH=/home/nvidia/f1tenth_ws/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/mapping build --build-base /home/nvidia/f1tenth_ws/build/mapping/build install --record /home/nvidia/f1tenth_ws/build/mapping/install.log --install-scripts $base/lib/mapping --single-version-externally-managed install_data
+[11.235s] running egg_info
+[11.241s] writing ../../build/mapping/mapping.egg-info/PKG-INFO
+[11.244s] writing dependency_links to ../../build/mapping/mapping.egg-info/dependency_links.txt
+[11.247s] writing entry points to ../../build/mapping/mapping.egg-info/entry_points.txt
+[11.249s] writing requirements to ../../build/mapping/mapping.egg-info/requires.txt
+[11.251s] writing top-level names to ../../build/mapping/mapping.egg-info/top_level.txt
+[11.698s] reading manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'
+[11.714s] writing manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'
+[11.720s] running build
+[11.722s] running build_py
+[11.732s] copying mapping/local_mapping_gradient.py -> /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping
+[11.746s] copying mapping/local_mapping.py -> /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping
+[11.752s] copying mapping/__init__.py -> /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping
+[11.757s] running install
+[11.771s] running install_lib
+[11.793s] copying /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping/local_mapping_gradient.py -> /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping
+[11.799s] copying /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping/local_mapping.py -> /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping
+[11.806s] copying /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping/__init__.py -> /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping
+[11.819s] byte-compiling /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping/local_mapping_gradient.py to local_mapping_gradient.cpython-38.pyc
+[11.861s] byte-compiling /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping/local_mapping.py to local_mapping.cpython-38.pyc
+[11.886s] byte-compiling /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping/__init__.py to __init__.cpython-38.pyc
+[11.898s] running install_data
+[11.901s] copying resource/mapping -> /home/nvidia/f1tenth_ws/install/mapping/share/ament_index/resource_index/packages
+[11.906s] copying package.xml -> /home/nvidia/f1tenth_ws/install/mapping/share/mapping
+[11.911s] running install_egg_info
+[11.929s] removing '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info' (and everything under it)
+[11.947s] Copying ../../build/mapping/mapping.egg-info to /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info
+[11.980s] running install_scripts
+[12.342s] Installing local_gradient_node script to /home/nvidia/f1tenth_ws/install/mapping/lib/mapping
+[12.345s] Installing local_mapping_node script to /home/nvidia/f1tenth_ws/install/mapping/lib/mapping
+[12.348s] writing list of installed files to '/home/nvidia/f1tenth_ws/build/mapping/install.log'
+[13.036s] Invoked command in '/home/nvidia/f1tenth_ws/src/mapping' returned '0': PYTHONPATH=/home/nvidia/f1tenth_ws/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/mapping build --build-base /home/nvidia/f1tenth_ws/build/mapping/build install --record /home/nvidia/f1tenth_ws/build/mapping/install.log --install-scripts $base/lib/mapping --single-version-externally-managed install_data

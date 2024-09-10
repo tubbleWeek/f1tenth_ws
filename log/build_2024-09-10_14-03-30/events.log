@@ -1,0 +1,96 @@
+[0.000000] (-) TimerEvent: {}
+[0.001975] (-) JobUnselected: {'identifier': 'ackermann_mux'}
+[0.003520] (-) JobUnselected: {'identifier': 'f1tenth_stack'}
+[0.004891] (-) JobUnselected: {'identifier': 'joy_teleop'}
+[0.005589] (-) JobUnselected: {'identifier': 'key_teleop'}
+[0.005878] (-) JobUnselected: {'identifier': 'mouse_teleop'}
+[0.006613] (-) JobUnselected: {'identifier': 'new_map_saver'}
+[0.007032] (-) JobUnselected: {'identifier': 'teleop_tools'}
+[0.007380] (-) JobUnselected: {'identifier': 'teleop_tools_msgs'}
+[0.007559] (-) JobUnselected: {'identifier': 'vesc'}
+[0.009905] (-) JobUnselected: {'identifier': 'vesc_ackermann'}
+[0.010209] (-) JobUnselected: {'identifier': 'vesc_driver'}
+[0.010378] (-) JobUnselected: {'identifier': 'vesc_msgs'}
+[0.010558] (mapping) JobQueued: {'identifier': 'mapping', 'dependencies': OrderedDict()}
+[0.010697] (mapping) JobStarted: {'identifier': 'mapping'}
+[0.099267] (-) TimerEvent: {}
+[0.202120] (-) TimerEvent: {}
+[0.303119] (-) TimerEvent: {}
+[0.404053] (-) TimerEvent: {}
+[0.505065] (-) TimerEvent: {}
+[0.606081] (-) TimerEvent: {}
+[0.707103] (-) TimerEvent: {}
+[0.808085] (-) TimerEvent: {}
+[0.909130] (-) TimerEvent: {}
+[1.010097] (-) TimerEvent: {}
+[1.111092] (-) TimerEvent: {}
+[1.212180] (-) TimerEvent: {}
+[1.313106] (-) TimerEvent: {}
+[1.416278] (-) TimerEvent: {}
+[1.521987] (-) TimerEvent: {}
+[1.624048] (-) TimerEvent: {}
+[1.725125] (-) TimerEvent: {}
+[1.826067] (-) TimerEvent: {}
+[1.927367] (-) TimerEvent: {}
+[2.028314] (-) TimerEvent: {}
+[2.129286] (-) TimerEvent: {}
+[2.230255] (-) TimerEvent: {}
+[2.331240] (-) TimerEvent: {}
+[2.432328] (-) TimerEvent: {}
+[2.533566] (-) TimerEvent: {}
+[2.634534] (-) TimerEvent: {}
+[2.735539] (-) TimerEvent: {}
+[2.836639] (-) TimerEvent: {}
+[2.937707] (-) TimerEvent: {}
+[3.038730] (-) TimerEvent: {}
+[3.139779] (-) TimerEvent: {}
+[3.240822] (-) TimerEvent: {}
+[3.341803] (-) TimerEvent: {}
+[3.442715] (-) TimerEvent: {}
+[3.543669] (-) TimerEvent: {}
+[3.613382] (mapping) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/mapping', 'build', '--build-base', '/home/nvidia/f1tenth_ws/build/mapping/build', 'install', '--record', '/home/nvidia/f1tenth_ws/build/mapping/install.log', '--install-scripts', '$base/lib/mapping', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/nvidia/f1tenth_ws/src/mapping', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'nvidia', 'SSH_CLIENT': '10.131.209.193 45000 22', 'XDG_SESSION_TYPE': 'tty', 'GIT_ASKPASS': '/home/nvidia/.vscode-server/cli/servers/Stable-4849ca9bdf9666755eb463db297b69e5385090e3/server/extensions/git/dist/askpass.sh', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/usr/local/cuda-11.4/lib64://home/nvidia/f1tenth_ws/install/vesc_driver/lib://home/nvidia/f1tenth_ws/install/vesc_ackermann/lib://home/nvidia/f1tenth_ws/install/vesc_msgs/lib://home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib:/usr/lib/aarch64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-11.4/lib64:', 'BROWSER': '/home/nvidia/.vscode-server/cli/servers/Stable-4849ca9bdf9666755eb463db297b69e5385090e3/server/bin/helpers/browser.sh', 'MOTD_SHOWN': 'pam', 'HOME': '/home/nvidia', 'TERM_PROGRAM_VERSION': '1.93.0', 'VSCODE_IPC_HOOK_CLI': '/run/user/1000/vscode-ipc-b4544531-9505-442b-8793-3087c32e17a8.sock', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/home/nvidia/.vscode-server/cli/servers/Stable-4849ca9bdf9666755eb463db297b69e5385090e3/server/extensions/git/dist/askpass-main.js', 'VSCODE_GIT_ASKPASS_NODE': '/home/nvidia/.vscode-server/cli/servers/Stable-4849ca9bdf9666755eb463db297b69e5385090e3/server/node', 'SSL_CERT_FILE': '/usr/lib/ssl/certs/ca-certificates.crt', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'COLCON_PREFIX_PATH': '//home/nvidia/f1tenth_ws/install', 'ROS_DISTRO': 'foxy', 'LOGNAME': 'nvidia', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': '5', 'GAZEBO_MODEL_PATH': ':/opt/ros/foxy/share/turtlebot3_gazebo/models:/opt/ros/foxy/share/turtlebot3_gazebo/models', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/usr/local/cuda-11.4/bin:/home/nvidia/.vscode-server/cli/servers/Stable-4849ca9bdf9666755eb463db297b69e5385090e3/server/bin/remote-cli:/home/nvidia/.local/bin://home/nvidia/f1tenth_ws/install/range_lib/bin:/opt/ros/foxy/bin:/usr/local/cuda-11.4/bin:/home/nvidia/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1000/vscode-git-b500d53350.sock', 'TERM_PROGRAM': 'vscode', 'ROS_DOMAIN_ID': '4', 'AMENT_PREFIX_PATH': '//home/nvidia/f1tenth_ws/install/f1tenth_stack://home/nvidia/f1tenth_ws/install/vesc://home/nvidia/f1tenth_ws/install/vesc_driver://home/nvidia/f1tenth_ws/install/vesc_ackermann://home/nvidia/f1tenth_ws/install/vesc_msgs://home/nvidia/f1tenth_ws/install/teleop_tools://home/nvidia/f1tenth_ws/install/joy_teleop://home/nvidia/f1tenth_ws/install/teleop_tools_msgs://home/nvidia/f1tenth_ws/install/particle_filter://home/nvidia/f1tenth_ws/install/new_map_saver://home/nvidia/f1tenth_ws/install/mouse_teleop://home/nvidia/f1tenth_ws/install/mapping://home/nvidia/f1tenth_ws/install/key_teleop://home/nvidia/f1tenth_ws/install/ackermann_mux:/opt/ros/foxy', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/home/nvidia/f1tenth_ws/build/mapping', 'TURTLEBOT3_MODEL': 'waffle', 'LC_ALL': 'en_US.UTF-8', 'SSH_CONNECTION': '10.131.209.193 45000 10.131.11.195 22', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/nvidia/f1tenth_ws/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/particle_filter/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '//home/nvidia/f1tenth_ws/install/vesc://home/nvidia/f1tenth_ws/install/vesc_driver://home/nvidia/f1tenth_ws/install/vesc_ackermann://home/nvidia/f1tenth_ws/install/vesc_msgs://home/nvidia/f1tenth_ws/install/teleop_tools://home/nvidia/f1tenth_ws/install/teleop_tools_msgs://home/nvidia/f1tenth_ws/install/range_lib://home/nvidia/f1tenth_ws/install/ackermann_mux'}, 'shell': False}
+[3.647841] (-) TimerEvent: {}
+[3.753779] (-) TimerEvent: {}
+[3.854809] (-) TimerEvent: {}
+[3.955826] (-) TimerEvent: {}
+[4.056889] (-) TimerEvent: {}
+[4.157773] (-) TimerEvent: {}
+[4.258720] (-) TimerEvent: {}
+[4.359648] (-) TimerEvent: {}
+[4.460699] (-) TimerEvent: {}
+[4.561687] (-) TimerEvent: {}
+[4.662639] (-) TimerEvent: {}
+[4.763612] (-) TimerEvent: {}
+[4.864665] (-) TimerEvent: {}
+[4.962432] (mapping) StdoutLine: {'line': b'running egg_info\n'}
+[4.964797] (-) TimerEvent: {}
+[4.966350] (mapping) StdoutLine: {'line': b'writing ../../build/mapping/mapping.egg-info/PKG-INFO\n'}
+[4.968014] (mapping) StdoutLine: {'line': b'writing dependency_links to ../../build/mapping/mapping.egg-info/dependency_links.txt\n'}
+[4.968972] (mapping) StdoutLine: {'line': b'writing entry points to ../../build/mapping/mapping.egg-info/entry_points.txt\n'}
+[4.969727] (mapping) StdoutLine: {'line': b'writing requirements to ../../build/mapping/mapping.egg-info/requires.txt\n'}
+[4.970389] (mapping) StdoutLine: {'line': b'writing top-level names to ../../build/mapping/mapping.egg-info/top_level.txt\n'}
+[5.065020] (-) TimerEvent: {}
+[5.164034] (mapping) StdoutLine: {'line': b"reading manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'\n"}
+[5.165144] (-) TimerEvent: {}
+[5.168980] (mapping) StdoutLine: {'line': b"writing manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'\n"}
+[5.169857] (mapping) StdoutLine: {'line': b'running build\n'}
+[5.170292] (mapping) StdoutLine: {'line': b'running build_py\n'}
+[5.170812] (mapping) StdoutLine: {'line': b'copying mapping/local_mapping_gradient.py -> /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping\n'}
+[5.172869] (mapping) StdoutLine: {'line': b'running install\n'}
+[5.177210] (mapping) StdoutLine: {'line': b'running install_lib\n'}
+[5.183472] (mapping) StdoutLine: {'line': b'copying /home/nvidia/f1tenth_ws/build/mapping/build/lib/mapping/local_mapping_gradient.py -> /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping\n'}
+[5.187516] (mapping) StdoutLine: {'line': b'byte-compiling /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping/local_mapping_gradient.py to local_mapping_gradient.cpython-38.pyc\n'}
+[5.201525] (mapping) StdoutLine: {'line': b'running install_data\n'}
+[5.202605] (mapping) StdoutLine: {'line': b'running install_egg_info\n'}
+[5.211320] (mapping) StdoutLine: {'line': b"removing '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info' (and everything under it)\n"}
+[5.213542] (mapping) StdoutLine: {'line': b'Copying ../../build/mapping/mapping.egg-info to /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info\n'}
+[5.220335] (mapping) StdoutLine: {'line': b'running install_scripts\n'}
+[5.265363] (-) TimerEvent: {}
+[5.314470] (mapping) StdoutLine: {'line': b'Installing local_gradient_node script to /home/nvidia/f1tenth_ws/install/mapping/lib/mapping\n'}
+[5.315536] (mapping) StdoutLine: {'line': b'Installing local_mapping_node script to /home/nvidia/f1tenth_ws/install/mapping/lib/mapping\n'}
+[5.317649] (mapping) StdoutLine: {'line': b"writing list of installed files to '/home/nvidia/f1tenth_ws/build/mapping/install.log'\n"}
+[5.365634] (-) TimerEvent: {}
+[5.428708] (mapping) CommandEnded: {'returncode': 0}
+[5.465848] (-) TimerEvent: {}
+[5.498110] (mapping) JobEnded: {'identifier': 'mapping', 'rc': 0}
+[5.502344] (-) EventReactorShutdown: {}
