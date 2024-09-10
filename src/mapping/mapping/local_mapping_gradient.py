@@ -22,13 +22,16 @@ class LocalMapNode(Node):
         self.subscription = self.create_subscription(
             LaserScan,
             '/scan',
-            self.lidar_callback,
+            self.lidar_scan,
             10)
         self.publisher = self.create_publisher(
             OccupancyGrid,
             '/local_costmap',
             10)
         
+        # Holder variables for data
+        self.laserScan = None
+
         # Initialize tf2
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
@@ -39,9 +42,9 @@ class LocalMapNode(Node):
         self.height = 4.0  # meters
         self.origin_x = -2.0  # meters
         self.origin_y = -2.0  # meters
-        self.grid_width = int(self.width / self.resolution)
-        # changed int(self.height / self.resolution) to 2 to try to speed up localization    
-        self.grid_height = 2
+        # changed  to 2 to try to speed up localization    
+        self.grid_width = 2
+        self.grid_height = int(self.height / self.resolution)
         self.frame_id = 'base_link'  # Frame of the robot
         self.costmap = np.full((self.grid_height, self.grid_width), -1, dtype=np.int8)  # Initialize with -1 for unknown
 
@@ -56,7 +59,17 @@ class LocalMapNode(Node):
         self.angle_min = np.deg2rad(-30)
         self.angle_max = np.deg2rad(30)
 
-    def lidar_callback(self, msg: LaserScan):
+        #timer for update
+        self.time = self.create_timer(0.05, self.update_map)
+
+    def lidar_scan(self, msg: LaserScan):#Save newest laser scan
+        self.laserScan = msg
+
+    def update_map(self, msg: LaserScan):
+        if self.laserScan == None:
+            self.get_logger().warn('No laser scan recieved, perhaps not updating')
+            return
+
         try:
             transform = self.tf_buffer.lookup_transform(
                 'base_link',
