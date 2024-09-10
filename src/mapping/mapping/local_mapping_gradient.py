@@ -40,7 +40,8 @@ class LocalMapNode(Node):
         self.origin_x = -2.0  # meters
         self.origin_y = -2.0  # meters
         self.grid_width = int(self.width / self.resolution)
-        self.grid_height = int(self.height / self.resolution)
+        # changed int(self.height / self.resolution) to 2 to try to speed up localization    
+        self.grid_height = 2
         self.frame_id = 'base_link'  # Frame of the robot
         self.costmap = np.full((self.grid_height, self.grid_width), -1, dtype=np.int8)  # Initialize with -1 for unknown
 
