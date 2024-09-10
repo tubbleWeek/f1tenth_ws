@@ -39,12 +39,12 @@ class LocalMapNode(Node):
         # Define costmap parameters
         self.resolution = 0.05  # meters per cell
         self.width = 4.0  # meters
-        self.height = 4.0  # meters
+        self.height = 2.0  # meters
         self.origin_x = -2.0  # meters
-        self.origin_y = -2.0  # meters
-        # changed  to 2 to try to speed up localization    
-        self.grid_width = 2
-        self.grid_height = int(self.height / self.resolution)
+        self.origin_y = -1.0  # meters
+        # changed  to divide by 2 to try to speed up localization    
+        self.grid_width = int(self.width / self.resolution)
+        self.grid_height = int((self.height / self.resolution))
         self.frame_id = 'base_link'  # Frame of the robot
         self.costmap = np.full((self.grid_height, self.grid_width), -1, dtype=np.int8)  # Initialize with -1 for unknown
 
@@ -65,15 +65,15 @@ class LocalMapNode(Node):
     def lidar_scan(self, msg: LaserScan):#Save newest laser scan
         self.laserScan = msg
 
-    def update_map(self, msg: LaserScan):
-        if self.laserScan == None:
-            self.get_logger().warn('No laser scan recieved, perhaps not updating')
-            return
+    def update_map(self):
+        # if self.laserScan == None:
+        #     self.get_logger().warn('No laser scan recieved, perhaps not updating')
+        #     return
 
         try:
             transform = self.tf_buffer.lookup_transform(
                 'base_link',
-                msg.header.frame_id,
+                self.laserScan.header.frame_id,
                 rclpy.time.Time()
             )
         except Exception as e:
@@ -89,13 +89,13 @@ class LocalMapNode(Node):
         transform_matrix = self.get_transform_matrix(translation, rotation)
 
         # Convert polar coordinates to Cartesian and apply transformation
-        for i, distance in enumerate(msg.ranges):
+        for i, distance in enumerate(self.laserScan.ranges):
             # Skip readings within the car radius
             if distance < self.car_radius:
                 continue
 
-            if msg.range_min < distance < msg.range_max:
-                angle = msg.angle_min + i * msg.angle_increment
+            if self.laserScan.range_min < distance < self.laserScan.range_max:
+                angle = self.laserScan.angle_min + i * self.laserScan.angle_increment
                 x_laser = distance * np.cos(angle)
                 y_laser = distance * np.sin(angle)
 
