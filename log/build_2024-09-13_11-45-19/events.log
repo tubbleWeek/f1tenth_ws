@@ -1,0 +1,110 @@
+[0.000000] (-) TimerEvent: {}
+[0.001117] (-) JobUnselected: {'identifier': 'ackermann_mux'}
+[0.002428] (-) JobUnselected: {'identifier': 'f1tenth_stack'}
+[0.003219] (-) JobUnselected: {'identifier': 'joy_teleop'}
+[0.003836] (-) JobUnselected: {'identifier': 'key_teleop'}
+[0.004132] (-) JobUnselected: {'identifier': 'mapping'}
+[0.004270] (-) JobUnselected: {'identifier': 'mouse_teleop'}
+[0.004429] (-) JobUnselected: {'identifier': 'new_map_saver'}
+[0.004590] (-) JobUnselected: {'identifier': 'teleop_tools'}
+[0.004743] (-) JobUnselected: {'identifier': 'teleop_tools_msgs'}
+[0.004869] (-) JobUnselected: {'identifier': 'vesc'}
+[0.004994] (-) JobUnselected: {'identifier': 'vesc_ackermann'}
+[0.005422] (-) JobUnselected: {'identifier': 'vesc_driver'}
+[0.005672] (-) JobUnselected: {'identifier': 'vesc_msgs'}
+[0.005829] (phasespace) JobQueued: {'identifier': 'phasespace', 'dependencies': OrderedDict()}
+[0.006031] (phasespace) JobStarted: {'identifier': 'phasespace'}
+[0.099061] (-) TimerEvent: {}
+[0.201541] (-) TimerEvent: {}
+[0.302552] (-) TimerEvent: {}
+[0.403607] (-) TimerEvent: {}
+[0.504687] (-) TimerEvent: {}
+[0.605739] (-) TimerEvent: {}
+[0.706819] (-) TimerEvent: {}
+[0.807999] (-) TimerEvent: {}
+[0.909186] (-) TimerEvent: {}
+[1.010328] (-) TimerEvent: {}
+[1.111513] (-) TimerEvent: {}
+[1.212577] (-) TimerEvent: {}
+[1.313713] (-) TimerEvent: {}
+[1.414986] (-) TimerEvent: {}
+[1.517268] (-) TimerEvent: {}
+[1.620912] (-) TimerEvent: {}
+[1.723599] (-) TimerEvent: {}
+[1.825443] (-) TimerEvent: {}
+[1.927057] (-) TimerEvent: {}
+[2.028779] (-) TimerEvent: {}
+[2.130333] (-) TimerEvent: {}
+[2.231940] (-) TimerEvent: {}
+[2.333446] (-) TimerEvent: {}
+[2.435093] (-) TimerEvent: {}
+[2.536721] (-) TimerEvent: {}
+[2.637719] (-) TimerEvent: {}
+[2.738859] (-) TimerEvent: {}
+[2.840215] (-) TimerEvent: {}
+[2.941356] (-) TimerEvent: {}
+[3.042468] (-) TimerEvent: {}
+[3.143566] (-) TimerEvent: {}
+[3.244814] (-) TimerEvent: {}
+[3.345891] (-) TimerEvent: {}
+[3.447008] (-) TimerEvent: {}
+[3.548231] (-) TimerEvent: {}
+[3.649363] (-) TimerEvent: {}
+[3.735949] (phasespace) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/phasespace', 'build', '--build-base', '/home/nvidia/f1tenth_ws/build/phasespace/build', 'install', '--record', '/home/nvidia/f1tenth_ws/build/phasespace/install.log', '--install-scripts', '$base/lib/phasespace', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/nvidia/f1tenth_ws/src/phasespace', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'nvidia', 'SSH_CLIENT': '10.131.106.155 45754 22', 'XDG_SESSION_TYPE': 'tty', 'GIT_ASKPASS': '/home/nvidia/.vscode-server/cli/servers/Stable-38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/server/extensions/git/dist/askpass.sh', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/usr/local/cuda-11.4/lib64://home/nvidia/f1tenth_ws/install/vesc_driver/lib://home/nvidia/f1tenth_ws/install/vesc_ackermann/lib://home/nvidia/f1tenth_ws/install/vesc_msgs/lib://home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib:/usr/lib/aarch64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/aarch64-linux-gnu:/opt/ros/foxy/lib:/usr/local/cuda-11.4/lib64:', 'BROWSER': '/home/nvidia/.vscode-server/cli/servers/Stable-38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/server/bin/helpers/browser.sh', 'MOTD_SHOWN': 'pam', 'HOME': '/home/nvidia', 'OLDPWD': '/home/nvidia/f1tenth_ws/src/phasespace/phasespace', 'TERM_PROGRAM_VERSION': '1.93.1', 'VSCODE_IPC_HOOK_CLI': '/run/user/1000/vscode-ipc-8727d5ac-2ba2-4bd5-8855-821b5775d863.sock', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/home/nvidia/.vscode-server/cli/servers/Stable-38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/server/extensions/git/dist/askpass-main.js', 'VSCODE_GIT_ASKPASS_NODE': '/home/nvidia/.vscode-server/cli/servers/Stable-38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/server/node', 'SSL_CERT_FILE': '/usr/lib/ssl/certs/ca-certificates.crt', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'COLCON_PREFIX_PATH': '//home/nvidia/f1tenth_ws/install', 'ROS_DISTRO': 'foxy', 'LOGNAME': 'nvidia', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': '3', 'GAZEBO_MODEL_PATH': ':/opt/ros/foxy/share/turtlebot3_gazebo/models:/opt/ros/foxy/share/turtlebot3_gazebo/models', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/usr/local/cuda-11.4/bin:/home/nvidia/.vscode-server/cli/servers/Stable-38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40/server/bin/remote-cli:/home/nvidia/.local/bin://home/nvidia/f1tenth_ws/install/range_lib/bin:/opt/ros/foxy/bin:/usr/local/cuda-11.4/bin:/home/nvidia/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1000/vscode-git-b500d53350.sock', 'TERM_PROGRAM': 'vscode', 'ROS_DOMAIN_ID': '4', 'AMENT_PREFIX_PATH': '//home/nvidia/f1tenth_ws/install/f1tenth_stack://home/nvidia/f1tenth_ws/install/vesc://home/nvidia/f1tenth_ws/install/vesc_driver://home/nvidia/f1tenth_ws/install/vesc_ackermann://home/nvidia/f1tenth_ws/install/vesc_msgs://home/nvidia/f1tenth_ws/install/teleop_tools://home/nvidia/f1tenth_ws/install/joy_teleop://home/nvidia/f1tenth_ws/install/teleop_tools_msgs://home/nvidia/f1tenth_ws/install/particle_filter://home/nvidia/f1tenth_ws/install/new_map_saver://home/nvidia/f1tenth_ws/install/mouse_teleop://home/nvidia/f1tenth_ws/install/mapping://home/nvidia/f1tenth_ws/install/key_teleop://home/nvidia/f1tenth_ws/install/ackermann_mux:/opt/ros/foxy', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/home/nvidia/f1tenth_ws/build/phasespace', 'TURTLEBOT3_MODEL': 'waffle', 'LC_ALL': 'en_US.UTF-8', 'SSH_CONNECTION': '10.131.106.155 45754 10.131.11.195 22', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/nvidia/f1tenth_ws/build/phasespace/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/phasespace/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/f1tenth_stack/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/vesc_msgs/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/joy_teleop/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/teleop_tools_msgs/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/particle_filter/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/new_map_saver/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages://home/nvidia/f1tenth_ws/install/key_teleop/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '//home/nvidia/f1tenth_ws/install/vesc://home/nvidia/f1tenth_ws/install/vesc_driver://home/nvidia/f1tenth_ws/install/vesc_ackermann://home/nvidia/f1tenth_ws/install/vesc_msgs://home/nvidia/f1tenth_ws/install/teleop_tools://home/nvidia/f1tenth_ws/install/teleop_tools_msgs://home/nvidia/f1tenth_ws/install/range_lib://home/nvidia/f1tenth_ws/install/ackermann_mux'}, 'shell': False}
+[3.755329] (-) TimerEvent: {}
+[3.863936] (-) TimerEvent: {}
+[3.965571] (-) TimerEvent: {}
+[4.066684] (-) TimerEvent: {}
+[4.167898] (-) TimerEvent: {}
+[4.269019] (-) TimerEvent: {}
+[4.370181] (-) TimerEvent: {}
+[4.471361] (-) TimerEvent: {}
+[4.572985] (-) TimerEvent: {}
+[4.674079] (-) TimerEvent: {}
+[4.775160] (-) TimerEvent: {}
+[4.876282] (-) TimerEvent: {}
+[4.978394] (-) TimerEvent: {}
+[5.010666] (phasespace) StdoutLine: {'line': b'running egg_info\n'}
+[5.013870] (phasespace) StdoutLine: {'line': b'creating ../../build/phasespace/phasespace.egg-info\n'}
+[5.014782] (phasespace) StdoutLine: {'line': b'writing ../../build/phasespace/phasespace.egg-info/PKG-INFO\n'}
+[5.016190] (phasespace) StdoutLine: {'line': b'writing dependency_links to ../../build/phasespace/phasespace.egg-info/dependency_links.txt\n'}
+[5.016926] (phasespace) StdoutLine: {'line': b'writing entry points to ../../build/phasespace/phasespace.egg-info/entry_points.txt\n'}
+[5.017650] (phasespace) StdoutLine: {'line': b'writing requirements to ../../build/phasespace/phasespace.egg-info/requires.txt\n'}
+[5.018450] (phasespace) StdoutLine: {'line': b'writing top-level names to ../../build/phasespace/phasespace.egg-info/top_level.txt\n'}
+[5.027284] (phasespace) StdoutLine: {'line': b"writing manifest file '../../build/phasespace/phasespace.egg-info/SOURCES.txt'\n"}
+[5.078639] (-) TimerEvent: {}
+[5.179741] (-) TimerEvent: {}
+[5.207883] (phasespace) StdoutLine: {'line': b"reading manifest file '../../build/phasespace/phasespace.egg-info/SOURCES.txt'\n"}
+[5.211595] (phasespace) StdoutLine: {'line': b"writing manifest file '../../build/phasespace/phasespace.egg-info/SOURCES.txt'\n"}
+[5.213230] (phasespace) StdoutLine: {'line': b'running build\n'}
+[5.214373] (phasespace) StdoutLine: {'line': b'running build_py\n'}
+[5.215034] (phasespace) StdoutLine: {'line': b'creating /home/nvidia/f1tenth_ws/build/phasespace/build\n'}
+[5.215727] (phasespace) StdoutLine: {'line': b'creating /home/nvidia/f1tenth_ws/build/phasespace/build/lib\n'}
+[5.216307] (phasespace) StdoutLine: {'line': b'creating /home/nvidia/f1tenth_ws/build/phasespace/build/lib/phasespace\n'}
+[5.216802] (phasespace) StdoutLine: {'line': b'copying phasespace/__init__.py -> /home/nvidia/f1tenth_ws/build/phasespace/build/lib/phasespace\n'}
+[5.217223] (phasespace) StdoutLine: {'line': b'copying phasespace/phasespace_node_ros2.py -> /home/nvidia/f1tenth_ws/build/phasespace/build/lib/phasespace\n'}
+[5.217941] (phasespace) StdoutLine: {'line': b'running install\n'}
+[5.222327] (phasespace) StdoutLine: {'line': b'running install_lib\n'}
+[5.227313] (phasespace) StdoutLine: {'line': b'creating /home/nvidia/f1tenth_ws/install/phasespace/lib/python3.8/site-packages/phasespace\n'}
+[5.228076] (phasespace) StdoutLine: {'line': b'copying /home/nvidia/f1tenth_ws/build/phasespace/build/lib/phasespace/__init__.py -> /home/nvidia/f1tenth_ws/install/phasespace/lib/python3.8/site-packages/phasespace\n'}
+[5.228745] (phasespace) StdoutLine: {'line': b'copying /home/nvidia/f1tenth_ws/build/phasespace/build/lib/phasespace/phasespace_node_ros2.py -> /home/nvidia/f1tenth_ws/install/phasespace/lib/python3.8/site-packages/phasespace\n'}
+[5.232587] (phasespace) StdoutLine: {'line': b'byte-compiling /home/nvidia/f1tenth_ws/install/phasespace/lib/python3.8/site-packages/phasespace/__init__.py to __init__.cpython-38.pyc\n'}
+[5.238340] (phasespace) StdoutLine: {'line': b'byte-compiling /home/nvidia/f1tenth_ws/install/phasespace/lib/python3.8/site-packages/phasespace/phasespace_node_ros2.py to phasespace_node_ros2.cpython-38.pyc\n'}
+[5.280025] (-) TimerEvent: {}
+[5.310878] (phasespace) StdoutLine: {'line': b'running install_data\n'}
+[5.312429] (phasespace) StdoutLine: {'line': b'creating /home/nvidia/f1tenth_ws/install/phasespace/share/ament_index\n'}
+[5.313377] (phasespace) StdoutLine: {'line': b'creating /home/nvidia/f1tenth_ws/install/phasespace/share/ament_index/resource_index\n'}
+[5.314193] (phasespace) StdoutLine: {'line': b'creating /home/nvidia/f1tenth_ws/install/phasespace/share/ament_index/resource_index/packages\n'}
+[5.314688] (phasespace) StdoutLine: {'line': b'copying resource/phasespace -> /home/nvidia/f1tenth_ws/install/phasespace/share/ament_index/resource_index/packages\n'}
+[5.315123] (phasespace) StdoutLine: {'line': b'copying package.xml -> /home/nvidia/f1tenth_ws/install/phasespace/share/phasespace\n'}
+[5.315566] (phasespace) StdoutLine: {'line': b'running install_egg_info\n'}
+[5.321554] (phasespace) StdoutLine: {'line': b'Copying ../../build/phasespace/phasespace.egg-info to /home/nvidia/f1tenth_ws/install/phasespace/lib/python3.8/site-packages/phasespace-0.0.0-py3.8.egg-info\n'}
+[5.327855] (phasespace) StdoutLine: {'line': b'running install_scripts\n'}
+[5.380191] (-) TimerEvent: {}
+[5.412626] (phasespace) StdoutLine: {'line': b'Installing phasespace_node script to /home/nvidia/f1tenth_ws/install/phasespace/lib/phasespace\n'}
+[5.414280] (phasespace) StdoutLine: {'line': b"writing list of installed files to '/home/nvidia/f1tenth_ws/build/phasespace/install.log'\n"}
+[5.480526] (-) TimerEvent: {}
+[5.517367] (phasespace) CommandEnded: {'returncode': 0}
+[5.581073] (-) TimerEvent: {}
+[5.589149] (phasespace) JobEnded: {'identifier': 'phasespace', 'rc': 0}
+[5.594274] (-) EventReactorShutdown: {}

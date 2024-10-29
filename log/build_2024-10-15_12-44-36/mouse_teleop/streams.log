@@ -1,0 +1,41 @@
+[9.922s] Invoking command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/mouse_teleop': PYTHONPATH=/home/nvidia/f1tenth_ws/build/mouse_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/mouse_teleop build --build-base /home/nvidia/f1tenth_ws/build/mouse_teleop/build install --record /home/nvidia/f1tenth_ws/build/mouse_teleop/install.log --install-scripts $base/lib/mouse_teleop --single-version-externally-managed install_data
+[14.499s] running egg_info
+[14.504s] creating ../../../../build/mouse_teleop/mouse_teleop.egg-info
+[14.513s] writing ../../../../build/mouse_teleop/mouse_teleop.egg-info/PKG-INFO
+[14.519s] writing dependency_links to ../../../../build/mouse_teleop/mouse_teleop.egg-info/dependency_links.txt
+[14.536s] writing entry points to ../../../../build/mouse_teleop/mouse_teleop.egg-info/entry_points.txt
+[14.537s] writing requirements to ../../../../build/mouse_teleop/mouse_teleop.egg-info/requires.txt
+[14.538s] writing top-level names to ../../../../build/mouse_teleop/mouse_teleop.egg-info/top_level.txt
+[14.561s] writing manifest file '../../../../build/mouse_teleop/mouse_teleop.egg-info/SOURCES.txt'
+[15.250s] reading manifest file '../../../../build/mouse_teleop/mouse_teleop.egg-info/SOURCES.txt'
+[15.285s] writing manifest file '../../../../build/mouse_teleop/mouse_teleop.egg-info/SOURCES.txt'
+[15.285s] running build
+[15.285s] running build_py
+[15.295s] creating /home/nvidia/f1tenth_ws/build/mouse_teleop/build
+[15.296s] creating /home/nvidia/f1tenth_ws/build/mouse_teleop/build/lib
+[15.296s] creating /home/nvidia/f1tenth_ws/build/mouse_teleop/build/lib/mouse_teleop
+[15.307s] copying mouse_teleop/__init__.py -> /home/nvidia/f1tenth_ws/build/mouse_teleop/build/lib/mouse_teleop
+[15.308s] copying mouse_teleop/mouse_teleop.py -> /home/nvidia/f1tenth_ws/build/mouse_teleop/build/lib/mouse_teleop
+[15.308s] running install
+[15.308s] running install_lib
+[15.313s] creating /home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages/mouse_teleop
+[15.316s] copying /home/nvidia/f1tenth_ws/build/mouse_teleop/build/lib/mouse_teleop/__init__.py -> /home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages/mouse_teleop
+[15.317s] copying /home/nvidia/f1tenth_ws/build/mouse_teleop/build/lib/mouse_teleop/mouse_teleop.py -> /home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages/mouse_teleop
+[15.322s] byte-compiling /home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages/mouse_teleop/__init__.py to __init__.cpython-38.pyc
+[15.348s] byte-compiling /home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages/mouse_teleop/mouse_teleop.py to mouse_teleop.cpython-38.pyc
+[15.421s] running install_data
+[15.422s] copying package.xml -> /home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop
+[15.422s] creating /home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/config
+[15.423s] copying config/mouse_teleop.yaml -> /home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/config
+[15.424s] creating /home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/launch
+[15.439s] copying launch/mouse_teleop.launch.py -> /home/nvidia/f1tenth_ws/install/mouse_teleop/share/mouse_teleop/launch
+[15.440s] creating /home/nvidia/f1tenth_ws/install/mouse_teleop/share/ament_index
+[15.441s] creating /home/nvidia/f1tenth_ws/install/mouse_teleop/share/ament_index/resource_index
+[15.441s] creating /home/nvidia/f1tenth_ws/install/mouse_teleop/share/ament_index/resource_index/packages
+[15.442s] copying resource/mouse_teleop -> /home/nvidia/f1tenth_ws/install/mouse_teleop/share/ament_index/resource_index/packages
+[15.442s] running install_egg_info
+[15.443s] Copying ../../../../build/mouse_teleop/mouse_teleop.egg-info to /home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages/mouse_teleop-0.3.0-py3.8.egg-info
+[15.443s] running install_scripts
+[15.699s] Installing mouse_teleop script to /home/nvidia/f1tenth_ws/install/mouse_teleop/lib/mouse_teleop
+[15.710s] writing list of installed files to '/home/nvidia/f1tenth_ws/build/mouse_teleop/install.log'
+[16.136s] Invoked command in '/home/nvidia/f1tenth_ws/src/f1tenth_system/teleop_tools/mouse_teleop' returned '0': PYTHONPATH=/home/nvidia/f1tenth_ws/build/mouse_teleop/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mouse_teleop/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../../../build/mouse_teleop build --build-base /home/nvidia/f1tenth_ws/build/mouse_teleop/build install --record /home/nvidia/f1tenth_ws/build/mouse_teleop/install.log --install-scripts $base/lib/mouse_teleop --single-version-externally-managed install_data

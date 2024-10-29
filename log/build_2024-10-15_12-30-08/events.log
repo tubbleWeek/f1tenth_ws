@@ -1,0 +1,23 @@
+[0.000000] (-) TimerEvent: {}
+[0.000854] (-) JobUnselected: {'identifier': 'ackermann_mux'}
+[0.001559] (-) JobUnselected: {'identifier': 'f1tenth_controllers'}
+[0.001709] (-) JobUnselected: {'identifier': 'f1tenth_stack'}
+[0.002849] (-) JobUnselected: {'identifier': 'joy_teleop'}
+[0.003580] (-) JobUnselected: {'identifier': 'key_teleop'}
+[0.003759] (-) JobUnselected: {'identifier': 'mapping'}
+[0.003936] (-) JobUnselected: {'identifier': 'mouse_teleop'}
+[0.004574] (-) JobUnselected: {'identifier': 'new_map_saver'}
+[0.004822] (-) JobUnselected: {'identifier': 'phasespace'}
+[0.005435] (-) JobUnselected: {'identifier': 'teleop_tools'}
+[0.005608] (-) JobUnselected: {'identifier': 'teleop_tools_msgs'}
+[0.005787] (-) JobUnselected: {'identifier': 'vesc'}
+[0.005914] (-) JobUnselected: {'identifier': 'vesc_ackermann'}
+[0.006116] (-) JobUnselected: {'identifier': 'vesc_driver'}
+[0.006269] (-) JobUnselected: {'identifier': 'vesc_msgs'}
+[0.006504] (pure_pursuit) JobQueued: {'identifier': 'pure_pursuit', 'dependencies': OrderedDict()}
+[0.006698] (pure_pursuit) JobStarted: {'identifier': 'pure_pursuit'}
+[0.098913] (-) TimerEvent: {}
+[0.202367] (-) TimerEvent: {}
+[0.238921] (pure_pursuit) StderrLine: {'line': b'Traceback (most recent call last):\n  File "/usr/lib/python3/dist-packages/colcon_core/executor/__init__.py", line 91, in __call__\n    rc = await self.task(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_core/task/__init__.py", line 93, in __call__\n    return await task_method(*args, **kwargs)\n  File "/usr/lib/python3/dist-packages/colcon_ros/task/ament_cmake/build.py", line 84, in build\n    create_environment_scripts(\n  File "/usr/lib/python3/dist-packages/colcon_core/environment/__init__.py", line 91, in create_environment_scripts\n    create_file_with_runtime_dependencies(prefix_path, pkg))\n  File "/usr/lib/python3/dist-packages/colcon_core/environment/__init__.py", line 174, in create_file_with_runtime_dependencies\n    path.write_text(\n  File "/usr/lib/python3.8/pathlib.py", line 1255, in write_text\n    with self.open(mode=\'w\', encoding=encoding, errors=errors) as f:\n  File "/usr/lib/python3.8/pathlib.py", line 1222, in open\n    return io.open(self, mode, buffering, encoding, errors, newline,\n  File "/usr/lib/python3.8/pathlib.py", line 1078, in _opener\n    return self._accessor.open(self, flags, mode)\nPermissionError: [Errno 13] Permission denied: \'/home/nvidia/f1tenth_ws/install/pure_pursuit/share/colcon-core/packages/pure_pursuit\'\n'}
+[0.242618] (pure_pursuit) JobEnded: {'identifier': 'pure_pursuit', 'rc': 1}
+[0.254106] (-) EventReactorShutdown: {}

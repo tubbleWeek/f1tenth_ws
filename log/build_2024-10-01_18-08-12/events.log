@@ -1,0 +1,88 @@
+[0.000000] (-) TimerEvent: {}
+[0.001607] (-) JobUnselected: {'identifier': 'ackermann_mux'}
+[0.003028] (-) JobUnselected: {'identifier': 'f1tenth_stack'}
+[0.003974] (-) JobUnselected: {'identifier': 'joy_teleop'}
+[0.005024] (-) JobUnselected: {'identifier': 'key_teleop'}
+[0.005239] (-) JobUnselected: {'identifier': 'mapping'}
+[0.005561] (-) JobUnselected: {'identifier': 'mouse_teleop'}
+[0.005748] (-) JobUnselected: {'identifier': 'new_map_saver'}
+[0.008048] (-) JobUnselected: {'identifier': 'phasespace'}
+[0.008326] (-) JobUnselected: {'identifier': 'teleop_tools'}
+[0.009653] (-) JobUnselected: {'identifier': 'teleop_tools_msgs'}
+[0.010981] (-) JobUnselected: {'identifier': 'vesc'}
+[0.011288] (-) JobUnselected: {'identifier': 'vesc_ackermann'}
+[0.011739] (-) JobUnselected: {'identifier': 'vesc_driver'}
+[0.012024] (-) JobUnselected: {'identifier': 'vesc_msgs'}
+[0.012173] (f1tenth_controllers) JobQueued: {'identifier': 'f1tenth_controllers', 'dependencies': OrderedDict()}
+[0.012760] (f1tenth_controllers) JobStarted: {'identifier': 'f1tenth_controllers'}
+[0.099499] (-) TimerEvent: {}
+[0.201945] (-) TimerEvent: {}
+[0.303067] (-) TimerEvent: {}
+[0.404151] (-) TimerEvent: {}
+[0.505154] (-) TimerEvent: {}
+[0.606687] (-) TimerEvent: {}
+[0.707680] (-) TimerEvent: {}
+[0.808738] (-) TimerEvent: {}
+[0.909889] (-) TimerEvent: {}
+[1.010869] (-) TimerEvent: {}
+[1.112433] (-) TimerEvent: {}
+[1.214158] (-) TimerEvent: {}
+[1.316478] (-) TimerEvent: {}
+[1.417411] (-) TimerEvent: {}
+[1.518391] (-) TimerEvent: {}
+[1.619570] (-) TimerEvent: {}
+[1.720532] (-) TimerEvent: {}
+[1.821508] (-) TimerEvent: {}
+[1.922483] (-) TimerEvent: {}
+[2.023503] (-) TimerEvent: {}
+[2.124532] (-) TimerEvent: {}
+[2.225510] (-) TimerEvent: {}
+[2.326426] (-) TimerEvent: {}
+[2.427494] (-) TimerEvent: {}
+[2.528480] (-) TimerEvent: {}
+[2.629462] (-) TimerEvent: {}
+[2.730463] (-) TimerEvent: {}
+[2.831569] (-) TimerEvent: {}
+[2.932586] (-) TimerEvent: {}
+[3.033778] (-) TimerEvent: {}
+[3.069489] (f1tenth_controllers) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/f1tenth_controllers', 'build', '--build-base', '/home/nvidia/f1tenth_ws/build/f1tenth_controllers/build', 'install', '--record', '/home/nvidia/f1tenth_ws/build/f1tenth_controllers/install.log', '--install-scripts', '$base/lib/f1tenth_controllers', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/nvidia/f1tenth_ws/src/f1tenth_controllers', 'env': {'SUDO_GID': '1000', 'MAIL': '/var/mail/root', 'USER': 'root', 'HOME': '/root', 'COLORTERM': 'truecolor', 'SUDO_UID': '1000', 'LOGNAME': 'root', 'TERM': 'xterm-256color', 'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'SUDO_COMMAND': '/usr/bin/colcon build --packages-select f1tenth_controllers', 'SHELL': '/bin/bash', 'SUDO_USER': 'nvidia', 'LC_ALL': 'en_US.UTF-8', 'PWD': '/home/nvidia/f1tenth_ws/build/f1tenth_controllers', 'COLCON': '1', 'PYTHONPATH': '/home/nvidia/f1tenth_ws/build/f1tenth_controllers/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages:'}, 'shell': False}
+[3.134497] (-) TimerEvent: {}
+[3.236577] (-) TimerEvent: {}
+[3.337607] (-) TimerEvent: {}
+[3.438530] (-) TimerEvent: {}
+[3.539554] (-) TimerEvent: {}
+[3.640501] (-) TimerEvent: {}
+[3.741410] (-) TimerEvent: {}
+[3.842382] (-) TimerEvent: {}
+[3.943375] (-) TimerEvent: {}
+[4.044355] (-) TimerEvent: {}
+[4.101818] (f1tenth_controllers) StdoutLine: {'line': b'running egg_info\n'}
+[4.105719] (f1tenth_controllers) StdoutLine: {'line': b'writing ../../build/f1tenth_controllers/f1tenth_controllers.egg-info/PKG-INFO\n'}
+[4.108157] (f1tenth_controllers) StdoutLine: {'line': b'writing dependency_links to ../../build/f1tenth_controllers/f1tenth_controllers.egg-info/dependency_links.txt\n'}
+[4.108970] (f1tenth_controllers) StdoutLine: {'line': b'writing entry points to ../../build/f1tenth_controllers/f1tenth_controllers.egg-info/entry_points.txt\n'}
+[4.109605] (f1tenth_controllers) StdoutLine: {'line': b'writing requirements to ../../build/f1tenth_controllers/f1tenth_controllers.egg-info/requires.txt\n'}
+[4.110375] (f1tenth_controllers) StdoutLine: {'line': b'writing top-level names to ../../build/f1tenth_controllers/f1tenth_controllers.egg-info/top_level.txt\n'}
+[4.144557] (-) TimerEvent: {}
+[4.245501] (-) TimerEvent: {}
+[4.282453] (f1tenth_controllers) StdoutLine: {'line': b"reading manifest file '../../build/f1tenth_controllers/f1tenth_controllers.egg-info/SOURCES.txt'\n"}
+[4.286995] (f1tenth_controllers) StdoutLine: {'line': b"writing manifest file '../../build/f1tenth_controllers/f1tenth_controllers.egg-info/SOURCES.txt'\n"}
+[4.288014] (f1tenth_controllers) StdoutLine: {'line': b'running build\n'}
+[4.288554] (f1tenth_controllers) StdoutLine: {'line': b'running build_py\n'}
+[4.289328] (f1tenth_controllers) StdoutLine: {'line': b'copying f1tenth_controllers/follow_the_gap_node.py -> /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib/f1tenth_controllers\n'}
+[4.290475] (f1tenth_controllers) StdoutLine: {'line': b'running install\n'}
+[4.294368] (f1tenth_controllers) StdoutLine: {'line': b'running install_lib\n'}
+[4.299183] (f1tenth_controllers) StdoutLine: {'line': b'copying /home/nvidia/f1tenth_ws/build/f1tenth_controllers/build/lib/f1tenth_controllers/follow_the_gap_node.py -> /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers\n'}
+[4.302425] (f1tenth_controllers) StdoutLine: {'line': b'byte-compiling /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers/follow_the_gap_node.py to follow_the_gap_node.cpython-38.pyc\n'}
+[4.315825] (f1tenth_controllers) StdoutLine: {'line': b'running install_data\n'}
+[4.317050] (f1tenth_controllers) StdoutLine: {'line': b'running install_egg_info\n'}
+[4.324285] (f1tenth_controllers) StdoutLine: {'line': b"removing '/home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers-0.0.0-py3.8.egg-info' (and everything under it)\n"}
+[4.326483] (f1tenth_controllers) StdoutLine: {'line': b'Copying ../../build/f1tenth_controllers/f1tenth_controllers.egg-info to /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/python3.8/site-packages/f1tenth_controllers-0.0.0-py3.8.egg-info\n'}
+[4.332866] (f1tenth_controllers) StdoutLine: {'line': b'running install_scripts\n'}
+[4.345645] (-) TimerEvent: {}
+[4.412377] (f1tenth_controllers) StdoutLine: {'line': b'Installing follow_the_gap_node script to /home/nvidia/f1tenth_ws/install/f1tenth_controllers/lib/f1tenth_controllers\n'}
+[4.414203] (f1tenth_controllers) StdoutLine: {'line': b"writing list of installed files to '/home/nvidia/f1tenth_ws/build/f1tenth_controllers/install.log'\n"}
+[4.445922] (-) TimerEvent: {}
+[4.514800] (f1tenth_controllers) CommandEnded: {'returncode': 0}
+[4.547072] (-) TimerEvent: {}
+[4.583004] (f1tenth_controllers) JobEnded: {'identifier': 'f1tenth_controllers', 'rc': 0}
+[4.588075] (-) EventReactorShutdown: {}

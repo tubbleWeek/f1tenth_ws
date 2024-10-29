@@ -1,0 +1,12 @@
+amcl:
+  ros__parameters:
+    base_frame_id: "base_link"
+    global_frame_id: "map"
+    laser_model_type: "likelihood_field"
+    max_particles: 2000
+    min_particles: 500
+    odom_frame_id: "odom"
+    scan_topic: scan
+    map_topic: map
+    min_update_a: 0.05
+    min_update_d: 0.1

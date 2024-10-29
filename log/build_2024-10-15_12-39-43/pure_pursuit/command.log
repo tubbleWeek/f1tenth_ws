@@ -1,0 +1,2 @@
+Invoking command in '/home/nvidia/f1tenth_ws/build/pure_pursuit': /usr/bin/cmake /home/nvidia/f1tenth_ws/src/pure_pursuit -DCMAKE_INSTALL_PREFIX=/home/nvidia/f1tenth_ws/install/pure_pursuit
+Invoked command in '/home/nvidia/f1tenth_ws/build/pure_pursuit' returned '1': /usr/bin/cmake /home/nvidia/f1tenth_ws/src/pure_pursuit -DCMAKE_INSTALL_PREFIX=/home/nvidia/f1tenth_ws/install/pure_pursuit

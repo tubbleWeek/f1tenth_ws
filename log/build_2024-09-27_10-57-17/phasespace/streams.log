@@ -1,0 +1,21 @@
+[5.441s] Invoking command in '/home/nvidia/f1tenth_ws/src/phasespace': PYTHONPATH=/home/nvidia/f1tenth_ws/build/phasespace/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/phasespace/lib/python3.8/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/phasespace build --build-base /home/nvidia/f1tenth_ws/build/phasespace/build install --record /home/nvidia/f1tenth_ws/build/phasespace/install.log --install-scripts $base/lib/phasespace --single-version-externally-managed install_data
+[6.469s] running egg_info
+[6.472s] writing ../../build/phasespace/phasespace.egg-info/PKG-INFO
+[6.474s] writing dependency_links to ../../build/phasespace/phasespace.egg-info/dependency_links.txt
+[6.476s] writing entry points to ../../build/phasespace/phasespace.egg-info/entry_points.txt
+[6.477s] writing requirements to ../../build/phasespace/phasespace.egg-info/requires.txt
+[6.477s] writing top-level names to ../../build/phasespace/phasespace.egg-info/top_level.txt
+[6.644s] reading manifest file '../../build/phasespace/phasespace.egg-info/SOURCES.txt'
+[6.649s] writing manifest file '../../build/phasespace/phasespace.egg-info/SOURCES.txt'
+[6.650s] running build
+[6.651s] running build_py
+[6.652s] running install
+[6.655s] running install_lib
+[6.662s] running install_data
+[6.662s] running install_egg_info
+[6.670s] removing '/home/nvidia/f1tenth_ws/install/phasespace/lib/python3.8/site-packages/phasespace-0.0.0-py3.8.egg-info' (and everything under it)
+[6.673s] Copying ../../build/phasespace/phasespace.egg-info to /home/nvidia/f1tenth_ws/install/phasespace/lib/python3.8/site-packages/phasespace-0.0.0-py3.8.egg-info
+[6.679s] running install_scripts
+[6.762s] Installing phasespace_node script to /home/nvidia/f1tenth_ws/install/phasespace/lib/phasespace
+[6.764s] writing list of installed files to '/home/nvidia/f1tenth_ws/build/phasespace/install.log'
+[6.891s] Invoked command in '/home/nvidia/f1tenth_ws/src/phasespace' returned '0': PYTHONPATH=/home/nvidia/f1tenth_ws/build/phasespace/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/phasespace/lib/python3.8/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/phasespace build --build-base /home/nvidia/f1tenth_ws/build/phasespace/build install --record /home/nvidia/f1tenth_ws/build/phasespace/install.log --install-scripts $base/lib/phasespace --single-version-externally-managed install_data

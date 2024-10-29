@@ -1,0 +1,3 @@
+[console_scripts]
+phasespace_node = phasespace.phasespace_node_ros2:main
+

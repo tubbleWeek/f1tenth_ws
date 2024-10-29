@@ -1,0 +1,27 @@
+[8.285s] Invoking command in '/home/nvidia/f1tenth_ws/src/mapping': PYTHONPATH=/home/nvidia/f1tenth_ws/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/mapping build --build-base /home/nvidia/f1tenth_ws/build/mapping/build install --record /home/nvidia/f1tenth_ws/build/mapping/install.log --install-scripts $base/lib/mapping --single-version-externally-managed install_data
+[9.841s] running egg_info
+[9.845s] writing ../../build/mapping/mapping.egg-info/PKG-INFO
+[9.847s] writing dependency_links to ../../build/mapping/mapping.egg-info/dependency_links.txt
+[9.848s] writing entry points to ../../build/mapping/mapping.egg-info/entry_points.txt
+[9.849s] writing requirements to ../../build/mapping/mapping.egg-info/requires.txt
+[9.850s] writing top-level names to ../../build/mapping/mapping.egg-info/top_level.txt
+[10.065s] reading manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'
+[10.071s] writing manifest file '../../build/mapping/mapping.egg-info/SOURCES.txt'
+[10.071s] running build
+[10.072s] running build_py
+[10.075s] running install
+[10.079s] running install_lib
+[10.088s] running install_data
+[10.088s] running install_egg_info
+[10.099s] removing '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info' (and everything under it)
+[10.102s] error removing /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info: [Errno 13] Permission denied: '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info/requires.txt'
+[10.104s] error removing /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info: [Errno 13] Permission denied: '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info/SOURCES.txt'
+[10.105s] error removing /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info: [Errno 13] Permission denied: '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info/top_level.txt'
+[10.105s] error removing /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info: [Errno 13] Permission denied: '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info/zip-safe'
+[10.106s] error removing /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info: [Errno 13] Permission denied: '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info/dependency_links.txt'
+[10.108s] error removing /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info: [Errno 13] Permission denied: '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info/PKG-INFO'
+[10.109s] error removing /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info: [Errno 13] Permission denied: '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info/entry_points.txt'
+[10.109s] error removing /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info: [Errno 39] Directory not empty: '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info'
+[10.110s] Copying ../../build/mapping/mapping.egg-info to /home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info
+[10.110s] error: [Errno 13] Permission denied: '/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages/mapping-0.0.0-py3.8.egg-info/requires.txt'
+[10.699s] Invoked command in '/home/nvidia/f1tenth_ws/src/mapping' returned '1': PYTHONPATH=/home/nvidia/f1tenth_ws/build/mapping/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/nvidia/f1tenth_ws/install/mapping/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/mapping build --build-base /home/nvidia/f1tenth_ws/build/mapping/build install --record /home/nvidia/f1tenth_ws/build/mapping/install.log --install-scripts $base/lib/mapping --single-version-externally-managed install_data
