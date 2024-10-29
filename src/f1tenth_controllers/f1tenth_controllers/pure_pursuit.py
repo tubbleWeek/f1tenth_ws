@@ -9,6 +9,7 @@ from rclpy.qos import (
     QoSReliabilityPolicy,
     qos_profile_sensor_data,
 )
+from rclpy.duration import Duration
 import time
 import numpy as np
 import std_msgs
@@ -17,6 +18,7 @@ from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
 import math
 import tf_transformations
 from collections import deque
+from tf2_ros import Buffer, TransformListener, LookupException, ConnectivityException, ExtrapolationException
 
 class Waypoint:
     def __init__(self, x, y, velocity, index):
@@ -61,6 +63,7 @@ class PurePursuitController(Node):
         # self.current_waypoint = Waypoint(self.x, self.y, 4, -1)
         self.current_waypoint = None
         self.lookahead_waypoint = self.getClosestPoint()
+        self.prev_lookahead_waypoint = self.lookahead_waypoint
         self.steering = 0.0
 
 
@@ -103,7 +106,7 @@ class PurePursuitController(Node):
         ret_point = self.path[0]  # Default to the first point if none found
         for point in self.path:
             distance = (point.x - x) ** 2 + (point.y - y) ** 2
-            index_diff = point.index - self.current_waypoint.index
+            index_diff = point.index - self.prev_lookahead_waypoint.index
             if (
                 distance > self.lookahead_dist
                 and self.minlook_ahead <= index_diff <= self.maxlook_ahead
@@ -131,53 +134,57 @@ class PurePursuitController(Node):
                 - calculate the distance again
         - drive to the waypoint
         '''
-        
-        # for initial point
-        if self.current_waypoint == None:
-            self.current_waypoint = self.lookahead_waypoint
-            drive = AckermannDrive(steering_angle=0.0, speed=0.0)
-            data = AckermannDriveStamped(header=std_msgs.msg.Header(), drive=drive)
-            self.ackermann_publisher.publish(data)
-            return
-        # get lastest odomety
-        curr_x, curr_y, curr_heading = self.odom_buffer[-1]
-        
+        # Attempt to retrieve the latest transformation
+        try:
+            transform = self.tf_buffer.lookup_transform(
+                "map", "base_link", rclpy.time.Time(), Duration(seconds=1.0)
+            )
+            # self.get_logger().info(f"Stored transform: translation {transform.transform.translation}")
+        except (LookupException, ConnectivityException, ExtrapolationException) as e:
+            self.get_logger().warn(f"Could not get transform between map and odom: {str(e)}")
+            return  # Skip this loop if transform is not available
+
+        # Use the latest transform to compute the robot’s current position
+        curr_x = transform.transform.translation.x
+        curr_y = transform.transform.translation.y
+        curr_heading = tf_transformations.euler_from_quaternion(
+            [
+                transform.transform.rotation.x,
+                transform.transform.rotation.y,
+                transform.transform.rotation.z,
+                transform.transform.rotation.w,
+            ]
+        )[2]
+
         if (self.i % 10) == 0:
             self.get_logger().info(f"current x position: {curr_x}")
             self.get_logger().info(f"current y position: {curr_y}")
             self.get_logger().info(f"current heading value: {curr_heading}")
-        
+
+        # Find and set the lookahead waypoint
+        self.prev_lookahead_waypoint = self.lookahead_waypoint
         self.lookahead_waypoint = self.get_lookaheadpoint(curr_x, curr_y)
 
-        # distance = (self.lookahead_waypoint.x - curr_x) ** 2 + (
-        #     self.lookahead_waypoint.y - curr_y
-        # ) ** 2
-
-        # if distance < (self.goal_buble * self.goal_buble):
-        #     self.current_waypoint = self.lookahead_waypoint
-        # self.get_logger().info(f'lookahead_waypoint: x: {self.current_waypoint.x}, y: {self.current_waypoint.y} ')
         if (self.i % 10) == 0:
-            self.get_logger().info(f'lookahead_waypoint: x: {self.lookahead_waypoint.x}, y: {self.lookahead_waypoint.y} ')
-            self.get_logger().info(f'lookahead_waypoint index: {self.lookahead_waypoint.index}')
+            self.get_logger().info(f"lookahead_waypoint: x: {self.lookahead_waypoint.x}, y: {self.lookahead_waypoint.y}")
+            # self.get_logger().info(f"lookahead_waypoint index: {self.lookahead_waypoint.index}")
+
+        # Calculate steering angle and set velocity
         self.steering = self.steering_angle(curr_x, curr_y, curr_heading)
-        
         velocity = self.lookahead_waypoint.velocity
 
-        # with 0.2 percentage --> max vel ~ 1m/s
         if (self.i % 10) == 0: 
             self.get_logger().info(f"actual velocity: {velocity * self.velocity_percentage}")
             self.get_logger().info(f"velocity: {1.0}")
-            self.get_logger().info(f"steering angel: {self.steering}")
-        
+            self.get_logger().info(f"steering angle: {self.steering}")
+
         drive = AckermannDrive(
             steering_angle=self.steering, speed=1.0
         )
-        # drive = AckermannDrive(
-        #     steering_angle=self.steering, speed=velocity * self.velocity_percentage
-        # )
+
         data = AckermannDriveStamped(header=std_msgs.msg.Header(), drive=drive)
         self.ackermann_publisher.publish(data)
-        
+
         if ((self.i % 10) == 0) and (self.i != 0):
             self.i = 0
         
