@@ -8,11 +8,15 @@ setup.py
 ../../../build/f1tenth_stack/f1tenth_stack.egg-info/requires.txt
 ../../../build/f1tenth_stack/f1tenth_stack.egg-info/top_level.txt
 ../../../build/f1tenth_stack/f1tenth_stack.egg-info/zip-safe
+config/amcl_params.yaml
+config/costmap_params.yaml
 config/f1tenth_online_async.yaml
 config/joy_teleop.yaml
+config/map_server_params.yaml
 config/mux.yaml
 config/sensors.yaml
 config/vesc.yaml
+config/waypoint_visual_config.yaml
 f1tenth_stack/__init__.py
 f1tenth_stack/tf_publisher.py
 f1tenth_stack/throttle_interpolator.py

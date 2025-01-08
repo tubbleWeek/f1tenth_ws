@@ -1,0 +1,106 @@
+[1.097s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[1.098s] DEBUG:colcon:Parsed command line arguments: Namespace(allow_overriding=[], ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0xffff93663850>>, merge_install=False, metas=['./colcon.meta'], mixin=None, mixin_files=None, mixin_verb=('build',), packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=6, paths=None, symlink_install=False, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0xffff93663850>, verb_name='build', verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0xffff93586a60>)
+[1.942s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[1.943s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[1.943s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[1.943s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[1.944s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[1.944s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[1.944s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/nvidia/f1tenth_ws/src/pure_pursuit'
+[1.945s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[1.945s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[1.946s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[1.946s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[1.946s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[1.947s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[1.947s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[1.947s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[1.947s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[2.025s] DEBUG:colcon.colcon_core.package_identification:Package '.' with type 'ros.ament_cmake' and name 'pure_pursuit'
+[2.026s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[2.026s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[2.026s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[2.027s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[2.027s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[2.117s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[2.118s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[2.134s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 18 installed packages in //home/nvidia/f1tenth_ws/install
+[2.146s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 316 installed packages in /opt/ros/foxy
+[2.157s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[2.587s] Level 5:colcon.colcon_core.verb:set package 'pure_pursuit' build argument 'cmake_args' from command line to 'None'
+[2.587s] Level 5:colcon.colcon_core.verb:set package 'pure_pursuit' build argument 'cmake_target' from command line to 'None'
+[2.588s] Level 5:colcon.colcon_core.verb:set package 'pure_pursuit' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.588s] Level 5:colcon.colcon_core.verb:set package 'pure_pursuit' build argument 'cmake_clean_cache' from command line to 'False'
+[2.588s] Level 5:colcon.colcon_core.verb:set package 'pure_pursuit' build argument 'cmake_clean_first' from command line to 'False'
+[2.588s] Level 5:colcon.colcon_core.verb:set package 'pure_pursuit' build argument 'cmake_force_configure' from command line to 'False'
+[2.589s] Level 5:colcon.colcon_core.verb:set package 'pure_pursuit' build argument 'ament_cmake_args' from command line to 'None'
+[2.589s] Level 5:colcon.colcon_core.verb:set package 'pure_pursuit' build argument 'catkin_cmake_args' from command line to 'None'
+[2.589s] Level 5:colcon.colcon_core.verb:set package 'pure_pursuit' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.589s] DEBUG:colcon.colcon_core.verb:Building package 'pure_pursuit' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/nvidia/f1tenth_ws/src/pure_pursuit/build/pure_pursuit', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit', 'merge_install': False, 'path': '/home/nvidia/f1tenth_ws/src/pure_pursuit', 'symlink_install': False, 'test_result_base': None}
+[2.590s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[2.595s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[2.596s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/nvidia/f1tenth_ws/src/pure_pursuit' with build type 'ament_cmake'
+[2.597s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/nvidia/f1tenth_ws/src/pure_pursuit'
+[2.608s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[2.610s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.610s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.686s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/src/pure_pursuit/build/pure_pursuit': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}://home/nvidia/f1tenth_ws/install/f1tenth_stack://home/nvidia/f1tenth_ws/install/joy_teleop://home/nvidia/f1tenth_ws/install/phasespace://home/nvidia/f1tenth_ws/install/particle_filter://home/nvidia/f1tenth_ws/install/new_map_saver://home/nvidia/f1tenth_ws/install/mouse_teleop://home/nvidia/f1tenth_ws/install/mapping://home/nvidia/f1tenth_ws/install/key_teleop://home/nvidia/f1tenth_ws/install/f1tenth_controllers:/opt/ros/foxy /usr/bin/cmake /home/nvidia/f1tenth_ws/src/pure_pursuit -DCMAKE_INSTALL_PREFIX=/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit
+[16.991s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/src/pure_pursuit/build/pure_pursuit' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}://home/nvidia/f1tenth_ws/install/f1tenth_stack://home/nvidia/f1tenth_ws/install/joy_teleop://home/nvidia/f1tenth_ws/install/phasespace://home/nvidia/f1tenth_ws/install/particle_filter://home/nvidia/f1tenth_ws/install/new_map_saver://home/nvidia/f1tenth_ws/install/mouse_teleop://home/nvidia/f1tenth_ws/install/mapping://home/nvidia/f1tenth_ws/install/key_teleop://home/nvidia/f1tenth_ws/install/f1tenth_controllers:/opt/ros/foxy /usr/bin/cmake /home/nvidia/f1tenth_ws/src/pure_pursuit -DCMAKE_INSTALL_PREFIX=/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit
+[17.023s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/src/pure_pursuit/build/pure_pursuit': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}://home/nvidia/f1tenth_ws/install/f1tenth_stack://home/nvidia/f1tenth_ws/install/joy_teleop://home/nvidia/f1tenth_ws/install/phasespace://home/nvidia/f1tenth_ws/install/particle_filter://home/nvidia/f1tenth_ws/install/new_map_saver://home/nvidia/f1tenth_ws/install/mouse_teleop://home/nvidia/f1tenth_ws/install/mapping://home/nvidia/f1tenth_ws/install/key_teleop://home/nvidia/f1tenth_ws/install/f1tenth_controllers:/opt/ros/foxy /usr/bin/cmake --build /home/nvidia/f1tenth_ws/src/pure_pursuit/build/pure_pursuit -- -j6 -l6
+[59.287s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/src/pure_pursuit/build/pure_pursuit' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}://home/nvidia/f1tenth_ws/install/f1tenth_stack://home/nvidia/f1tenth_ws/install/joy_teleop://home/nvidia/f1tenth_ws/install/phasespace://home/nvidia/f1tenth_ws/install/particle_filter://home/nvidia/f1tenth_ws/install/new_map_saver://home/nvidia/f1tenth_ws/install/mouse_teleop://home/nvidia/f1tenth_ws/install/mapping://home/nvidia/f1tenth_ws/install/key_teleop://home/nvidia/f1tenth_ws/install/f1tenth_controllers:/opt/ros/foxy /usr/bin/cmake --build /home/nvidia/f1tenth_ws/src/pure_pursuit/build/pure_pursuit -- -j6 -l6
+[59.578s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/nvidia/f1tenth_ws/src/pure_pursuit/build/pure_pursuit': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}://home/nvidia/f1tenth_ws/install/f1tenth_stack://home/nvidia/f1tenth_ws/install/joy_teleop://home/nvidia/f1tenth_ws/install/phasespace://home/nvidia/f1tenth_ws/install/particle_filter://home/nvidia/f1tenth_ws/install/new_map_saver://home/nvidia/f1tenth_ws/install/mouse_teleop://home/nvidia/f1tenth_ws/install/mapping://home/nvidia/f1tenth_ws/install/key_teleop://home/nvidia/f1tenth_ws/install/f1tenth_controllers:/opt/ros/foxy /usr/bin/cmake --install /home/nvidia/f1tenth_ws/src/pure_pursuit/build/pure_pursuit
+[59.710s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(pure_pursuit)
+[59.715s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/nvidia/f1tenth_ws/src/pure_pursuit/build/pure_pursuit' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}://home/nvidia/f1tenth_ws/install/f1tenth_stack://home/nvidia/f1tenth_ws/install/joy_teleop://home/nvidia/f1tenth_ws/install/phasespace://home/nvidia/f1tenth_ws/install/particle_filter://home/nvidia/f1tenth_ws/install/new_map_saver://home/nvidia/f1tenth_ws/install/mouse_teleop://home/nvidia/f1tenth_ws/install/mapping://home/nvidia/f1tenth_ws/install/key_teleop://home/nvidia/f1tenth_ws/install/f1tenth_controllers:/opt/ros/foxy /usr/bin/cmake --install /home/nvidia/f1tenth_ws/src/pure_pursuit/build/pure_pursuit
+[59.735s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit' for CMake module files
+[59.740s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit' for CMake config files
+[59.742s] Level 1:colcon.colcon_core.shell:create_environment_hook('pure_pursuit', 'cmake_prefix_path')
+[59.744s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/hook/cmake_prefix_path.ps1'
+[59.749s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/hook/cmake_prefix_path.dsv'
+[59.752s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/hook/cmake_prefix_path.sh'
+[59.758s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/lib'
+[59.759s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/bin'
+[59.759s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/lib/pkgconfig/pure_pursuit.pc'
+[59.761s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/lib/python3.8/site-packages'
+[59.762s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/bin'
+[59.763s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/package.ps1'
+[59.768s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/package.dsv'
+[59.771s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/package.sh'
+[59.775s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/package.bash'
+[59.779s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/package.zsh'
+[59.782s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/colcon-core/packages/pure_pursuit)
+[59.982s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(pure_pursuit)
+[59.985s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit' for CMake module files
+[59.989s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit' for CMake config files
+[59.992s] Level 1:colcon.colcon_core.shell:create_environment_hook('pure_pursuit', 'cmake_prefix_path')
+[59.993s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/hook/cmake_prefix_path.ps1'
+[59.997s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/hook/cmake_prefix_path.dsv'
+[59.999s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/hook/cmake_prefix_path.sh'
+[60.002s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/lib'
+[60.002s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/bin'
+[60.003s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/lib/pkgconfig/pure_pursuit.pc'
+[60.005s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/lib/python3.8/site-packages'
+[60.006s] Level 1:colcon.colcon_core.environment:checking '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/bin'
+[60.007s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/package.ps1'
+[60.011s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/package.dsv'
+[60.014s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/package.sh'
+[60.016s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/package.bash'
+[60.018s] INFO:colcon.colcon_core.shell:Creating package script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/pure_pursuit/package.zsh'
+[60.020s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/nvidia/f1tenth_ws/src/pure_pursuit/install/pure_pursuit/share/colcon-core/packages/pure_pursuit)
+[60.022s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[60.026s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[60.027s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[60.027s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[60.071s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[60.071s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[60.072s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[60.185s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[60.187s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/local_setup.ps1'
+[60.192s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/_local_setup_util_ps1.py'
+[60.198s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/setup.ps1'
+[60.210s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/local_setup.sh'
+[60.213s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/_local_setup_util_sh.py'
+[60.216s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/setup.sh'
+[60.228s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/local_setup.bash'
+[60.231s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/setup.bash'
+[60.244s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/local_setup.zsh'
+[60.246s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/nvidia/f1tenth_ws/src/pure_pursuit/install/setup.zsh'
