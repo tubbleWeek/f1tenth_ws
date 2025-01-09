@@ -68,7 +68,36 @@ Sometimes the costmap will not start. In the case that it does not launch, to la
   
 ```
 The `costmap/costmap` is the topic that the transition event's name is, by default it should be `costmap/costmap`. Once this command is ran, you should see a message in the terminal that the costmap has been started
-### Running Nodes
+
+### Mapping and Saving map
+To create a map of an area, I use slam_toolbox. To launch SLAM run:
+
+```
+ros2 launch slam_toolbox online_async_launch.py 
+```
+
+You should now see the map being posted to the `/map` topic, and you should be able to visualize it using rviz.
+
+The f1tenth_stack has a params file for slam_toolbox called `f1tenth_online_async.yaml`, If you are running slam_toolbox on the f1tenth, you should pass this yaml file into the slam_toolbox node. Do this with:
+
+```
+ros2 launch slam_toolbox online_async_launch.py params_file:=/home/nvidia/f1tenth_ws/src/f1tenth_system/f1tenth_stack/config/f1tenth_online_async.yaml
+```
+
+To save the map, you can use the slam_toolbox plugin for rviz or using the CLI version:
+
+```
+ros2 run nav2_map_server map_saver_cli -f map_name
+```
+
+If you are having issues with the map_saver timing out, I have created another package called new_map_saver. You can run it using:
+
+```
+ros2 launch new_map_saver map_saver.launch.py
+```
+
+
+### Localization and Map
 
 There are 3 main nodes that need to be launched for controllers to work on the F1tenth. Each of the nodes will output an error if they cannot be started. They should be launched in this order
 

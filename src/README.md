@@ -42,3 +42,14 @@ To compile select packages:
 colcon build --packages-select <package_name>
 ```
 
+### Other Considerations
+
+If you are planning to use the nav2 stack for controller and planner development, you will need to use C++. There is lots of documentation and tutorials on the nav2 website available for use.
+
+If you are running into issues not being able to run your ros nodes, make sure you have sourced your setup.bash. You can do this by running:
+
+```
+source install/setup.bash
+```
+
+In the root of your ros workspace.
