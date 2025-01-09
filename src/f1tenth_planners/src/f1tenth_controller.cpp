@@ -44,7 +44,7 @@ namespace nav2_controller {
         transform_tolerance_ = rclcpp::Duration::from_seconds(transform_tolerance);
     }
 
-      void PurePursuitController::cleanup()
+    void PurePursuitController::cleanup()
         {
             RCLCPP_INFO(
             logger_, "CleaningUp plugin %s of type PurePursuit",
@@ -52,18 +52,18 @@ namespace nav2_controller {
         }
 
 
-  void PurePursuitController::activate()
-  {
-    RCLCPP_INFO(
-      logger_, "Activating plugin %s of type PurePursuit",
-      name_.c_str());
-  }
+    void PurePursuitController::activate()
+        {
+            RCLCPP_INFO(
+            logger_, "Activating plugin %s of type PurePursuit",
+            name_.c_str());
+        }
 
     void PurePursuitController::deactivate()
-    {
-        RCLCPP_INFO(
-        logger_, "Deactivating plugin %s of type PurePursuit",
-        name_.c_str());
-    }
+        {
+            RCLCPP_INFO(
+            logger_, "Deactivating plugin %s of type PurePursuit",
+            name_.c_str());
+        }
 
 }
