@@ -22,12 +22,6 @@ def generate_launch_description():
         'amcl_params.yaml'
     )
 
-    costmap_config = os.path.join(
-        get_package_share_directory('f1tenth_stack'),
-        'config',
-        'costmap_params.yaml'
-    )
-
     wp_visual_config = os.path.join(
         get_package_share_directory('f1tenth_stack'),
         'config',
@@ -43,17 +37,12 @@ def generate_launch_description():
         default_value=amcl_config,
         description='Descriptions for amcl configs')
 
-    costmap_la = DeclareLaunchArgument(
-        'costmap_config',
-        default_value=costmap_config,
-        description='Descriptions for costmap configs')
-
     wp_visual_la = DeclareLaunchArgument(
         'wp_visual_config',
         default_value=wp_visual_config,
         description='Descriptions for waypoint visual configs')
 
-    ld = LaunchDescription([map_server_la, amcl_la, costmap_la, wp_visual_la])
+    ld = LaunchDescription([map_server_la, amcl_la, wp_visual_la])
 
     map_server_node = Node(
         package='nav2_map_server',
@@ -93,34 +82,6 @@ def generate_launch_description():
         }]
     )
 
-    global_costmap_node = Node(
-        package='nav2_costmap_2d',
-        executable='nav2_costmap_2d',
-        name='global_costmap',
-        output='screen',
-        parameters=[LaunchConfiguration('costmap_config')]
-    )
-
-    local_costmap_node = Node(
-        package='nav2_costmap_2d',
-        executable='nav2_costmap_2d',
-        name='local_costmap',
-        output='screen',
-        parameters=[LaunchConfiguration('costmap_config')]
-    )
-
-    costmap_lifecyle = Node(
-        package='nav2_lifecycle_manager',
-        executable='lifecycle_manager',
-        name='lifecycle_manager_costmap',
-        output='screen',
-        parameters=[{
-            'use_sim_time': False,
-            'autostart': True,
-            'node_names': ['global_costmap', 'local_costmap']
-        }]
-    )
-
     wp_vis_node = Node(
         package='pure_pursuit',
         executable='waypoint_visualizer',
@@ -149,28 +110,10 @@ def generate_launch_description():
         actions=[wp_vis_node]
     )
 
-    global_costmap_n_ta = TimerAction(
-        period = 4.0,
-        actions=[global_costmap_node]
-    )
-
-    local_costmap_n_ta = TimerAction(
-        period = 4.5,
-        actions=[local_costmap_node]
-    )
-
-    costmap_lc_ta = TimerAction(
-        period = 5.0,
-        actions=[costmap_lifecyle]
-    )
     # finalize
     ld.add_action(map_server_node)
-    ld.add_action(wp_vis_node)
     ld.add_action(map_lc_ta)
-    # ld.add_action(wp_visual_ta)
-#    ld.add_action(global_costmap_n_ta)
-#    ld.add_action(local_costmap_n_ta)
-#    ld.add_action(costmap_lc_ta)
+    ld.add_action(wp_visual_ta)
     ld.add_action(amcl_n_ta)
     ld.add_action(amcl_lc_ta)
 

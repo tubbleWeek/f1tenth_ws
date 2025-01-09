@@ -29,9 +29,33 @@ The Host machine needs to have ROS2 Foxy and with it Rviz2 package.
 
 The f1tenth_ws on the Jetson is where all of the ROS nodes are stored, most of the coding should be done through ssh.
 
-### Updated Launch instructions
+### Running F1tenth Stack
 
-A launch file has been created that launches all three nodes described below as well as the Nav2 Costmap node.
+Most controllers and planners require the f1tenth stack to be ran before hand. You can launch it using the launch file specified in the f1tenth_stack.
+
+```
+ros2 launch f1tenth_stack bringup_launch.py
+```
+
+This will launch vesc, urg, and joystick node.
+
+### Updated Launch instructions
+The nav2 stack has been added to the robot, if you want to use the nav2 controller and planner server, you can run:
+
+```
+ros2 launch nav2_bringup bringup_launch.py
+```
+
+Additionally, it is recomended that you pass your own params file you can do this with:
+
+```
+ros2 launch nav2_bringup bringuo_launch.py params_file:=<MY_PARAM_FILE>.yaml
+```
+
+Replace `<MY_PARAM_FILE>` with the path to your paramater file. An example can be found in the f1tenth_controllers config directory.
+
+
+A launch file has been created that launches all three nodes described below.
 You can run the launch file with:
 ```
   ros2 launch f1tenth_controllers map_loc_launch.py
@@ -75,7 +99,7 @@ The map server will post the map to the `/map` topic
 ---
 
 ##### Issues
-If you cannot see the map you should stop the map server node and retry from the beginning. It may take a few seconds ~30 before rviz2 picks up the map. It may also help to open rviz2 before the map_server. If you wait any longer than this the map is not being posted.
+If you cannot see the map you should stop the map server node and re-run it. It may take a few seconds ~15 before rviz2 picks up the map. It may also help to open rviz2 before the map_server. If you wait any longer than this rviz is not getting the map.
 
 #### AMCL
 This is the nav2 amcl package
