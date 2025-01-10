@@ -62,3 +62,12 @@ source install/setup.bash
 ```
 
 In the root of your ros workspace.
+
+
+Sometime you may make changes to your code and compile, but your changes are not present when running the ROS nodes. In this case you should delete your `build`, `install`, and `logs` folders.
+
+```
+rm -fr build install logs
+```
+
+Then recompile your entire code base with `colcon build`
