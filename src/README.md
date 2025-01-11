@@ -30,6 +30,15 @@ ros2 pkg create --build-type ament_python <package_name>
 ### Compiling Packages
 If you have made changes to the code or parameters, you will need to compile yoour code before you run your nodes. Otherwise, your changes will not be present. You must run these commands in your root ros directory ie in `f1tenth_ws`
 
+For python it is a good idea to run this command in the root of your ROS workspace:
+
+```
+rosdep install -i --from-path src --rosdistro foxy -y
+```
+
+`foxy` should be replaced by the version of ros that you are using
+
+
 To compile all packages:
 
 ```
@@ -53,3 +62,12 @@ source install/setup.bash
 ```
 
 In the root of your ros workspace.
+
+
+Sometime you may make changes to your code and compile, but your changes are not present when running the ROS nodes. In this case you should delete your `build`, `install`, and `logs` folders.
+
+```
+rm -fr build install logs
+```
+
+Then recompile your entire code base with `colcon build`
