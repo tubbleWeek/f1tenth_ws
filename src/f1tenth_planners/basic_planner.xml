@@ -1,0 +1,5 @@
+<library path="f1tenth_planners_plugin">
+	<class name="f1tenth_planners/BasicPlanner" type="nav2_basic_planner::BasicPlanner" base_class_type="nav2_core::GlobalPlanner">
+    <description>Basic straight-line planner implementation</description>
+  </class>
+</library>
