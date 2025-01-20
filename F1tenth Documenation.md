@@ -49,11 +49,15 @@ ros2 launch nav2_bringup bringup_launch.py
 Additionally, it is recomended that you pass your own params file you can do this with:
 
 ```
-ros2 launch nav2_bringup bringuo_launch.py params_file:=<MY_PARAM_FILE>.yaml
+ros2 launch nav2_bringup bringup_launch.py params_file:=<MY_PARAM_FILE>.yaml
 ```
 
 Replace `<MY_PARAM_FILE>` with the path to your paramater file. An example can be found in the f1tenth_controllers config directory.
 
+example command below:
+```
+ros2 launch nav2_bringup bringup_launch.py params_file:=/home/nvidia/f1tenth_ws/src/f1tenth_controllers/config/nav2_params.yaml map:=/home/nvidia/f1tenth_ws/maps/shepherd_lab_map_cleaned.yaml
+```
 
 A launch file has been created that launches all three nodes described below.
 You can run the launch file with:
