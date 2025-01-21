@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include <memory>
+
 #include "nav2_core/controller.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "pluginlib/class_loader.hpp"
@@ -17,7 +19,7 @@ namespace nav2_controller {
             ~PurePursuitController() override = default;
 
             void configure(
-                const rclcpp_lifecycle::LifecycleNode::WeakPtr & parent,
+                const rclcpp_lifecycle::LifecycleNode::SharedPtr & parent,
                 std::string name, const std::shared_ptr < tf2_ros::Buffer > & tf,
                 const std::shared_ptr < nav2_costmap_2d::Costmap2DROS > & costmap_ros);
 
@@ -34,12 +36,13 @@ namespace nav2_controller {
         protected:
             nav_msgs::msg::Path transformGlobalPlan(const nav_msgs::msg::Path & path);
             bool transformPose(
-            const std::shared_ptr < tf2_ros::Buffer > tf,
-            const std::string frame,
-            const geometry_msgs::msg::PoseStamped & in_pose,
-            geometry_msgs::msg::PoseStamped & out_pose,
-            rclcpp::Duration & transform_tolerance
+                const std::shared_ptr < tf2_ros::Buffer > tf,
+                const std::string frame,
+                const geometry_msgs::msg::PoseStamped & in_pose,
+                geometry_msgs::msg::PoseStamped & out_pose,
+                rclcpp::Duration & transform_tolerance
             );
+
             rclcpp_lifecycle::LifecycleNode::WeakPtr node_;
             std::shared_ptr < tf2_ros::Buffer > tf_;
             std::string name_;
