@@ -26,7 +26,11 @@ find_package(builtin_interfaces REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(nav2_costmap_2d REQUIRED)
 find_package(nav2_core REQUIRED)
+find_package(nav2_common REQUIRED)
+find_package(tf2 REQUIRED)
 find_package(pluginlib REQUIRED)
+
+nav2_package()
 
 include_directories(
   include
@@ -49,19 +53,25 @@ set(dependencies
   nav2_costmap_2d
   nav2_core
   pluginlib
+  tf2
+  nav2_common
 )
+
 
 add_library(${library_name} SHARED
   src/f1tenth_planner.cpp
+  src/f1tenth_controller.cpp
 )
 
 ament_target_dependencies(${library_name}
   ${dependencies}
 )
 
+# prevent pluginlib from using boost
 target_compile_definitions(${library_name} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
 
 pluginlib_export_plugin_description_file(nav2_core basic_planner.xml)
+pluginlib_export_plugin_description_file(nav2_core basic_controller.xml)
 
 install(TARGETS ${library_name}
   ARCHIVE DESTINATION lib
@@ -73,7 +83,7 @@ install(DIRECTORY include/
   DESTINATION include/
 )
 
-install(FILES basic_planner.xml
+install(FILES basic_planner.xml basic_controller.xml
   DESTINATION share/${PROJECT_NAME}
 )
 

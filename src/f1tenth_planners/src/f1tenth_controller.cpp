@@ -1,4 +1,6 @@
 #include <algorithm>
+#include <memory>
+#include <string>
 
 #include "nav2_core/exceptions.hpp"
 #include "nav2_util/node_utils.hpp"
@@ -13,7 +15,7 @@ using nav2_util::declare_parameter_if_not_declared;
 
 namespace nav2_controller {
     void PurePursuitController::configure(
-        const rclcpp_lifecycle::LifecycleNode::WeakPtr & parent,
+        const rclcpp_lifecycle::LifecycleNode::SharedPtr & parent,
         std::string name, const std::shared_ptr<tf2_ros::Buffer> & tf,
         const std::shared_ptr<nav2_costmap_2d::Costmap2DROS> & costmap_ros)
     {

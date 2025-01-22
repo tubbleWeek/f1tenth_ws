@@ -109,7 +109,8 @@ controller_server:
       stateful: True
     # DWB parameters
     FollowPath:
-      plugin: "dwb_core::DWBLocalPlanner"
+      plugin: "f1tenth_planners/PurePursuitController"
+      # plugin: "dwb_core::DWBLocalPlanner"
       debug_trajectory_details: True
       min_vel_x: 0.0
       min_vel_y: 0.0
@@ -254,7 +255,9 @@ planner_server:
     use_sim_time: False
     planner_plugins: ["GridBased"]
     GridBased:
-      plugin: "f1tenth_planners/BasicPlanner"
+      # To add a new plugin for a planner 
+      # plugin: "f1tenth_planners/BasicPlanner"
+      plugin: "nav2_navfn_planner/NavfnPlanner"
       interpolation_resolution: 0.1
       tolerance: 0.5
       use_astar: false
