@@ -1,0 +1,940 @@
+#!/usr/bin/env python3
+from tf2_ros import Buffer, TransformListener # for locolization
+import rclpy
+from rclpy.node import Node
+from scipy.spatial.transform import Rotation as R
+import numpy as np
+from geometry_msgs.msg import TransformStamped  # Use TransformStamped instead of Rigids
+from collections import deque  # For implementing a circular buffer
+from rclpy.qos import qos_profile_sensor_data
+from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
+import std_msgs
+ # Import your MPPI class
+
+import pycuda.driver as cuda
+import pycuda.autoinit
+from pycuda.compiler import SourceModule
+from pycuda.curandom import XORWOWRandomNumberGenerator
+from pycuda import gpuarray
+
+cuda.init()
+device = cuda.Device(0)
+primary_context = device.retain_primary_context()
+primary_context.push()
+
+from numba import cuda as numba_cuda
+from numba.cuda.random import create_xoroshiro128p_states, xoroshiro128p_normal_float32
+from .cuda_device_functions import *
+from .input_constraints import *
+
+gpu = numba_cuda.get_current_device()
+print(numba_cuda.is_available())
+max_threads_per_block = gpu.MAX_THREADS_PER_BLOCK
+max_square_block_dim = (int(gpu.MAX_BLOCK_DIM_X**0.5), int(gpu.MAX_BLOCK_DIM_X**0.5))
+max_blocks = gpu.MAX_GRID_DIM_X
+max_rec_blocks = rec_max_control_rollouts = int(1e6) # Though theoretically limited by max_blocks on GPU
+rec_min_control_rollouts = 100
+
+DEFAULT_OBS_COST = 1e4
+
+class Config:
+  
+  """ Configurations that are typically fixed throughout execution. """
+  
+  def __init__(self, 
+               T=5, # Horizon (s)
+               dt=0.1, # Length of each step (s)
+               num_control_rollouts=16384, # Number of control sequences
+               num_vis_state_rollouts=16384, # Number of visualization rollouts
+               seed=1,
+               mppi_type=1): # Normal dist / 1: NLN):
+    
+    self.seed = seed
+    self.T = T
+    self.dt = dt
+    self.num_steps = int(T/dt)
+    self.max_threads_per_block = max_threads_per_block # save just in case
+    self.mppi_type = mppi_type # Normal dist / 1: NLN
+    assert T > 0
+    assert dt > 0
+    assert T > dt
+    assert self.num_steps > 0
+    
+    if self.mppi_type == 0:
+      print('Vanilla MPPI is used')
+    else:
+      print('log-MPPI is used')
+
+    # Number of control rollouts are currently limited by the number of blocks
+    self.num_control_rollouts = num_control_rollouts
+    if self.num_control_rollouts > rec_max_control_rollouts:
+      self.num_control_rollouts = rec_max_control_rollouts
+      print("MPPI Config: Clip num_control_rollouts to be recommended max number of {}. (Max={})".format(
+        rec_max_control_rollouts, max_blocks))
+    elif self.num_control_rollouts < rec_min_control_rollouts:
+      self.num_control_rollouts = rec_min_control_rollouts
+      print("MPPI Config: Clip num_control_rollouts to be recommended min number of {}. (Recommended max={})".format(
+        rec_min_control_rollouts, rec_max_control_rollouts))
+    
+    # For visualizing state rollouts
+    self.num_vis_state_rollouts = num_vis_state_rollouts
+    self.num_vis_state_rollouts = min([self.num_vis_state_rollouts, self.num_control_rollouts])
+    self.num_vis_state_rollouts = max([1, self.num_vis_state_rollouts])
+
+
+class MPPI_Numba(object):
+  
+  """ 
+  Implementation of Information theoretic MPPI by Williams et. al. 
+  Alg 2. in https://homes.cs.washington.edu/~bboots/files/InformationTheoreticMPC.pdf
+
+
+  Planner object that initializes GPU memory and runs MPPI on GPU via numba. 
+  
+  Typical workflow: 
+    1. Initialize object with config that allows pre-initialization of GPU memory
+    2. reset()
+    3. setup(mppi_params) based on problem instance
+    4. solve(), which returns optimized control sequence
+    5. get_state_rollout() for visualization
+    6. shift_and_update(next_state, optimal_u_sequence, num_shifts=1)
+    7. Repeat from 2 if params have changed
+  """
+
+  def __init__(self, cfg):
+
+    # Fixed configs
+    self.cfg = cfg
+    self.T = cfg.T
+    self.dt = cfg.dt
+    self.num_steps = cfg.num_steps
+    self.num_control_rollouts = cfg.num_control_rollouts
+
+    self.num_vis_state_rollouts = cfg.num_vis_state_rollouts
+    self.seed = cfg.seed
+    self.vehicle_length = 0.57
+    self.vehicle_width = 0.3
+    self.vehicle_wheelbase = 0.32
+    # Basic info 
+    self.max_threads_per_block = cfg.max_threads_per_block
+
+    # Initialize reuseable device variables
+    self.noise_samples_d = None
+    self.u_cur_d = None
+    self.u_prev_d = None
+    self.costs_d = None
+    self.weights_d = None
+    self.rng_states_d = None
+    self.state_rollout_batch_d = None # For visualization only. Otherwise, inefficient
+
+    # Other task specific params
+    self.device_var_initialized = False
+
+    # Sudden Obstacle variables
+    self.isObstacleVisible = 1.0 # 0:False
+    self.iteration_count = 0
+
+    self.generator = XORWOWRandomNumberGenerator()
+    self.mppi_type = self.cfg.mppi_type # Normal dist / 1: NLN
+    if self.mppi_type == 1:
+      # print("NLN is used for noise")
+      self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.002, 0.02]))
+      print('the mu:', self.mu_LogN)
+      print('the std:', self.std_LogN)
+      self.LogN_info = [self.mppi_type, self.mu_LogN, self.std_LogN]
+
+    self.reset()
+
+  def reset(self):
+    # Other task specific params
+    self.u_seq0 = np.zeros((self.num_steps, 2), dtype=np.float32)
+    self.u_seq0[:,0] = 1.0 # Linear velocity
+    self.params = None
+    self.params_set = False
+    self.u_prev_d = None
+    
+    # Initialize all fixed-size device variables ahead of time. (Do not change in the lifetime of MPPI object)
+    self.init_device_vars_before_solving()
+
+  def init_device_vars_before_solving(self):
+
+    if not self.device_var_initialized:
+      t0 = time.time()
+      
+      self.noise_samples_d = numba_cuda.device_array((self.num_control_rollouts, self.num_steps, 2), dtype=np.float32) # to be sampled collaboratively via GPU
+      self.u_cur_d = numba_cuda.to_device(self.u_seq0) 
+      self.u_prev_d = numba_cuda.to_device(self.u_seq0) 
+      self.costs_d = numba_cuda.device_array((self.num_control_rollouts), dtype=np.float32)
+      self.weights_d = numba_cuda.device_array((self.num_control_rollouts), dtype=np.float32)
+      self.rng_states_d = create_xoroshiro128p_states(self.num_control_rollouts*self.num_steps, seed=self.seed)
+      
+      self.state_rollout_batch_d = numba_cuda.device_array((self.num_vis_state_rollouts, self.num_steps+1, 3), dtype=np.float32) # 3: x, y, theta  
+      # self.local_costmap_d = numba_cuda.device_array((self.local_costmap_size, self.local_costmap_size), dtype=np.float32)   
+      self.device_var_initialized = True
+      print("MPPI planner has initialized GPU memory after {} s".format(time.time()-t0))
+
+  def setup(self, params):
+    # These tend to change (e.g., current robot position, the map) after each step
+    self.set_params(params)
+
+  def set_params(self, params):
+    self.params = copy.deepcopy(params)
+    self.params_set = True
+
+  def check_solve_conditions(self):
+    if not self.params_set:
+      print("MPPI parameters are not set. Cannot solve")
+      return False
+    if not self.device_var_initialized:
+      print("Device variables not initialized. Cannot solve.")
+      return False
+    return True
+
+  def solve(self):
+    """Entry point for different algoritims"""
+    
+    if not self.check_solve_conditions():
+      print("MPPI solve condition not met. Cannot solve. Return")
+      return
+    
+    return self.solve_with_nominal_dynamics()
+
+  def convert_position_to_costmap_indices(self, position): 
+    map_resolution = 0.05
+    origin = [-15, -10]
+    map_y = int((position[0] - origin[0]) / map_resolution)
+    map_x = int((position[1] - origin[1] ) / map_resolution)
+    return map_x, map_y
+
+  def random_noise_sample(self):
+    # Use the random generator to generate random noise
+    # The logic from log-MPPI_ros github repo
+    if self.mppi_type == 0: # Normal Dist
+      du_d = self.generator.gen_normal(
+          self.num_control_rollouts * self.num_steps * 2,
+          np.float32)
+    # log-MPPI
+    if self.mppi_type == 1: # NLN
+        # print('NLN IS USED FOR NOISE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        du_LogN_d = self.generator.gen_log_normal(
+            self.num_control_rollouts * self.num_steps * 2,
+            np.float32, self.mu_LogN, self.std_LogN)
+        du_d = du_LogN_d * self.generator.gen_normal(
+            self.num_control_rollouts * self.num_steps * 2,
+            np.float32)
+        
+    return du_d.get()
+
+  def move_mppi_task_vars_to_device(self):
+    vrange_d = numba_cuda.to_device(self.params['vrange'].astype(np.float32))
+    wrange_d = numba_cuda.to_device(self.params['wrange'].astype(np.float32))
+    xgoal_d = numba_cuda.to_device(self.params['xgoal'].astype(np.float32))
+    goal_tolerance_d = np.float32(self.params['goal_tolerance'])
+    lambda_weight_d = np.float32(self.params['lambda_weight'])
+
+    u_std_d = numba_cuda.to_device(self.params['u_std'].astype(np.float32))
+    self.u_std = self.params['u_std'].astype(np.float32)
+    x0_d = numba_cuda.to_device(self.params['x0'].astype(np.float32))
+    dt_d = np.float32(self.params['dt'])
+    vehicle_length_d = np.float32(self.vehicle_length)
+    vehicle_width_d = np.float32(self.vehicle_width)
+    vehicle_wheelbase_d = np.float32(self.vehicle_wheelbase)
+
+    isObstacleVisible_d = np.float32(self.isObstacleVisible)
+    #obstacle
+    if "obstacle_positions" in self.params:
+      obs_pos_d = cuda.to_device(self.params['obstacle_positions'].astype(np.float32))
+    else:
+      obs_pos_d = np.array([[1e5,1e5]], dtype=np.float32) # dummy value, else numba panics : (
+    if "obstacle_radius" in self.params:
+      obs_r_d = cuda.to_device(self.params['obstacle_radius'].astype(np.float32))
+    else:
+      obs_r_d = np.array([0], dtype=np.float32) # dummy value, else numba panics : (
+
+    obs_cost_d = np.float32(DEFAULT_OBS_COST if 'obs_penalty' not in self.params 
+                                     else self.params['obs_penalty'])
+    return vrange_d, wrange_d, xgoal_d, \
+           goal_tolerance_d, lambda_weight_d, \
+           vehicle_length_d, vehicle_width_d, vehicle_wheelbase_d, \
+           u_std_d, x0_d, dt_d, \
+            obs_pos_d, obs_r_d, obs_cost_d, isObstacleVisible_d
+
+  def solve_with_nominal_dynamics(self):
+    """
+    Launch GPU kernels that use nominal dynamics but adjsuts cost function based on worst-case linear speed.
+    """
+    self.isObstacleVisible = 1.0
+
+    vrange_d, wrange_d, xgoal_d, \
+      goal_tolerance_d, lambda_weight_d, \
+           vehicle_length_d, vehicle_width_d, vehicle_wheelbase_d,\
+              u_std_d, x0_d, dt_d, \
+                obs_pos_d, obs_r_d, obs_cost_d, isObstacleVisible_d = self.move_mppi_task_vars_to_device()
+  
+    # Weight for distance cost
+    dist_weight = DEFAULT_DIST_WEIGHT if 'dist_weight' not in self.params else self.params['dist_weight']
+
+    # Optimization loop
+    for k in range(self.params['num_opt']):
+
+      # Sample control noise
+      noise_samples = self.random_noise_sample()
+      # reshape the noise samples to (num_control_rollouts, num_steps, 2)
+      noise_samples_reshaped = noise_samples.reshape(self.num_control_rollouts, self.num_steps, 2).astype(np.float32)
+      noise_samples_reshaped[:,:,0] *= u_std_d[0]
+      noise_samples_reshaped[:,:,1] *= u_std_d[1]
+
+      self.noise_samples_d = numba_cuda.to_device(noise_samples_reshaped)
+
+      # ORIGINAL NUMBA IMPLEMENTATION
+      # self.sample_noise_numba[self.num_control_rollouts, self.num_steps](
+      #       self.rng_states_d, u_std_d, self.noise_samples_d)
+      
+      # Rollout and compute mean or cvar
+      self.rollout_numba[self.num_control_rollouts, 1](
+        vrange_d,
+        wrange_d,
+        xgoal_d,
+        obs_cost_d,
+        obs_pos_d,
+        obs_r_d,
+        isObstacleVisible_d,
+        vehicle_length_d,
+        vehicle_width_d,
+        vehicle_wheelbase_d,
+        goal_tolerance_d,
+        lambda_weight_d,
+        u_std_d,
+        x0_d,
+        dt_d,
+        dist_weight,
+        self.noise_samples_d,
+        self.u_cur_d,
+
+        # results
+        self.costs_d
+      )
+
+      self.u_prev_d = self.u_cur_d
+
+      # Compute cost and update the optimal control on device
+      self.update_useq_numba[1, 32](
+        lambda_weight_d, 
+        self.costs_d, 
+        self.noise_samples_d, 
+        self.weights_d, 
+        vrange_d,
+        wrange_d,
+        self.u_cur_d
+      )
+
+    return self.u_cur_d.copy_to_host()
+
+
+  def shift_and_update(self, new_x0, u_cur, num_shifts=1):
+    # self.params["x0"] = new_x0.copy()
+    self.shift_optimal_control_sequence(u_cur, num_shifts)
+
+
+  def shift_optimal_control_sequence(self, u_cur, num_shifts=1):
+    u_cur_shifted = u_cur.copy()
+    u_cur_shifted[:-num_shifts] = u_cur_shifted[num_shifts:]
+    self.u_cur_d = numba_cuda.to_device(u_cur_shifted.astype(np.float32))
+
+  def get_visible_obstacle_set(self,obstacle_positions, obstacle_radius):
+      self.params['obstacle_positions'] = copy.deepcopy(obstacle_positions)
+      self.params['obstacle_radius'] = copy.deepcopy(obstacle_radius)
+    
+  def get_state_rollout(self):
+    """
+    Generate state sequences based on the current optimal control sequence.
+    """
+
+    assert self.params_set, "MPPI parameters are not set"
+
+    if not self.device_var_initialized:
+      print("Device variables not initialized. Cannot run mppi.")
+      return
+    
+    # Move things to GPU
+    vrange_d = numba_cuda.to_device(self.params['vrange'].astype(np.float32))
+    wrange_d = numba_cuda.to_device(self.params['wrange'].astype(np.float32))
+    x0_d = numba_cuda.to_device(self.params['x0'].astype(np.float32))
+    dt_d = np.float32(self.params['dt'])
+    vehicle_wheelbase_d = np.float32(self.vehicle_wheelbase)
+
+    self.get_state_rollout_across_control_noise[self.num_vis_state_rollouts, 1](
+        self.state_rollout_batch_d, # where to store results
+        x0_d, 
+        dt_d,
+        self.noise_samples_d,
+        vrange_d,
+        wrange_d,
+        vehicle_wheelbase_d,
+        self.u_prev_d,
+        self.u_cur_d,
+        )
+    
+    return self.state_rollout_batch_d.copy_to_host()
+
+  def get_vehicle_boundary_points_p(self, x_curr, vehicle_length, vehicle_width):
+    x_center, y_center, theta = x_curr
+    # Half dimensions
+    half_length = vehicle_length / 2
+    half_width = vehicle_width / 2
+
+    # Define the relative positions of the corners
+    corners = np.array([
+        [half_length, half_width],     # Front left
+        [half_length, -half_width],    # Front right
+        [0, -half_width],               # center right,   
+        [-half_length, -half_width],   # Rear right
+        [-half_length, half_width],    # Rear left,
+        [0, half_width]    # center left
+    ])
+
+    # Compute the rotation matrix based on heading angle (theta)
+    cos_theta = math.cos(theta)
+    sin_theta = math.sin(theta)
+    rotation_matrix = np.array([
+        [cos_theta, -sin_theta],
+        [sin_theta, cos_theta]
+    ])
+
+    # Rotate corners by the heading angle and translate to world coordinates
+    world_corners = rotation_matrix @ corners.T 
+    world_corners = world_corners.T + np.array([x_center, y_center])
+    # Add first point to the end for visualization
+    world_corners = np.vstack([world_corners, world_corners[0]])
+    return world_corners
+  
+
+  """GPU kernels from here on"""
+
+  @staticmethod
+  @numba_cuda.jit(fastmath=True)
+  def rollout_numba(
+          vrange_d, 
+          wrange_d, 
+          xgoal_d,
+          obs_cost_d,
+          obs_pos_d,
+          obs_r_d,
+          isObstacleVisible_d,
+          vehicle_length_d,
+          vehicle_width_d,
+          vehicle_wheelbase_d,         
+          goal_tolerance_d, 
+          lambda_weight_d, 
+          u_std_d, 
+          x0_d, 
+          dt_d,
+          dist_weight_d,
+          noise_samples_d,
+          u_cur_d,
+          costs_d):
+    """
+    There should only be one thread running in each block, where each block handles a single sampled control sequence.
+    """
+
+
+    # Get block id and thread id
+    bid = numba_cuda.blockIdx.x   # index of block
+    tid = numba_cuda.threadIdx.x  # index of thread within a block
+    costs_d[bid] = 0.0
+
+    # Explicit unicycle update and map lookup
+    # From here on we assume grid is properly padded so map lookup remains valid
+
+    x_curr = numba_cuda.local.array(3, numba.float32) # Dubins car model states x,y,theta
+
+    for i in range(3): 
+      x_curr[i] = x0_d[i]
+
+    timesteps = len(u_cur_d)
+
+    goal_reached = False
+    goal_tolerance_d2 = goal_tolerance_d*goal_tolerance_d
+    dist_to_goal2 = 1e9 # initialize to a large value
+
+    v_nom = v_noisy = w_nom = w_noisy = 0.0
+
+    # Allocate space for vehicle boundary points (4)
+    vehicle_boundary_points_d = numba_cuda.local.array((6, 2), dtype=np.float32)
+    # vehicle_boundary_points_grid_d = numba_cuda.local.array((4, 2), dtype=np.float32)
+    # printed=False
+    gamma = 1.0 # Discount factor for cost
+
+    for t in range(timesteps):
+      # Nominal noisy control
+      # v_nom = u_cur_d[t, 0] + noise_samples_d[bid, t, 0] # linear velocity cons
+      # v_noisy = max(vrange_d[0], min(vrange_d[1], v_nom))
+      v_noisy = v_nom = 1.0 # Constant velocity
+      w_nom = u_cur_d[t, 1] + noise_samples_d[bid, t, 1]
+      w_noisy = max(wrange_d[0], min(wrange_d[1], w_nom))
+      
+      # Forward simulate
+      # dubins car model update
+      x_curr[2] += dt_d*w_nom
+      x_curr[2] = math.fmod(x_curr[2], 2*math.pi)
+      x_curr[0] += dt_d*v_nom*math.cos(x_curr[2])
+      x_curr[1] += dt_d*v_nom*math.sin(x_curr[2])
+
+      # Compute distance to goal
+      dist_to_goal2 = ((xgoal_d[0]-x_curr[0])**2) + (xgoal_d[1]-x_curr[1])**2
+      costs_d[bid]+= stage_cost(dist_to_goal2, dist_weight_d) * gamma
+
+      # Compute vehicle boundary points for the current state
+      get_vehicle_boundary_points(x_curr, vehicle_length_d, vehicle_width_d, vehicle_boundary_points_d)
+
+      # Add obstacle costs
+      num_obs = len(obs_pos_d)
+      if isObstacleVisible_d == 1.0:
+        for obs_i in range(num_obs):
+          op = obs_pos_d[obs_i]
+          dist_diff2 = (x_curr[0]-op[0])**2 + (x_curr[1]-op[1])**2 - obs_r_d[obs_i]**2
+          costs_d[bid] += (1-numba.float32(dist_diff2>0))*obs_cost_d     
+
+          for i in range(6):
+            # calcculate the cost of the boundary points
+            dist_diff = ((vehicle_boundary_points_d[i,0]-op[0])**2+(vehicle_boundary_points_d[i,1]-op[1])**2 -obs_r_d[obs_i]**2)
+            costs_d[bid] += (1-numba.float32(dist_diff>0))*obs_cost_d
+      
+
+
+      # Convert vehicle boundary points to costmap indices
+      # -15:x_min, -10:y_min, 0.05:grid_resolution 10:scaling factor
+      # get_vehicle_boundary_points_grid(vehicle_boundary_points_d, -15.0, -10.0, 0.05, 10.0, vehicle_boundary_points_grid_d)
+      
+      # Add obstacle costs
+      # costs_d[bid] +=  (calculate_obstacle_cost(vehicle_boundary_points_d, obs_cost_d, max_local_cost_d, local_costmap_d) / 4 )* gamma 
+      gamma *= 1.0
+
+      if dist_to_goal2<= goal_tolerance_d2:
+        goal_reached = True
+        break
+    
+    # Accumulate terminal cost 
+    costs_d[bid] += term_cost(dist_to_goal2, goal_reached)
+
+    for t in range(timesteps):
+      costs_d[bid] += lambda_weight_d*((u_cur_d[t,1]/(u_std_d[1]**2))*noise_samples_d[bid, t, 1])
+
+  @staticmethod
+  @numba_cuda.jit(fastmath=True)
+  def update_useq_numba(
+        lambda_weight_d,
+        costs_d,
+        noise_samples_d,
+        weights_d,
+        vrange_d,
+        wrange_d,
+        u_cur_d):
+    """
+    GPU kernel that updates the optimal control sequence based on previously evaluated cost values.
+    Assume that the function is invoked as update_useq_numba[1, NUM_THREADS], with one block and multiple threads.
+    """
+
+    tid = numba_cuda.threadIdx.x
+    num_threads = numba_cuda.blockDim.x
+    numel = len(noise_samples_d)
+    gap = int(math.ceil(numel / num_threads))
+
+    # Find the minimum value via reduction
+    starti = min(tid*gap, numel)
+    endi = min(starti+gap, numel)
+    if starti<numel:
+      weights_d[starti] = costs_d[starti]
+    for i in range(starti, endi):
+      weights_d[starti] = min(weights_d[starti], costs_d[i])
+    numba_cuda.syncthreads()
+
+    s = gap
+    while s < numel:
+      if (starti % (2 * s) == 0) and ((starti + s) < numel):
+        # Stride by `s` and add
+        weights_d[starti] = min(weights_d[starti], weights_d[starti + s])
+      s *= 2
+      numba_cuda.syncthreads()
+
+    beta = weights_d[0]
+    
+    # Compute weight
+    for i in range(starti, endi):
+      weights_d[i] = math.exp(-1./lambda_weight_d*(costs_d[i]-beta))
+    numba_cuda.syncthreads()
+
+    # Normalize
+    # Reuse costs_d array
+    for i in range(starti, endi):
+      costs_d[i] = weights_d[i]
+    numba_cuda.syncthreads()
+    for i in range(starti+1, endi):
+      costs_d[starti] += costs_d[i]
+    numba_cuda.syncthreads()
+    s = gap
+    while s < numel:
+      if (starti % (2 * s) == 0) and ((starti + s) < numel):
+        # Stride by `s` and add
+        costs_d[starti] += costs_d[starti + s]
+      s *= 2
+      numba_cuda.syncthreads()
+
+    for i in range(starti, endi):
+      weights_d[i] /= costs_d[0]
+    numba_cuda.syncthreads()
+    
+    # update the u_cur_d
+    timesteps = len(u_cur_d)
+    for t in range(timesteps):
+      for i in range(starti, endi):
+        numba_cuda.atomic.add(u_cur_d, (t, 0), weights_d[i]*noise_samples_d[i, t, 0])
+        numba_cuda.atomic.add(u_cur_d, (t, 1), weights_d[i]*noise_samples_d[i, t, 1])
+    numba_cuda.syncthreads()
+
+    # Blocks crop the control together
+    tgap = int(math.ceil(timesteps / num_threads))
+    starti = min(tid*tgap, timesteps)
+    endi = min(starti+tgap, timesteps)
+    for ti in range(starti, endi):
+      u_cur_d[ti, 0] = max(vrange_d[0], min(vrange_d[1], u_cur_d[ti, 0]))
+      u_cur_d[ti, 1] = max(wrange_d[0], min(wrange_d[1], u_cur_d[ti, 1]))
+
+
+  @staticmethod
+  @numba_cuda.jit(fastmath=True)
+  def get_state_rollout_across_control_noise(
+          state_rollout_batch_d, # where to store results
+          x0_d, 
+          dt_d,
+          noise_samples_d,
+          vrange_d,
+          wrange_d,
+          vehicle_wheelbase_d,
+          u_prev_d,
+          u_cur_d):
+    """
+    Do a fixed number of rollouts for visualization across blocks.
+    Assume kernel is launched as get_state_rollout_across_control_noise[num_blocks, 1]
+    The block with id 0 will always visualize the best control sequence. Other blocks will visualize random samples.
+    """
+    
+    # Use block id
+    tid = numba_cuda.threadIdx.x
+    bid = numba_cuda.blockIdx.x
+    timesteps = len(u_cur_d)
+
+
+    if bid==0:
+      # Visualize the current best 
+      # Explicit unicycle update and map lookup
+      # From here on we assume grid is properly padded so map lookup remains valid
+      x_curr = numba_cuda.local.array(3, numba.float32) # x, y, theta
+
+      for i in range(3): 
+        x_curr[i] = x0_d[i]
+        state_rollout_batch_d[bid,0,i] = x0_d[i]
+      
+      for t in range(timesteps):
+        # Nominal noisy control
+        v_nom = 1.0
+        w_nom = u_cur_d[t, 1]
+        # Forward simulate
+        # dubins car model update
+        x_curr[2] += dt_d*w_nom
+        x_curr[2] = math.fmod(x_curr[2], 2*math.pi)
+        x_curr[0] += dt_d*v_nom*math.cos(x_curr[2])
+        x_curr[1] += dt_d*v_nom*math.sin(x_curr[2])
+
+        # Save state x, y, theta
+        state_rollout_batch_d[bid,t+1,0] = x_curr[0]
+        state_rollout_batch_d[bid,t+1,1] = x_curr[1]
+        state_rollout_batch_d[bid,t+1,2] = x_curr[2]
+    
+    else:
+      # Explicit unicycle update and map lookup
+      # From here on we assume grid is properly padded so map lookup remains valid
+      x_curr = numba_cuda.local.array(3, numba.float32)
+      for i in range(3): 
+        x_curr[i] = x0_d[i]
+        state_rollout_batch_d[bid,0,i] = x0_d[i]
+
+      for t in range(timesteps):
+        # Nominal noisy control
+        # v_nom = u_prev_d[t, 0] + noise_samples_d[bid, t, 0]
+        w_nom = u_prev_d[t, 1] + noise_samples_d[bid, t, 1]
+        v_noisy = 1.0
+        w_noisy = max(wrange_d[0], min(wrange_d[1], w_nom))
+
+        # # # Nominal noisy control
+        # v_nom = u_prev_d[t, 0]
+        # w_nom = u_prev_d[t, 1]
+        # Forward simulate
+        # dubins car model update
+        x_curr[2] += dt_d*w_noisy
+        x_curr[2] = math.fmod(x_curr[2], 2*math.pi)
+        x_curr[0] += dt_d*v_noisy*math.cos(x_curr[2])
+        x_curr[1] += dt_d*v_noisy*math.sin(x_curr[2])
+
+        # Save state x, y, theta
+        state_rollout_batch_d[bid,t+1,0] = x_curr[0]
+        state_rollout_batch_d[bid,t+1,1] = x_curr[1]
+        state_rollout_batch_d[bid,t+1,2] = x_curr[2]
+
+  @staticmethod
+  @numba_cuda.jit(fastmath=True)
+  def sample_noise_numba(rng_states, u_std_d, noise_samples_d):
+    """
+    Should be invoked as sample_noise_numba[NUM_U_SAMPLES, NUM_THREADS].
+    noise_samples_d.shape is assumed to be (num_rollouts, time_steps, 2)
+    Assume each thread corresponds to one time step
+    For consistency, each block samples a sequence, and threads (not too many) work together over num_steps.
+    This will not work if time steps are more than max_threads_per_block (usually 1024)
+    """
+    block_id = numba_cuda.blockIdx.x
+    thread_id = numba_cuda.threadIdx.x
+    abs_thread_id = numba_cuda.grid(1)
+
+    noise_samples_d[block_id, thread_id, 0] = u_std_d[0]*xoroshiro128p_normal_float32(rng_states, abs_thread_id)
+    noise_samples_d[block_id, thread_id, 1] = u_std_d[1]*xoroshiro128p_normal_float32(rng_states, abs_thread_id)
+
+obstacle_list = [[0.0,-1.7, 0.6], [1.11, -0.5, 0.6], [2.52, -0.94, 0.6]] 
+# obstacle_radius_list = [[0.4], [0.4], [0.4]]
+
+obstacle_positions_arr = np.array([obstacle[:2] for obstacle in obstacle_list], dtype=np.float32)
+obstacle_radius_arr = np.array([obstacle[2] for obstacle in obstacle_list], dtype=np.float32)
+
+class MPPIPlannerNode(Node):
+    def __init__(self):
+        super().__init__('mppi_planner_node')
+
+        # Initialize configuration for MPPI
+        self.cfg = Config(T = 3,
+            dt = 0.1,
+            num_control_rollouts =1000, # Same1 as number of blocks, can be more than 1024
+            num_vis_state_rollouts = 500,
+            seed = 1,
+            mppi_type = 1)
+        self.mppi = MPPI_Numba(self.cfg)
+        
+        # self.pid_controller = PIDController(kp=1.0, ki=0.0, kd=0.1, target_velocity=1.0)  # Target 1 m/s velocity
+
+        ''' # original buffer info
+        # Circular buffer to store the most recent phasespace data
+        self.buffer_size = 10  # You can change the size of the buffer as needed
+        self.f1tenth_data_buffer = deque(maxlen=self.buffer_size)
+        self.obs_pos_data_buffer = deque(maxlen=self.buffer_size)
+        self.target_pos_data_buffer = deque(maxlen=self.buffer_size)
+        '''
+
+        # MPPI initial parameters
+        self.mppi_params = dict(
+        # Task specification
+        dt = self.cfg.dt, 
+        x0 = np.zeros(3), # Start state
+        # xgoal = np.array([5.0, -2.0]), # Goal position #TODO: change this dynamically
+        # vehicle length(lf and lr wrt the cog) and width
+        vehicle_length = 0.57,
+        vehicle_width = 0.3,
+        vehicle_wheelbase= 0.32,
+        # For risk-aware min time planning
+        goal_tolerance = 0.40,
+        dist_weight = 10, #  Weight for dist-to-goal cost.
+
+        lambda_weight = 0.572, # Temperature param in MPPI
+        num_opt = 1, # Number of steps in each solve() function call.
+
+        # Control and sample specification
+        # variance = 0.1
+        u_std = np.array([0.023, 0.1]), # Noise std for sampling linear and angular velocities.
+        vrange = np.array([2.0, 2.0]), # Linear velocity range. Constant Linear Velocity
+        wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
+        
+        ## obstacles
+        # obstacle_positions = obstacle_positions_arr,
+        # obstacle_radius = obstacle_radius_arr,
+        
+        obstacle_positions = np.array([[0.1,-1.7]]).astype(np.float32),
+        obstacle_radius = np.array([0.5]),
+        obs_penalty = 1e8)
+        
+        ''' # original phase space codes below
+        # Create the subscriber to the /phasespace/rigids_throttled topic (now using TransformStamped)
+        self.ps_sub = self.create_subscription(
+            TransformStamped,
+            '/phasespace',  # Adjust the topic name as necessary
+            self.feedback_callback,
+            qos_profile_sensor_data  # QoS profile, 10 is default
+        )
+        '''
+        self.tf_buffer = Buffer()
+        self.tf_listener = TransformListener(self.tf_buffer, self)
+
+        
+        self.action_pub = self.create_publisher(
+            msg_type=AckermannDriveStamped,
+            topic="/drive",
+            qos_profile=qos_profile_sensor_data,
+        )
+        # Create a timer to call the MPPI solver every 100ms (0.1s)
+        self.timer = self.create_timer(0.1, self.solve_mppi)
+        self.i = 0
+        self.isGoalReached = False
+        self.mppi.setup(self.mppi_params)
+        self.get_logger().info('MPPI Planner Node started')
+
+    ''' # original phasespace feedback callback
+    def feedback_callback(self, data: TransformStamped):
+        # Extract the translation (position) from the TransformStamped message
+        if data.child_frame_id == '1': # F1tenth
+          f1tenth_msg = data
+        
+          veh_2d_world_pos = np.array([f1tenth_msg.transform.translation.x, f1tenth_msg.transform.translation.y, f1tenth_msg.transform.translation.z]) / 1000 # Assuming x and z as world plane
+
+          # Convert quaternion to Euler angles (heading)
+          r = R.from_quat([
+              f1tenth_msg.transform.rotation.x,
+              f1tenth_msg.transform.rotation.y,
+              f1tenth_msg.transform.rotation.z,
+              f1tenth_msg.transform.rotation.w
+          ])
+          veh_2d_world_heading = -r.as_euler('YZX', degrees=False)[0]  # Assuming 'YZX' rotation order (adjust as necessary)
+
+          phasespace_data = np.hstack([veh_2d_world_pos, veh_2d_world_heading])
+          # Add the latest data to the buffer (FIFO behavior, old data gets removed if full)
+          self.f1tenth_data_buffer.append(phasespace_data)
+
+        if data.child_frame_id == '2': # Obstacle
+          obstacle_pos_ps = data
+          
+          #Get the obtastacle positions
+          obs_position =  np.array([obstacle_pos_ps.transform.translation.x, obstacle_pos_ps.transform.translation.z]) / 1000 
+          self.obs_pos_data_buffer.append(obs_position)
+        
+        if data.child_frame_id == '3': # Target
+          target_pos_ps = data
+
+          target_position = np.array([target_pos_ps.transform.translation.x,target_pos_ps.transform.translation.z]) / 1000 
+          self.target_pos_data_buffer.append(target_position)
+    '''
+
+    def solve_mppi(self):
+        '''
+        # If the buffer is not empty, use the most recent data to update MPPI params
+        if self.f1tenth_data_buffer:
+        '''
+        try:
+            # 1. Look up transform from map -> base_link
+            transform = self.tf_buffer.lookup_transform(
+                'map',           # source frame (or "map")
+                'base_link',     # target frame (your robot)
+                rclpy.time.Time()
+            )
+
+            # 2. Extract x, y
+            x_robot = transform.transform.translation.x
+            y_robot = transform.transform.translation.y
+
+            # 3. Convert quaternion to yaw
+            quat = transform.transform.rotation
+            r = R.from_quat([quat.x, quat.y, quat.z, quat.w])
+            yaw_robot = r.as_euler('xyz', degrees=False)[2]
+
+            # 4. Update the MPPI initial state
+            self.mppi_params['x0'] = np.array([x_robot, y_robot, yaw_robot])
+            ''' # original phasespace 
+            latest_data = self.f1tenth_data_buffer[-1]  # Get the latest buffered data
+            latest_obstacle_pos= self.obs_pos_data_buffer[-1]
+            # latest_target_pos = self.target_pos_data_buffer[-1]
+            # Update MPPI parameters with the latest data
+            self.mppi_params['x0'] = np.array([latest_data[0], latest_data[2], latest_data[3]])
+            self.mppi_params['obstacle_positions'] = np.array([[np.round(latest_obstacle_pos[0],3),np.round(latest_obstacle_pos[1],3)]]).astype(np.float32) # x, and z
+            '''
+            
+            # self.mppi_params['xgoal'] = np.array([latest_target_pos[0], latest_target_pos[1]])
+            #TODO: make this a moving target
+            self.mppi_params['xgoal'] = np.array([-1.0, -13])
+
+            self.mppi.setup(self.mppi_params)
+
+            # Solve MPPI
+            result = self.mppi.solve()
+
+            #get the first action 
+            u_execute = result[0]
+            if self.i > 3:
+              h = std_msgs.msg.Header()
+              h.stamp = self.get_clock().now().to_msg()
+              if ((self.i % 10) == 0): 
+                self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {np.rad2deg(-u_execute[1]*1.0)}" )
+                ''' # comment out phasespace logging
+                self.get_logger().info(f'Running MPPI solver with buffered x0: x: {latest_data[0]}, z: {latest_data[2]}, {latest_data[3]}...')
+                self.get_logger().info(f"Obstacle Position: x: {latest_obstacle_pos[0]}, z: {latest_obstacle_pos[1]}")
+                '''
+                self.get_logger().info(f"Target Position: x: {self.mppi_params['xgoal'][0]}, z: {self.mppi_params['xgoal'][1]}")
+                self.get_logger().info(f"F1tenth Configuration x: {x_robot}, y:{y_robot}, yaw: {yaw_robot}")
+                
+              if self.isGoalReached:
+                u_execute = [0.0, 0.0]
+                drive = AckermannDrive(steering_angle=u_execute[0], speed=u_execute[1])
+                data = AckermannDriveStamped(header=h, drive=drive)
+                self.get_logger().info(f"Goal Reached!!!!")
+              else:   
+                # drive = AckermannDrive(steering_angle=-0.8*(np.tan(u_execute[1]*1.0)*(self.mppi_params['vehicle_wheelbase'])), speed=1.0)
+                drive = AckermannDrive(steering_angle=0.8*(np.tan(u_execute[1]*1.0)*(self.mppi_params['vehicle_wheelbase'])), speed=1.0)
+                data = AckermannDriveStamped(header=h, drive=drive)
+
+              # if ((self.i % 10) == 0): 
+              #   self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {np.rad2deg(-u_execute[1]*1.0)}" )
+              
+              # msg = String()
+              # msg.data = "Hello World: %d" % self.i
+              self.action_pub.publish(data)
+              self.mppi.shift_and_update(self.mppi_params['x0'], result, 1)
+
+              # dist2goal2 = (self.mppi_params['xgoal'][0] - latest_data[0])**2 + (self.mppi_params['xgoal'][1] - latest_data[2])**2
+              dist2goal2 = (self.mppi_params['xgoal'][0] - x_robot)**2 \
+                         + (self.mppi_params['xgoal'][1] - y_robot)**2
+              
+              goaltol2 = self.mppi_params['goal_tolerance'] * self.mppi_params['goal_tolerance']
+              if ((self.i % 10) == 0): 
+                self.get_logger().info(f"Distance to the Goal: {np.sqrt(dist2goal2)}, Goal Tolerance: {goaltol2}")
+              if dist2goal2 < goaltol2:
+                self.isGoalReached = True
+            self.i += 1
+
+        except Exception as e:
+            self.get_logger().warn(f"Could not lookup TF transform: {e}")
+            return
+        '''
+        else:
+            self.get_logger().warn('No phasespace data available in buffer to run MPPI solver')
+        '''
+
+    def on_shutdown(self):
+        self.get_logger().info('MPPI Planner Node shutting down')
+        self.get_logger().info("Popping CUDA context...")
+        # Clean up the context for both numba and cuda
+        # numba_cuda.contextmanager.clean()
+        primary_context.pop()
+        primary_context.detach()
+        # Additional cleanup can be added here (e.g., releasing CUDA memory)
+
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    # Create and spin the MPPI planner node
+    node = MPPIPlannerNode()
+
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.on_shutdown()
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()

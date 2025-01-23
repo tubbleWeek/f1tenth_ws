@@ -25,9 +25,9 @@ If you cannot it may be due to the firewall, you should disable it and retry pin
 
 #### ROS on Host
 
-The Host machine needs to have ROS2 Foxy and with it Rviz2 package. 
+The Host machine needs to have ROS2 Foxy and with it Rviz2 package if you want to be able to vizualize topics. Otherwise you can jsut ssh into your machine without the use of ROS. 
 
-The f1tenth_ws on the Jetson is where all of the ROS nodes are stored, most of the coding should be done through ssh.
+The f1tenth_ws on the Jetson is where all of the ROS nodes are stored, most of the coding should be done through ssh for convienence.
 
 ### Running F1tenth Stack
 
@@ -49,10 +49,10 @@ ros2 launch nav2_bringup bringup_launch.py
 Additionally, it is recomended that you pass your own params file you can do this with:
 
 ```
-ros2 launch nav2_bringup bringup_launch.py params_file:=<MY_PARAM_FILE>.yaml
+ros2 launch nav2_bringup bringup_launch.py params_file:=<MY_PARAM_FILE>.yaml map:=<MY_MAP>.yaml
 ```
 
-Replace `<MY_PARAM_FILE>` with the path to your paramater file. An example can be found in the f1tenth_controllers config directory.
+Replace `<MY_PARAM_FILE>` with the path to your paramater file. An example can be found in the f1tenth_controllers config directory, and replace `<MY_MAP>` with a yaml file describing a map.
 
 example command below:
 ```
@@ -72,6 +72,12 @@ Sometimes the costmap will not start. In the case that it does not launch, to la
   
 ```
 The `costmap/costmap` is the topic that the transition event's name is, by default it should be `costmap/costmap`. Once this command is ran, you should see a message in the terminal that the costmap has been started
+
+### Path Follower
+There is a path follower node called `path_follower_node` it is in the f1tenth_controllers directory under the filename `p_controller.py`. It can follow a raceline described with (x, y, v) datapoints. Where your x and y are your x and y coordinates in your global frame, and the v is the target velocity. You can run this node with:
+```
+ros2 run f1tenth_controllers path_follower_node
+```
 
 ### Mapping and Saving map
 To create a map of an area, I use slam_toolbox. To launch SLAM run:
