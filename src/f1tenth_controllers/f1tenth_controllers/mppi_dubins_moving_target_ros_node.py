@@ -8,6 +8,7 @@ from geometry_msgs.msg import TransformStamped  # Use TransformStamped instead o
 from collections import deque  # For implementing a circular buffer
 from rclpy.qos import qos_profile_sensor_data
 from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
+from visualization_msgs.msg import Marker
 import std_msgs
  # Import your MPPI class
 
@@ -716,7 +717,8 @@ class MPPIPlannerNode(Node):
             seed = 1,
             mppi_type = 1)
         self.mppi = MPPI_Numba(self.cfg)
-        
+        self.map_path = "/home/nvidia/f1tenth_ws/src/pure_pursuit/racelines/shepherd_lab_raceline_v1.csv"
+        data = np.loadtxt(self.map_path, delimiter = ",")
         # self.pid_controller = PIDController(kp=1.0, ki=0.0, kd=0.1, target_velocity=1.0)  # Target 1 m/s velocity
 
         ''' # original buffer info
@@ -729,34 +731,56 @@ class MPPIPlannerNode(Node):
 
         # MPPI initial parameters
         self.mppi_params = dict(
-        # Task specification
-        dt = self.cfg.dt, 
-        x0 = np.zeros(3), # Start state
-        # xgoal = np.array([5.0, -2.0]), # Goal position #TODO: change this dynamically
-        # vehicle length(lf and lr wrt the cog) and width
-        vehicle_length = 0.57,
-        vehicle_width = 0.3,
-        vehicle_wheelbase= 0.32,
-        # For risk-aware min time planning
-        goal_tolerance = 0.40,
-        dist_weight = 10, #  Weight for dist-to-goal cost.
+          # Task specification
+          dt = self.cfg.dt, 
+          x0 = np.zeros(3), # Start state
+          # vehicle length(lf and lr wrt the cog) and width
+          vehicle_length = 0.57,
+          vehicle_width = 0.3,
+          vehicle_wheelbase= 0.32,
+          # For risk-aware min time planning
+          goal_tolerance = 0.40,
+          dist_weight = 10, #  Weight for dist-to-goal cost.
 
-        lambda_weight = 0.572, # Temperature param in MPPI
-        num_opt = 1, # Number of steps in each solve() function call.
+          lambda_weight = 0.572, # Temperature param in MPPI
+          num_opt = 1, # Number of steps in each solve() function call.
 
-        # Control and sample specification
-        # variance = 0.1
-        u_std = np.array([0.023, 0.1]), # Noise std for sampling linear and angular velocities.
-        vrange = np.array([2.0, 2.0]), # Linear velocity range. Constant Linear Velocity
-        wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
+          # Control and sample specification
+          # variance = 0.1
+          u_std = np.array([0.023, 0.1]), # Noise std for sampling linear and angular velocities.
+          vrange = np.array([2.0, 2.0]), # Linear velocity range. Constant Linear Velocity
+          wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
+          
+          ## obstacles
+          # obstacle_positions = obstacle_positions_arr,
+          # obstacle_radius = obstacle_radius_arr,
+          
+          obstacle_positions = np.array([[0.1,-1.7]]).astype(np.float32),
+          obstacle_radius = np.array([0.5]),
+          obs_penalty = 1e8
+        )
+
+        self.cx = data[:, 0] # 1st column of data -> x-position of the waypoints
+        self.cy = data[:, 1] # 2nd column of data -> y-position of the waypoints
+        self.cv = data[:, 2] # 3rd column of data -> velocity of the waypoints
         
-        ## obstacles
-        # obstacle_positions = obstacle_positions_arr,
-        # obstacle_radius = obstacle_radius_arr,
-        
-        obstacle_positions = np.array([[0.1,-1.7]]).astype(np.float32),
-        obstacle_radius = np.array([0.5]),
-        obs_penalty = 1e8)
+        self.rear_x = self.mppi_params['x0'][0] - ((self.mppi_params['vehicle_wheelbase'] / 2) * math.cos(self.mppi_params['x0'][2]))
+        self.rear_y = self.mppi_params['x0'][1] - ((self.mppi_params['vehicle_wheelbase'] / 2) * math.sin(self.mppi_params['x0'][2]))
+
+        self.min_lookahead = 1.0
+        self.max_lookahead = 3.0
+        self.lookahead_ratio = 1.5
+
+        # for path following
+        self.current_index = None
+        self.target_index = 0
+
+        # self publish the marker array
+        self.lookahead_marker_pub = self.create_publisher(Marker, "/lookahead_marker", 5)
+        self.lookahead_marker_timer = self.create_timer(0.1, self.lookahead_publish_waypoint)
+
+        self.curr_marker_pub = self.create_publisher(Marker, "/curr_marker", 5)
+        self.currmarker_timer = self.create_timer(0.1, self.curr_publish_waypoint)
         
         ''' # original phase space codes below
         # Create the subscriber to the /phasespace/rigids_throttled topic (now using TransformStamped)
@@ -817,6 +841,99 @@ class MPPIPlannerNode(Node):
           target_position = np.array([target_pos_ps.transform.translation.x,target_pos_ps.transform.translation.z]) / 1000 
           self.target_pos_data_buffer.append(target_position)
     '''
+    def calc_distance(self, point_x, point_y):
+        dx = self.rear_x - point_x
+        dy = self.rear_y - point_y
+        return math.hypot(dx, dy)
+    
+    def lookahead_publish_waypoint(self):
+        marker = Marker()
+        marker.header.frame_id = "map"
+        marker.header.stamp = self.get_clock().now().to_msg()
+        marker.ns = "lookahead_waypoint"
+        # self.get_logger().info(f'Target Waypoint id: {self.target_index}')
+        # marker.id = int(str(self.target_index))
+        marker.id = 1
+        marker.type = Marker.SPHERE
+        marker.action = Marker.ADD
+        marker.pose.position.x = self.cx[self.target_index]
+        marker.pose.position.y = self.cy[self.target_index]
+        marker.pose.position.z = 0.0
+        marker.pose.orientation.w = 1.0
+
+        marker.scale.x = 0.25
+        marker.scale.y = 0.25
+        marker.scale.z = 0.25
+
+        marker.color.a = 1.0
+        marker.color.r = 1.0
+
+        self.lookahead_marker_pub.publish(marker)
+
+    def curr_publish_waypoint(self):
+        # self.get_logger().info(f'curr waypoint x: {waypoint.x}, wp_y: {waypoint.y}, wp index: {waypoint.index}')
+        index = 0
+        if self.current_index == None:
+            index = 1
+        else:
+             index = self.current_index
+        # self.get_logger().info(f'Current Waypoint id: {self.current_index}')
+        marker = Marker()
+        marker.header.frame_id = "map"
+        marker.header.stamp = self.get_clock().now().to_msg()
+        marker.ns = "curr_waypoint"
+        # marker.id = int(str(self.current_index))
+        marker.id = 1
+        marker.type = Marker.SPHERE
+        marker.action = Marker.ADD
+        
+        marker.pose.position.x = self.cx[index]
+        marker.pose.position.y = self.cy[index]
+
+        marker.pose.position.z = 0.0
+        marker.pose.orientation.w = 1.0
+
+        marker.scale.x = 0.25
+        marker.scale.y = 0.25
+        marker.scale.z = 0.25
+
+        marker.color.a = 1.0
+        marker.color.b = 0.0
+
+        self.curr_marker_pub.publish(marker)
+
+    def search_target_index(self):
+        # To speed up nearest point search, doing it at only first time.
+        if self.current_index is None:
+            # search nearest point index
+            dx = [self.rear_x - icx for icx in self.cx]
+            dy = [self.rear_y - icy for icy in self.cy]
+            d = np.hypot(dx, dy)
+            ind = np.argmin(d)
+            self.current_index = ind
+        else:
+            ind = self.current_index
+            while True:
+                distance_this_index = self.calc_distance(self.cx[ind], self.cy[ind])
+                distance_next_index = self.calc_distance(self.cx[(ind + 1) % len(self.cx)], self.cy[(ind + 1) % len(self.cy)])
+                if distance_this_index < distance_next_index:
+                    break
+                ind = (ind + 1) % len(self.cx)  # Ensure wrap-around in a circular path
+            self.current_index = ind
+
+        current_velocity = self.mppi_params['vrange'][0] # assume constant velocity
+        Lf = min(max(self.min_lookahead, self.max_lookahead * current_velocity / self.lookahead_ratio), self.max_lookahead)
+        if self.i % 20 == 0:
+            self.get_logger().info(f'Lookahead Distance: {Lf}, Current Velocity: {current_velocity}')
+            dist_to_next = self.calc_distance(self.cx[ind], self.cy[ind])
+            self.get_logger().info(f'Distance to next waypoint: {dist_to_next}')
+        # search look ahead target point index
+        while Lf > self.calc_distance(self.cx[ind], self.cy[ind]):
+            ind = (ind + 1) % len(self.cx)  # Wrap around for circular paths
+            if ind == self.current_index:  # Avoid infinite loop in case of very small Lf
+                break
+
+        return ind, Lf
 
     def solve_mppi(self):
         '''
@@ -842,6 +959,8 @@ class MPPIPlannerNode(Node):
 
             # 4. Update the MPPI initial state
             self.mppi_params['x0'] = np.array([x_robot, y_robot, yaw_robot])
+            self.rear_x = self.mppi_params['x0'][0] - ((self.mppi_params['vehicle_wheelbase'] / 2) * math.cos(self.mppi_params['x0'][2]))
+            self.rear_y = self.mppi_params['x0'][1] - ((self.mppi_params['vehicle_wheelbase'] / 2) * math.sin(self.mppi_params['x0'][2]))
             ''' # original phasespace 
             latest_data = self.f1tenth_data_buffer[-1]  # Get the latest buffered data
             latest_obstacle_pos= self.obs_pos_data_buffer[-1]
@@ -851,9 +970,15 @@ class MPPIPlannerNode(Node):
             self.mppi_params['obstacle_positions'] = np.array([[np.round(latest_obstacle_pos[0],3),np.round(latest_obstacle_pos[1],3)]]).astype(np.float32) # x, and z
             '''
             
-            # self.mppi_params['xgoal'] = np.array([latest_target_pos[0], latest_target_pos[1]])
-            #TODO: make this a moving target
-            self.mppi_params['xgoal'] = np.array([-1.0, -13])
+            ind = self.search_target_index()[0]
+            if self.target_index >= ind:
+                ind = self.target_index
+            self.target_index = ind
+            global_tx = self.cx[ind] # This is the target waypoints x position
+            global_ty = self.cy[ind] # This is the target waypoints y position
+            latest_target_pos = [global_tx, global_ty]
+            self.mppi_params['xgoal'] = np.array([latest_target_pos[0], latest_target_pos[1]])
+            # self.mppi_params['xgoal'] = np.array([-1.0, -13])
 
             self.mppi.setup(self.mppi_params)
 
@@ -873,16 +998,18 @@ class MPPIPlannerNode(Node):
                 '''
                 self.get_logger().info(f"Target Position: x: {self.mppi_params['xgoal'][0]}, z: {self.mppi_params['xgoal'][1]}")
                 self.get_logger().info(f"F1tenth Configuration x: {x_robot}, y:{y_robot}, yaw: {yaw_robot}")
-                
+
+              ''' Do not use this variable for path following setting, because there is never an end  
               if self.isGoalReached:
                 u_execute = [0.0, 0.0]
                 drive = AckermannDrive(steering_angle=u_execute[0], speed=u_execute[1])
                 data = AckermannDriveStamped(header=h, drive=drive)
                 self.get_logger().info(f"Goal Reached!!!!")
-              else:   
-                # drive = AckermannDrive(steering_angle=-0.8*(np.tan(u_execute[1]*1.0)*(self.mppi_params['vehicle_wheelbase'])), speed=1.0)
-                drive = AckermannDrive(steering_angle=0.8*(np.tan(u_execute[1]*1.0)*(self.mppi_params['vehicle_wheelbase'])), speed=1.0)
-                data = AckermannDriveStamped(header=h, drive=drive)
+              else: 
+              '''  
+              # drive = AckermannDrive(steering_angle=-0.8*(np.tan(u_execute[1]*1.0)*(self.mppi_params['vehicle_wheelbase'])), speed=1.0)
+              drive = AckermannDrive(steering_angle=0.8*(np.tan(u_execute[1]*1.0)*(self.mppi_params['vehicle_wheelbase'])), speed=1.0)
+              data = AckermannDriveStamped(header=h, drive=drive)
 
               # if ((self.i % 10) == 0): 
               #   self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {np.rad2deg(-u_execute[1]*1.0)}" )
@@ -898,9 +1025,10 @@ class MPPIPlannerNode(Node):
               
               goaltol2 = self.mppi_params['goal_tolerance'] * self.mppi_params['goal_tolerance']
               if ((self.i % 10) == 0): 
-                self.get_logger().info(f"Distance to the Goal: {np.sqrt(dist2goal2)}, Goal Tolerance: {goaltol2}")
+                self.get_logger().info(f"Distance to the Goal: {np.sqrt(dist2goal2)}, Goal Tolerance: {goaltol2}, Current target_index: {self.target_index}")
               if dist2goal2 < goaltol2:
                 self.isGoalReached = True
+                self.target_index  = self.search_target_index()[0]
             self.i += 1
 
         except Exception as e:
