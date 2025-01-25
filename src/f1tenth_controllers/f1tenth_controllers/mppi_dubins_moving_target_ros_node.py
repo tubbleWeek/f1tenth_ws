@@ -10,7 +10,6 @@ from rclpy.qos import qos_profile_sensor_data
 from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
 from visualization_msgs.msg import Marker
 import std_msgs
- # Import your MPPI class
 
 import pycuda.driver as cuda
 import pycuda.autoinit
@@ -39,9 +38,7 @@ rec_min_control_rollouts = 100
 DEFAULT_OBS_COST = 1e4
 
 class Config:
-  
   """ Configurations that are typically fixed throughout execution. """
-  
   def __init__(self, 
                T=5, # Horizon (s)
                dt=0.1, # Length of each step (s)
@@ -49,7 +46,6 @@ class Config:
                num_vis_state_rollouts=16384, # Number of visualization rollouts
                seed=1,
                mppi_type=1): # Normal dist / 1: NLN):
-    
     self.seed = seed
     self.T = T
     self.dt = dt
@@ -82,13 +78,10 @@ class Config:
     self.num_vis_state_rollouts = min([self.num_vis_state_rollouts, self.num_control_rollouts])
     self.num_vis_state_rollouts = max([1, self.num_vis_state_rollouts])
 
-
 class MPPI_Numba(object):
-  
   """ 
   Implementation of Information theoretic MPPI by Williams et. al. 
   Alg 2. in https://homes.cs.washington.edu/~bboots/files/InformationTheoreticMPC.pdf
-
 
   Planner object that initializes GPU memory and runs MPPI on GPU via numba. 
   
@@ -101,9 +94,7 @@ class MPPI_Numba(object):
     6. shift_and_update(next_state, optimal_u_sequence, num_shifts=1)
     7. Repeat from 2 if params have changed
   """
-
   def __init__(self, cfg):
-
     # Fixed configs
     self.cfg = cfg
     self.T = cfg.T
@@ -143,7 +134,6 @@ class MPPI_Numba(object):
       print('the mu:', self.mu_LogN)
       print('the std:', self.std_LogN)
       self.LogN_info = [self.mppi_type, self.mu_LogN, self.std_LogN]
-
     self.reset()
 
   def reset(self):
@@ -158,10 +148,8 @@ class MPPI_Numba(object):
     self.init_device_vars_before_solving()
 
   def init_device_vars_before_solving(self):
-
     if not self.device_var_initialized:
       t0 = time.time()
-      
       self.noise_samples_d = numba_cuda.device_array((self.num_control_rollouts, self.num_steps, 2), dtype=np.float32) # to be sampled collaboratively via GPU
       self.u_cur_d = numba_cuda.to_device(self.u_seq0) 
       self.u_prev_d = numba_cuda.to_device(self.u_seq0) 
@@ -193,11 +181,9 @@ class MPPI_Numba(object):
 
   def solve(self):
     """Entry point for different algoritims"""
-    
     if not self.check_solve_conditions():
       print("MPPI solve condition not met. Cannot solve. Return")
       return
-    
     return self.solve_with_nominal_dynamics()
 
   def convert_position_to_costmap_indices(self, position): 
@@ -315,9 +301,7 @@ class MPPI_Numba(object):
         # results
         self.costs_d
       )
-
       self.u_prev_d = self.u_cur_d
-
       # Compute cost and update the optimal control on device
       self.update_useq_numba[1, 32](
         lambda_weight_d, 
@@ -328,14 +312,11 @@ class MPPI_Numba(object):
         wrange_d,
         self.u_cur_d
       )
-
     return self.u_cur_d.copy_to_host()
-
 
   def shift_and_update(self, new_x0, u_cur, num_shifts=1):
     # self.params["x0"] = new_x0.copy()
     self.shift_optimal_control_sequence(u_cur, num_shifts)
-
 
   def shift_optimal_control_sequence(self, u_cur, num_shifts=1):
     u_cur_shifted = u_cur.copy()
@@ -350,13 +331,10 @@ class MPPI_Numba(object):
     """
     Generate state sequences based on the current optimal control sequence.
     """
-
     assert self.params_set, "MPPI parameters are not set"
-
     if not self.device_var_initialized:
       print("Device variables not initialized. Cannot run mppi.")
       return
-    
     # Move things to GPU
     vrange_d = numba_cuda.to_device(self.params['vrange'].astype(np.float32))
     wrange_d = numba_cuda.to_device(self.params['wrange'].astype(np.float32))
@@ -375,7 +353,6 @@ class MPPI_Numba(object):
         self.u_prev_d,
         self.u_cur_d,
         )
-    
     return self.state_rollout_batch_d.copy_to_host()
 
   def get_vehicle_boundary_points_p(self, x_curr, vehicle_length, vehicle_width):
@@ -409,9 +386,7 @@ class MPPI_Numba(object):
     world_corners = np.vstack([world_corners, world_corners[0]])
     return world_corners
   
-
   """GPU kernels from here on"""
-
   @staticmethod
   @numba_cuda.jit(fastmath=True)
   def rollout_numba(
@@ -438,7 +413,6 @@ class MPPI_Numba(object):
     There should only be one thread running in each block, where each block handles a single sampled control sequence.
     """
 
-
     # Get block id and thread id
     bid = numba_cuda.blockIdx.x   # index of block
     tid = numba_cuda.threadIdx.x  # index of thread within a block
@@ -446,12 +420,9 @@ class MPPI_Numba(object):
 
     # Explicit unicycle update and map lookup
     # From here on we assume grid is properly padded so map lookup remains valid
-
     x_curr = numba_cuda.local.array(3, numba.float32) # Dubins car model states x,y,theta
-
     for i in range(3): 
       x_curr[i] = x0_d[i]
-
     timesteps = len(u_cur_d)
 
     goal_reached = False
@@ -500,8 +471,6 @@ class MPPI_Numba(object):
             # calcculate the cost of the boundary points
             dist_diff = ((vehicle_boundary_points_d[i,0]-op[0])**2+(vehicle_boundary_points_d[i,1]-op[1])**2 -obs_r_d[obs_i]**2)
             costs_d[bid] += (1-numba.float32(dist_diff>0))*obs_cost_d
-      
-
 
       # Convert vehicle boundary points to costmap indices
       # -15:x_min, -10:y_min, 0.05:grid_resolution 10:scaling factor
@@ -601,7 +570,6 @@ class MPPI_Numba(object):
       u_cur_d[ti, 0] = max(vrange_d[0], min(vrange_d[1], u_cur_d[ti, 0]))
       u_cur_d[ti, 1] = max(wrange_d[0], min(wrange_d[1], u_cur_d[ti, 1]))
 
-
   @staticmethod
   @numba_cuda.jit(fastmath=True)
   def get_state_rollout_across_control_noise(
@@ -624,7 +592,6 @@ class MPPI_Numba(object):
     tid = numba_cuda.threadIdx.x
     bid = numba_cuda.blockIdx.x
     timesteps = len(u_cur_d)
-
 
     if bid==0:
       # Visualize the current best 
@@ -699,12 +666,6 @@ class MPPI_Numba(object):
     noise_samples_d[block_id, thread_id, 0] = u_std_d[0]*xoroshiro128p_normal_float32(rng_states, abs_thread_id)
     noise_samples_d[block_id, thread_id, 1] = u_std_d[1]*xoroshiro128p_normal_float32(rng_states, abs_thread_id)
 
-obstacle_list = [[0.0,-1.7, 0.6], [1.11, -0.5, 0.6], [2.52, -0.94, 0.6]] 
-# obstacle_radius_list = [[0.4], [0.4], [0.4]]
-
-obstacle_positions_arr = np.array([obstacle[:2] for obstacle in obstacle_list], dtype=np.float32)
-obstacle_radius_arr = np.array([obstacle[2] for obstacle in obstacle_list], dtype=np.float32)
-
 class MPPIPlannerNode(Node):
     def __init__(self):
         super().__init__('mppi_planner_node')
@@ -720,14 +681,6 @@ class MPPIPlannerNode(Node):
         self.map_path = "/home/nvidia/f1tenth_ws/src/pure_pursuit/racelines/shepherd_lab_raceline_v1.csv"
         data = np.loadtxt(self.map_path, delimiter = ",")
         # self.pid_controller = PIDController(kp=1.0, ki=0.0, kd=0.1, target_velocity=1.0)  # Target 1 m/s velocity
-
-        ''' # original buffer info
-        # Circular buffer to store the most recent phasespace data
-        self.buffer_size = 10  # You can change the size of the buffer as needed
-        self.f1tenth_data_buffer = deque(maxlen=self.buffer_size)
-        self.obs_pos_data_buffer = deque(maxlen=self.buffer_size)
-        self.target_pos_data_buffer = deque(maxlen=self.buffer_size)
-        '''
 
         # MPPI initial parameters
         self.mppi_params = dict(
@@ -750,10 +703,6 @@ class MPPIPlannerNode(Node):
           u_std = np.array([0.023, 0.1]), # Noise std for sampling linear and angular velocities.
           vrange = np.array([2.0, 2.0]), # Linear velocity range. Constant Linear Velocity
           wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
-          
-          ## obstacles
-          # obstacle_positions = obstacle_positions_arr,
-          # obstacle_radius = obstacle_radius_arr,
           
           obstacle_positions = np.array([[0.1,-1.7]]).astype(np.float32),
           obstacle_radius = np.array([0.5]),
@@ -778,22 +727,11 @@ class MPPIPlannerNode(Node):
         # self publish the marker array
         self.lookahead_marker_pub = self.create_publisher(Marker, "/lookahead_marker", 5)
         self.lookahead_marker_timer = self.create_timer(0.1, self.lookahead_publish_waypoint)
-
         self.curr_marker_pub = self.create_publisher(Marker, "/curr_marker", 5)
         self.currmarker_timer = self.create_timer(0.1, self.curr_publish_waypoint)
         
-        ''' # original phase space codes below
-        # Create the subscriber to the /phasespace/rigids_throttled topic (now using TransformStamped)
-        self.ps_sub = self.create_subscription(
-            TransformStamped,
-            '/phasespace',  # Adjust the topic name as necessary
-            self.feedback_callback,
-            qos_profile_sensor_data  # QoS profile, 10 is default
-        )
-        '''
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
-
         
         self.action_pub = self.create_publisher(
             msg_type=AckermannDriveStamped,
@@ -807,40 +745,6 @@ class MPPIPlannerNode(Node):
         self.mppi.setup(self.mppi_params)
         self.get_logger().info('MPPI Planner Node started')
 
-    ''' # original phasespace feedback callback
-    def feedback_callback(self, data: TransformStamped):
-        # Extract the translation (position) from the TransformStamped message
-        if data.child_frame_id == '1': # F1tenth
-          f1tenth_msg = data
-        
-          veh_2d_world_pos = np.array([f1tenth_msg.transform.translation.x, f1tenth_msg.transform.translation.y, f1tenth_msg.transform.translation.z]) / 1000 # Assuming x and z as world plane
-
-          # Convert quaternion to Euler angles (heading)
-          r = R.from_quat([
-              f1tenth_msg.transform.rotation.x,
-              f1tenth_msg.transform.rotation.y,
-              f1tenth_msg.transform.rotation.z,
-              f1tenth_msg.transform.rotation.w
-          ])
-          veh_2d_world_heading = -r.as_euler('YZX', degrees=False)[0]  # Assuming 'YZX' rotation order (adjust as necessary)
-
-          phasespace_data = np.hstack([veh_2d_world_pos, veh_2d_world_heading])
-          # Add the latest data to the buffer (FIFO behavior, old data gets removed if full)
-          self.f1tenth_data_buffer.append(phasespace_data)
-
-        if data.child_frame_id == '2': # Obstacle
-          obstacle_pos_ps = data
-          
-          #Get the obtastacle positions
-          obs_position =  np.array([obstacle_pos_ps.transform.translation.x, obstacle_pos_ps.transform.translation.z]) / 1000 
-          self.obs_pos_data_buffer.append(obs_position)
-        
-        if data.child_frame_id == '3': # Target
-          target_pos_ps = data
-
-          target_position = np.array([target_pos_ps.transform.translation.x,target_pos_ps.transform.translation.z]) / 1000 
-          self.target_pos_data_buffer.append(target_position)
-    '''
     def calc_distance(self, point_x, point_y):
         dx = self.rear_x - point_x
         dy = self.rear_y - point_y
@@ -871,7 +775,6 @@ class MPPIPlannerNode(Node):
         self.lookahead_marker_pub.publish(marker)
 
     def curr_publish_waypoint(self):
-        # self.get_logger().info(f'curr waypoint x: {waypoint.x}, wp_y: {waypoint.y}, wp index: {waypoint.index}')
         index = 0
         if self.current_index == None:
             index = 1
@@ -936,10 +839,6 @@ class MPPIPlannerNode(Node):
         return ind, Lf
 
     def solve_mppi(self):
-        '''
-        # If the buffer is not empty, use the most recent data to update MPPI params
-        if self.f1tenth_data_buffer:
-        '''
         try:
             # 1. Look up transform from map -> base_link
             transform = self.tf_buffer.lookup_transform(
@@ -961,14 +860,7 @@ class MPPIPlannerNode(Node):
             self.mppi_params['x0'] = np.array([x_robot, y_robot, yaw_robot])
             self.rear_x = self.mppi_params['x0'][0] - ((self.mppi_params['vehicle_wheelbase'] / 2) * math.cos(self.mppi_params['x0'][2]))
             self.rear_y = self.mppi_params['x0'][1] - ((self.mppi_params['vehicle_wheelbase'] / 2) * math.sin(self.mppi_params['x0'][2]))
-            ''' # original phasespace 
-            latest_data = self.f1tenth_data_buffer[-1]  # Get the latest buffered data
-            latest_obstacle_pos= self.obs_pos_data_buffer[-1]
-            # latest_target_pos = self.target_pos_data_buffer[-1]
-            # Update MPPI parameters with the latest data
-            self.mppi_params['x0'] = np.array([latest_data[0], latest_data[2], latest_data[3]])
-            self.mppi_params['obstacle_positions'] = np.array([[np.round(latest_obstacle_pos[0],3),np.round(latest_obstacle_pos[1],3)]]).astype(np.float32) # x, and z
-            '''
+            #TODO: add obstacle avoidance through costmap
             
             ind = self.search_target_index()[0]
             if self.target_index >= ind:
@@ -978,8 +870,6 @@ class MPPIPlannerNode(Node):
             global_ty = self.cy[ind] # This is the target waypoints y position
             latest_target_pos = [global_tx, global_ty]
             self.mppi_params['xgoal'] = np.array([latest_target_pos[0], latest_target_pos[1]])
-            # self.mppi_params['xgoal'] = np.array([-1.0, -13])
-
             self.mppi.setup(self.mppi_params)
 
             # Solve MPPI
@@ -992,14 +882,10 @@ class MPPIPlannerNode(Node):
               h.stamp = self.get_clock().now().to_msg()
               if ((self.i % 10) == 0): 
                 self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {np.rad2deg(-u_execute[1]*1.0)}" )
-                ''' # comment out phasespace logging
-                self.get_logger().info(f'Running MPPI solver with buffered x0: x: {latest_data[0]}, z: {latest_data[2]}, {latest_data[3]}...')
-                self.get_logger().info(f"Obstacle Position: x: {latest_obstacle_pos[0]}, z: {latest_obstacle_pos[1]}")
-                '''
                 self.get_logger().info(f"Target Position: x: {self.mppi_params['xgoal'][0]}, z: {self.mppi_params['xgoal'][1]}")
                 self.get_logger().info(f"F1tenth Configuration x: {x_robot}, y:{y_robot}, yaw: {yaw_robot}")
 
-              ''' Do not use this variable for path following setting, because there is never an end  
+              ''' Do not use this variable for circular corridor path following setting, because there is never an end  
               if self.isGoalReached:
                 u_execute = [0.0, 0.0]
                 drive = AckermannDrive(steering_angle=u_execute[0], speed=u_execute[1])
@@ -1034,10 +920,6 @@ class MPPIPlannerNode(Node):
         except Exception as e:
             self.get_logger().warn(f"Could not lookup TF transform: {e}")
             return
-        '''
-        else:
-            self.get_logger().warn('No phasespace data available in buffer to run MPPI solver')
-        '''
 
     def on_shutdown(self):
         self.get_logger().info('MPPI Planner Node shutting down')
@@ -1047,14 +929,9 @@ class MPPIPlannerNode(Node):
         primary_context.pop()
         primary_context.detach()
         # Additional cleanup can be added here (e.g., releasing CUDA memory)
-
-
 def main(args=None):
     rclpy.init(args=args)
-
-    # Create and spin the MPPI planner node
     node = MPPIPlannerNode()
-
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
@@ -1062,7 +939,5 @@ def main(args=None):
     finally:
         node.on_shutdown()
         rclpy.shutdown()
-
-
 if __name__ == '__main__':
     main()
