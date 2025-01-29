@@ -44,6 +44,7 @@ DEFAULT_DIST_WEIGHT = 10
 np.set_printoptions(precision=2, suppress=True)
 
 num_traj = 1000 # only use the first 'num_traj' trajectories
+print("Reading cuniform trajectories...")
 with open('/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/FINAL_C_Uniform_100000_trajectories_disjoint_DUBINS_v_1_perturb_2.01_slack_2.01_seed_2025_grid_0.05_0.05_4.50deg_na45_t4.01_ts0.2.pkl', 'rb') as f:
     cuniform_trajectories = pickle.load(f)[:num_traj]
 
@@ -55,6 +56,7 @@ def process_element(array_part, scalar_part):
     return np.concatenate([array_part, [scalar_part]])
 
 # Process all trajectories
+print("Processing cuniform trajectories...")
 processed_trajectories = [
     np.array([process_element(array_part, scalar_part) for array_part, scalar_part in trajectory])
     for trajectory in cuniform_trajectories
@@ -66,8 +68,8 @@ cuniform_trajectories_transformed = np.array(processed_trajectories)
 class Config:
   """ Configurations that are typically fixed throughout execution. """
   def __init__(self, 
-               T=5, # Horizon (s)
-               dt=0.1, # Length of each step (s)
+               T=4, # Horizon (s)
+               dt=0.2, # Length of each step (s)
                num_control_rollouts=16384, # Number of control sequences
                num_vis_state_rollouts=16384, # Number of visualization rollouts
                seed=1,
@@ -142,7 +144,8 @@ class CUniform_Numba(object):
     self.generator = XORWOWRandomNumberGenerator()
 
     self.iteration_count = 0
-
+    self.local_costmap_size = 120
+    self.costmap_loaded = False
     self.reset()
 
     
@@ -153,9 +156,9 @@ class CUniform_Numba(object):
     self.params = None
     self.params_set = False
     self.u_prev_d = None
+    self.costmap_loaded = False
     
     # Initialize all fixed-size device variables ahead of time. (Do not change in the lifetime of CUniform object)
-
     self.init_device_vars_before_solving()
 
   def load_trajectories(self, trajectories):
@@ -164,15 +167,13 @@ class CUniform_Numba(object):
 
 
   def init_device_vars_before_solving(self):
-
     if not self.device_var_initialized:
       t0 = time.time()      
       self.costs_d = numba_cuda.device_array((self.num_control_rollouts), dtype=np.float32)
       self.weights_d = numba_cuda.device_array((self.num_control_rollouts), dtype=np.float32)
-      # self.local_costmap_d = numba_cuda.device_array((self.local_costmap_size, self.local_costmap_size), dtype=np.float32)   
+      self.local_costmap_d = numba_cuda.device_array((self.local_costmap_size, self.local_costmap_size), dtype=np.float32)   
       self.device_var_initialized = True
       print(" CUniform planner has initialized GPU memory after {} s".format(time.time()-t0))
-
 
   def setup(self, params):
     # These tend to change (e.g., current robot position, the map) after each step
@@ -182,6 +183,8 @@ class CUniform_Numba(object):
   def set_params(self, params):
     self.params = copy.deepcopy(params)
     self.x0 = self.params['x0']
+    if self.params['costmap'] is not None: # should be type ndarray
+        self.costmap_loaded = True
     self.params_set = True
 
   def check_solve_conditions(self):
@@ -190,6 +193,9 @@ class CUniform_Numba(object):
       return False
     if not self.device_var_initialized:
       print("Device variables not initialized. Cannot solve.")
+      return False
+    if not self.costmap_loaded:
+      print("Costmap not loaded. Cannot solve.")
       return False
     return True
 
@@ -213,19 +219,32 @@ class CUniform_Numba(object):
     obs_cost_d = np.float32(DEFAULT_OBS_COST if 'obs_penalty' not in self.params 
                                      else self.params['obs_penalty'])
 
+    ''' COSTMAP Variables'''
+    local_costmap_edt = self.params['costmap']
+    local_costmap_edt = np.ascontiguousarray(local_costmap_edt)
+    max_local_cost_d = np.float32(np.max(local_costmap_edt))
+    # set the local costmap to the local_costmap_d on the device
+    local_costmap_d = numba_cuda.to_device(local_costmap_edt)
+    costmap_origin_x = np.float32(self.params['costmap_origin'][0])
+    costmap_origin_y = np.float32(self.params['costmap_origin'][1])
+    costmap_resolution = np.float32(self.params['costmap_resolution'])
+
     return xgoal_d, goal_tolerance_d, \
             vehicle_length_d, vehicle_width_d, vehicle_wheelbase_d, \
-            obs_cost_d
+            obs_cost_d, local_costmap_d, max_local_cost_d, \
+           costmap_origin_x, costmap_origin_y, costmap_resolution
 
   def get_rollout_cost(self):
-    
     '''
     Calculate the cost of the each trajectories and find the trajectory with min cost. and return that trajectory to the host
     '''
     xgoal_d, goal_tolerance_d, \
-      vehicle_length_d, vehicle_width_d, vehicle_wheelbase_d, \
-        obs_cost_d = self.move_cuniform_task_vars_to_device()
-        # Weight for distance cost
+    vehicle_length_d, vehicle_width_d, vehicle_wheelbase_d, \
+    obs_cost_d, local_costmap_d, max_local_cost_d, \
+    costmap_origin_x, costmap_origin_y, costmap_resolution \
+    = self.move_cuniform_task_vars_to_device()
+    
+    # Weight for distance cost
     dist_weight = DEFAULT_DIST_WEIGHT if 'dist_weight' not in self.params else self.params['dist_weight']
 
     self.rollouts_cost_numba[self.num_control_rollouts, 1](
@@ -233,6 +252,11 @@ class CUniform_Numba(object):
       self.costs_d,
       goal_tolerance_d,
       xgoal_d,
+      local_costmap_d, # local_costmap added
+      max_local_cost_d,
+      costmap_origin_x,
+      costmap_origin_y,
+      costmap_resolution,
       obs_cost_d,
       vehicle_length_d,
       vehicle_width_d,
@@ -324,6 +348,11 @@ class CUniform_Numba(object):
     costs_d,
     goal_tolerance_d,
     xgoal_d,
+    local_costmap_d, # local_costmap added
+    max_local_cost_d,
+    costmap_origin_x,
+    costmap_origin_y,
+    params_costmap_resolution,
     obs_cost_d,
     vehicle_length_d,
     vehicle_width_d,
@@ -347,7 +376,9 @@ class CUniform_Numba(object):
     # Allocate space for vehicle boundary points (4)
     vehicle_boundary_points_d = numba_cuda.local.array((6, 2), dtype=np.float32)
     x_curr = numba_cuda.local.array(3, numba.float32) # Dubins car model states x,y,theta
-    # printed=False
+
+    x_curr_grid_d = numba_cuda.local.array((2), dtype=np.int32)
+
     gamma = 1.0 # Discount factor for cost
     # Loop through each state in the trajectory
     num_steps = trajectories_d.shape[1]
@@ -361,22 +392,28 @@ class CUniform_Numba(object):
         costs_d[bid] += stage_cost(dist_to_goal2, dist_weight_d) * gamma
 
         # Compute vehicle boundary points for the current state
-        get_vehicle_boundary_points(x_curr, vehicle_length_d, vehicle_width_d, vehicle_boundary_points_d)
+        # get_vehicle_boundary_points(x_curr, vehicle_length_d, vehicle_width_d, vehicle_boundary_points_d)
         
           
         # Convert vehicle boundary points to costmap indices
         # -15:x_min, -10:y_min, 0.05:grid_resolution 10:scaling factor
         # get_vehicle_boundary_points_grid(vehicle_boundary_points_d, -15.0, -10.0, 0.05, 10.0, vehicle_boundary_points_grid_d)
-        
-        # Add obstacle costs
-        # costs_d[bid] +=  (calculate_obstacle_cost(vehicle_boundary_points_d, obs_cost_d, max_local_cost_d, local_costmap_d) / 4 )* gamma 
-        # gamma *= 0.95
+
+        convert_position_to_costmap_indices_gpu(
+            x_curr[0],
+            x_curr[1],
+            costmap_origin_x,
+            costmap_origin_y,
+            params_costmap_resolution,
+            x_curr_grid_d,
+        )
+        costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) * obs_cost_d * gamma
 
         if dist_to_goal2  <= goal_tolerance_d2:
           goal_reached = True
           break
       
-        # Accumulate terminal cost 
+    # Accumulate terminal cost 
     costs_d[bid] += term_cost(dist_to_goal2, goal_reached)
     # give reward for reaching the goal
     # costs_d[bid] += (-goal_reached) * 10
@@ -394,8 +431,6 @@ class CUniformPlannerNode(Node):
         
         self.cuniform = CUniform_Numba(self.cfg)
         self.original_trajectories = cuniform_trajectories_transformed
-        self.map_path = "/home/nvidia/f1tenth_ws/src/pure_pursuit/racelines/shepherd_lab_raceline_v1.csv"
-        data = np.loadtxt(self.map_path, delimiter = ",")
 
         # CUniform initial parameters
         self.cuniform_params = dict(
@@ -418,6 +453,7 @@ class CUniformPlannerNode(Node):
           vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
           wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
           
+          costmap = None, # intiallly nothing
           obs_penalty = 1e8
         )
 
@@ -425,23 +461,71 @@ class CUniformPlannerNode(Node):
         self.tf_listener = TransformListener(self.tf_buffer, self)
 
         '''############### for costmap ##############'''
-        #TODO: unfinishied
-
+        # high level steps
+        # Step 1: subscribe to OccupancyGrid and convert msg.data into a numpy array
+        # Step 2: Pass that array to cuniform_params['costmap'] in solve_cuniform()
+        self.local_costmap = None  # store the latest costmap
+        self.costmap_sub = self.create_subscription(
+            OccupancyGrid, # Type: nav_msgs/msg/OccupancyGrid
+            '/local_costmap/costmap',
+            self.costmap_callback,
+            1 # only the most recent message is kept in the queue
+        )
+        self.debug_local_costmap_pub = self.create_publisher(OccupancyGrid, '/debug_local_costmap', 1)
+        self.no_costmap_received_timer = self.create_timer(2.0, self.notify_no_costmap)
 
         self.action_pub = self.create_publisher(
             msg_type=AckermannDriveStamped,
             topic="/drive",
             qos_profile=qos_profile_sensor_data,
         )
+
         # Create a timer to call the CUniform solver every 100ms (0.1s)
         self.timer = self.create_timer(0.1, self.solve_cuniform)
         self.i = 0
         self.isGoalReached = False
-        self.cuniform.setup(self.cuniform_params)
-        self.cuniform.load_trajectories(self.original_trajectories[:])
 
+        self.cuniform.setup(self.cuniform_params)
+        
+        self.cuniform.load_trajectories(self.original_trajectories[:])
         self.get_logger().info('Cuniform Planner Node started')
 
+    def notify_no_costmap(self):
+        if self.local_costmap is None:
+            self.get_logger().warn("No /local_costmap/costmap data received yet...")
+
+    def publish_local_costmap_debug(self):
+        if self.cuniform.params['costmap'] is not None:
+            height, width = self.cuniform.params['costmap'].shape
+
+            msg = OccupancyGrid()
+            msg.header.frame_id = "map"
+            msg.header.stamp = self.get_clock().now().to_msg()
+
+            msg.info.width = width
+            msg.info.height = height
+            msg.info.resolution = self.cuniform.params['costmap_resolution']
+
+            # Shift the origin so the costmap is centered on local_costmap_origin
+            msg.info.origin.position.x = self.cuniform.local_costmap_origin[0]
+            msg.info.origin.position.y = self.cuniform.local_costmap_origin[1] 
+
+            # Convert float costmap to int8
+            costmap_int8 = self.cuniform.params['costmap'].astype(np.int8).flatten()
+            msg.data = costmap_int8.tolist()
+            self.debug_local_costmap_pub.publish(msg)
+
+    def costmap_callback(self, msg: OccupancyGrid):
+        # Convert msg.data to a 2D list or np.array
+        width = msg.info.width
+        height = msg.info.height
+        # Convert msg data to float costmap and store resolution/origin
+        costmap_int8 = np.array(msg.data, dtype=np.int8).reshape(height, width)
+        self.local_costmap = costmap_int8.astype(np.float32)
+        self.cuniform_params['costmap_resolution'] = msg.info.resolution
+        self.cuniform_params['costmap_origin'] = [msg.info.origin.position.x, msg.info.origin.position.y]
+        self.cuniform_params['costmap'] = self.local_costmap
+        
     def solve_cuniform(self):
         try:
             # 1. Look up transform from map -> base_link
@@ -459,13 +543,18 @@ class CUniformPlannerNode(Node):
             yaw_robot = r.as_euler('xyz', degrees=False)[2]            
 
             self.cuniform_params['x0'] = np.array([x_robot, y_robot, yaw_robot])
+            if self.local_costmap is not None:
+                self.cuniform_params['costmap'] = self.local_costmap
 
             # Update CUniform parameters with the latest data
             x_current = np.array([x_robot, y_robot, yaw_robot])
             self.cuniform.shift_and_update(x_current, self.original_trajectories)
 
             # Solve CUniform
+            self.cuniform.setup(self.cuniform_params)
             min_idx, _ , _  = self.cuniform.solve()
+            self.cuniform.local_costmap_origin = self.cuniform_params['costmap_origin']
+            self.publish_local_costmap_debug()
               
             omega = self.cuniform.control(x_current, self.cuniform.trajectories[min_idx][1], dt=0.2)
             u_execute = [1.0, omega]
@@ -504,7 +593,6 @@ class CUniformPlannerNode(Node):
         except Exception as e:
             tb_str = ''.join(traceback.format_exception(None, e, e.__traceback__))
             self.get_logger().warn(f"Cannnot run solve_cuniform: {e}\n{tb_str}")
-            return
 
     def on_shutdown(self):
         self.get_logger().info('CUniform Planner Node shutting down')
