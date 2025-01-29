@@ -736,6 +736,15 @@ def main():
       #Read the environment from the pickle file
       # with open(r'C:\Users\ogpoy\Documents\GitHub\diffusionPolicy\src\traj_generation\envs\environments_1.pickle', 'rb') as f:
       # with open('/home/jiang/Documents/GitHub/diffusionPolicy/src/traj_generation/envs/environments_4_with_costmaps.pickle', 'rb') as f:
+      ''' things need to be changed to make the ROS2 MPPI controller node runnable, finish in order
+      1. have a ros2 node structure setup, proper subscriber(amcl? and costmaps related subscription) and proper publisher (for steering velocities or ackermann msgs). this file is not even a ros2 node, just a python script for simulation, turn it into a ros2 node
+
+      2. locolization, the first thing need to be done for real-world setting is locolizaiton, refer to william's pure pursuit and copy the locolization structure here.
+
+      3. Now take costmap, change the pickle file reading line below to read nav_msgs/msg/OccupancyGrid from topic /local_costmap/costmap, or read nav2_msgs/msg/Costmap from topic /local_costmap/costmap_raw, depending on how we want to use the costmap
+
+      4. Apply the costmap on mppi trajectories, may refer to https://github.com/IhabMohamed/log-MPPI_ros/tree/main/mppi_control
+      '''
       with open('/mnt/c/Users/ogpoy/Documents/GitHub/diffusionPolicy/src/traj_generation/envs/environments_2_with_costmaps.pickle', 'rb') as f:
           env = pickle.load(f)
 

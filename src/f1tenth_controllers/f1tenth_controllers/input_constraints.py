@@ -91,12 +91,16 @@ def angle_wrap_2pi(angle):
     return wrapped_angle
 
 
-def convert_position_to_costmap_indices_cpu(position, map_resolution=0.05, origin=[-15, -10]):
-    # 10 is the map scaling factor from the costmap generation
-    map_y = int((10 * position[0] - origin[0]) / map_resolution)
-    map_x = int((10 * position[1] - origin[1] ) / map_resolution)
+def convert_position_to_costmap_indices_cpu(position, map_resolution=0.05, origin=[-0.5, -2.25]):
+    map_x = int(( position[0] - origin[0]) / map_resolution)
+    map_y = int(( position[1] - origin[1] ) / map_resolution)
     return map_x, map_y
 
+def convert_positions_to_costmap_indices_cpu(positions, map_resolution=0.05, origin=[-0.5, -2.25]):
+    positions = np.array(positions)  # Ensure input is a NumPy array
+    indices = ((positions - origin) / map_resolution).astype(int)
+    map_x, map_y = indices[:, 0], indices[:, 1]  # Separate into x and y
+    return map_x, map_y
 
 ''' @brief: Returning the mean and standard deviation of the lognormal distribution, 
            given mean and variance of Normal distribution'''

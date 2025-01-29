@@ -24,10 +24,9 @@ setup(
     entry_points={
         'console_scripts': [
             'follow_the_gap_node = f1tenth_controllers.follow_the_gap_node:main',
-            'pure_pursuit_node = f1tenth_controllers.pure_pursuit:main',
-            'pure_pursuit_nodev2 = f1tenth_controllers.pure_pursuit_sim:main',
-            'p_controller_node = f1tenth_controllers.p_controller:main',
-            'mppi_costmap_node = f1tenth_controllers.mppi_goal_kinematic_model_pycuda_costmap:main'
+            'path_follower_node = f1tenth_controllers.p_controller:main',
+            # 'mppi_costmap_node = f1tenth_controllers.mppi_goal_kinematic_model_pycuda_costmap:main'
+            'mppi_costmap_node = f1tenth_controllers.mppi_dubins_moving_target_ros_node:main'
         ],
     },
 )

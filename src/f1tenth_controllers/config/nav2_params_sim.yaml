@@ -109,7 +109,7 @@ controller_server:
       stateful: True
     # DWB parameters
     FollowPath:
-      plugin: "f1tenth_planners/PurePursuitController"
+      plugin: "nav2_controller::PurePursuitController"
       # plugin: "dwb_core::DWBLocalPlanner"
       debug_trajectory_details: True
       min_vel_x: 0.0

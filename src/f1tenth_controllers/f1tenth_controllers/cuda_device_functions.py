@@ -1,3 +1,4 @@
+import numba.cuda
 import numpy as np
 import math
 import copy
@@ -24,7 +25,7 @@ def term_cost(dist2, goal_reached):
 def get_vehicle_boundary_points(x_curr, vehicle_length, vehicle_width, vehicle_boundary_points):
     x_center = x_curr[0]
     y_center = x_curr[1]
-    theta = x_curr[2]
+    theta = x_curr[4] # heading angle
     # epsilon = 0.1 outer bound for the car
     half_length = (vehicle_length / 2) + 0.1
     half_width = (vehicle_width / 2) + 0.1
@@ -72,15 +73,52 @@ def get_vehicle_boundary_points_grid(vehicle_boundary_points, x_min, y_min, grid
         vehicle_boundary_points_grid[i, 0] = x_grid
         vehicle_boundary_points_grid[i, 1] = y_grid
 
+#Convert the vehicle current position to the grid coordinates
+@cuda.jit('void(float32, float32, float32, float32, float32, int32[:])', device=True, inline=True)
+def convert_position_to_costmap_indices_gpu(x_curr_x, x_curr_y, x_min, y_min, grid_resolution, x_curr_grid):
+
+    x = x_curr_x
+    y = x_curr_y
+
+    x_grid = numba.int32((x - x_min) / grid_resolution)
+    y_grid = numba.int32((y - y_min) / grid_resolution)
+    center = 60
+    flipped_x_grid = 2 * center - x_grid 
+    flipped_y_grid = 2 * center - y_grid 
+    # x_curr_grid[0] = x_grid
+    # x_curr_grid[1] = y_grid
+    x_curr_grid[0] = x_grid
+    x_curr_grid[1] = y_grid
+
 @cuda.jit('float32(float32[:,:], float32, float32, float32[:,:])', device=True, inline=True)
 def calculate_obstacle_cost(vehicle_boundary_points_grid, obstacle_weight, max_cost, costmap):
     cost = 0.0
     for i in range(4):
         corner_x = vehicle_boundary_points_grid[i, 0]
         corner_y = vehicle_boundary_points_grid[i, 1]
-        cost += obstacle_weight*(max_cost -costmap[int(corner_y), int(corner_x)])
+        cost += obstacle_weight*(costmap[int(corner_y), int(corner_x)])
     return cost
 
+@cuda.jit('float32(float32[:,:], int32[:])', device=True, inline=True)
+def calculate_localcostmap_cost(costmap, x_curr_grid):
+    cost = 0.0
+    # Sum the 13,13 grid around the current position grid
+    # for i in range(13):
+    #     for j in range(13):
+    #         cost += costmap[x_curr_grid[1]-6+i, x_curr_grid[0]-6+j]
+    # Sum the 5,5 grid around the current position grid
+    # for i in range(7):
+    #     for j in range(7):
+    #         cost += costmap[x_curr_grid[1]-3+i, x_curr_grid[0]-3+j]
+    # return cost
+    # GPT-o1's suggestion below
+    cost = 0.0
+    for i in range(7):
+        for j in range(7):
+            y_index = x_curr_grid[1] - 3 + i  # row
+            x_index = x_curr_grid[0] - 3 + j  # column
+            cost += costmap[y_index, x_index]
+    return cost
 
 
 # @cuda.jit('float32(float32[:,:], float32[:,:], float32[:], float32)', device=True, inline=True)
