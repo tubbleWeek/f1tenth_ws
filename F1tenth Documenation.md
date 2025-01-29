@@ -56,7 +56,7 @@ Replace `<MY_PARAM_FILE>` with the path to your paramater file. An example can b
 
 example command below:
 ```
-ros2 launch nav2_bringup bringup_launch.py params_file:=/home/nvidia/f1tenth_ws/src/f1tenth_controllers/config/nav2_params.yaml map:=/home/nvidia/f1tenth_ws/maps/shepherd_lab_map_cleaned.yaml
+ros2 launch nav2_bringup bringup_launch.py params_file:=/home/nvidia/f1tenth_ws/src/f1tenth_controllers/config/nav2_params.yaml map:=/home/nvidia/f1tenth_ws/maps/shepherd_lab_map.yaml
 ```
 
 A launch file has been created that launches all three nodes described below.

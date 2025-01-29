@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 from tf2_ros import Buffer, TransformListener # for locolization
 import rclpy
+import traceback
 from rclpy.node import Node
 from scipy.spatial.transform import Rotation as R
 import numpy as np
+from scipy.ndimage import gaussian_filter, distance_transform_cdt, distance_transform_edt
 from geometry_msgs.msg import TransformStamped  # Use TransformStamped instead of Rigids
 from collections import deque  # For implementing a circular buffer
 from rclpy.qos import qos_profile_sensor_data
 from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
 from visualization_msgs.msg import Marker
+from nav_msgs.msg import OccupancyGrid # for applying local costmap
 import std_msgs
-
+import time
 import pycuda.driver as cuda
 import pycuda.autoinit
 from pycuda.compiler import SourceModule
@@ -34,6 +37,8 @@ max_square_block_dim = (int(gpu.MAX_BLOCK_DIM_X**0.5), int(gpu.MAX_BLOCK_DIM_X**
 max_blocks = gpu.MAX_GRID_DIM_X
 max_rec_blocks = rec_max_control_rollouts = int(1e6) # Though theoretically limited by max_blocks on GPU
 rec_min_control_rollouts = 100
+
+np.set_printoptions(precision=2, suppress=True)
 
 DEFAULT_OBS_COST = 1e4
 
@@ -122,10 +127,6 @@ class MPPI_Numba(object):
     # Other task specific params
     self.device_var_initialized = False
 
-    # Sudden Obstacle variables
-    self.isObstacleVisible = 1.0 # 0:False
-    self.iteration_count = 0
-
     self.generator = XORWOWRandomNumberGenerator()
     self.mppi_type = self.cfg.mppi_type # Normal dist / 1: NLN
     if self.mppi_type == 1:
@@ -134,6 +135,10 @@ class MPPI_Numba(object):
       print('the mu:', self.mu_LogN)
       print('the std:', self.std_LogN)
       self.LogN_info = [self.mppi_type, self.mu_LogN, self.std_LogN]
+
+    # local costmap size and resolution/
+    self.local_costmap_size = 120
+    self.costmap_loaded = False
     self.reset()
 
   def reset(self):
@@ -143,6 +148,7 @@ class MPPI_Numba(object):
     self.params = None
     self.params_set = False
     self.u_prev_d = None
+    self.costmap_loaded = False
     
     # Initialize all fixed-size device variables ahead of time. (Do not change in the lifetime of MPPI object)
     self.init_device_vars_before_solving()
@@ -157,8 +163,10 @@ class MPPI_Numba(object):
       self.weights_d = numba_cuda.device_array((self.num_control_rollouts), dtype=np.float32)
       self.rng_states_d = create_xoroshiro128p_states(self.num_control_rollouts*self.num_steps, seed=self.seed)
       
+      self.debug_d = numba_cuda.device_array((self.num_control_rollouts,self.num_steps+1, 4), dtype=np.float32)
+
       self.state_rollout_batch_d = numba_cuda.device_array((self.num_vis_state_rollouts, self.num_steps+1, 3), dtype=np.float32) # 3: x, y, theta  
-      # self.local_costmap_d = numba_cuda.device_array((self.local_costmap_size, self.local_costmap_size), dtype=np.float32)   
+      self.local_costmap_d = numba_cuda.device_array((self.local_costmap_size, self.local_costmap_size), dtype=np.float32)   
       self.device_var_initialized = True
       print("MPPI planner has initialized GPU memory after {} s".format(time.time()-t0))
 
@@ -169,6 +177,8 @@ class MPPI_Numba(object):
   def set_params(self, params):
     self.params = copy.deepcopy(params)
     self.params_set = True
+    if self.params['costmap'] is not None: # should be type ndarray
+        self.costmap_loaded = True
 
   def check_solve_conditions(self):
     if not self.params_set:
@@ -176,6 +186,9 @@ class MPPI_Numba(object):
       return False
     if not self.device_var_initialized:
       print("Device variables not initialized. Cannot solve.")
+      return False
+    if not self.costmap_loaded:
+      print("Costmap not loaded. Cannot solve.")
       return False
     return True
 
@@ -185,13 +198,6 @@ class MPPI_Numba(object):
       print("MPPI solve condition not met. Cannot solve. Return")
       return
     return self.solve_with_nominal_dynamics()
-
-  def convert_position_to_costmap_indices(self, position): 
-    map_resolution = 0.05
-    origin = [-15, -10]
-    map_y = int((position[0] - origin[0]) / map_resolution)
-    map_x = int((position[1] - origin[1] ) / map_resolution)
-    return map_x, map_y
 
   def random_noise_sample(self):
     # Use the random generator to generate random noise
@@ -227,43 +233,38 @@ class MPPI_Numba(object):
     vehicle_width_d = np.float32(self.vehicle_width)
     vehicle_wheelbase_d = np.float32(self.vehicle_wheelbase)
 
-    isObstacleVisible_d = np.float32(self.isObstacleVisible)
-    #obstacle
-    if "obstacle_positions" in self.params:
-      obs_pos_d = cuda.to_device(self.params['obstacle_positions'].astype(np.float32))
-    else:
-      obs_pos_d = np.array([[1e5,1e5]], dtype=np.float32) # dummy value, else numba panics : (
-    if "obstacle_radius" in self.params:
-      obs_r_d = cuda.to_device(self.params['obstacle_radius'].astype(np.float32))
-    else:
-      obs_r_d = np.array([0], dtype=np.float32) # dummy value, else numba panics : (
-
+    local_costmap_edt = self.params['costmap']
+    local_costmap_edt = np.ascontiguousarray(local_costmap_edt)
+    max_local_cost_d = np.float32(np.max(local_costmap_edt))
+    # set the local costmap to the local_costmap_d on the device
+    local_costmap_d = numba_cuda.to_device(local_costmap_edt)
     obs_cost_d = np.float32(DEFAULT_OBS_COST if 'obs_penalty' not in self.params 
-                                     else self.params['obs_penalty'])
+                                  else self.params['obs_penalty'])
+    costmap_origin_x = np.float32(self.params['costmap_origin'][0])
+    costmap_origin_y = np.float32(self.params['costmap_origin'][1])
+    costmap_resolution = np.float32(self.params['costmap_resolution'])
     return vrange_d, wrange_d, xgoal_d, \
            goal_tolerance_d, lambda_weight_d, \
            vehicle_length_d, vehicle_width_d, vehicle_wheelbase_d, \
-           u_std_d, x0_d, dt_d, \
-            obs_pos_d, obs_r_d, obs_cost_d, isObstacleVisible_d
+           u_std_d, x0_d, dt_d, local_costmap_d, obs_cost_d, max_local_cost_d, \
+           costmap_origin_x, costmap_origin_y, costmap_resolution
 
   def solve_with_nominal_dynamics(self):
     """
     Launch GPU kernels that use nominal dynamics but adjsuts cost function based on worst-case linear speed.
     """
-    self.isObstacleVisible = 1.0
-
     vrange_d, wrange_d, xgoal_d, \
       goal_tolerance_d, lambda_weight_d, \
-           vehicle_length_d, vehicle_width_d, vehicle_wheelbase_d,\
-              u_std_d, x0_d, dt_d, \
-                obs_pos_d, obs_r_d, obs_cost_d, isObstacleVisible_d = self.move_mppi_task_vars_to_device()
+      vehicle_length_d, vehicle_width_d, vehicle_wheelbase_d,\
+      u_std_d, x0_d, dt_d, \
+      local_costmap_d, obs_cost_d, max_local_cost_d,\
+      costmap_origin_x, costmap_origin_y, params_costmap_resolution = self.move_mppi_task_vars_to_device()
   
     # Weight for distance cost
-    dist_weight = DEFAULT_DIST_WEIGHT if 'dist_weight' not in self.params else self.params['dist_weight']
+    dist_weight = 1e4 if 'dist_weight' not in self.params else self.params['dist_weight']
 
     # Optimization loop
     for k in range(self.params['num_opt']):
-
       # Sample control noise
       noise_samples = self.random_noise_sample()
       # reshape the noise samples to (num_control_rollouts, num_steps, 2)
@@ -282,10 +283,10 @@ class MPPI_Numba(object):
         vrange_d,
         wrange_d,
         xgoal_d,
+        local_costmap_d, # local_costmap added
+        max_local_cost_d,
         obs_cost_d,
-        obs_pos_d,
-        obs_r_d,
-        isObstacleVisible_d,
+
         vehicle_length_d,
         vehicle_width_d,
         vehicle_wheelbase_d,
@@ -297,11 +298,20 @@ class MPPI_Numba(object):
         dist_weight,
         self.noise_samples_d,
         self.u_cur_d,
-
         # results
-        self.costs_d
+        self.costs_d,
+        costmap_origin_x,
+        costmap_origin_y,
+        params_costmap_resolution,
+        self.debug_d        
       )
       self.u_prev_d = self.u_cur_d
+
+      debug_arr = self.debug_d.copy_to_host()
+      # print(f'Debug ARR {np.array(debug_arr[0,:,:])}')
+      # print(f'Debug ARR {np.array(debug_arr[1,:,:])}')
+      # print(f'Debug ARR {np.array(debug_arr[2,:,:])}')
+
       # Compute cost and update the optimal control on device
       self.update_useq_numba[1, 32](
         lambda_weight_d, 
@@ -323,10 +333,6 @@ class MPPI_Numba(object):
     u_cur_shifted[:-num_shifts] = u_cur_shifted[num_shifts:]
     self.u_cur_d = numba_cuda.to_device(u_cur_shifted.astype(np.float32))
 
-  def get_visible_obstacle_set(self,obstacle_positions, obstacle_radius):
-      self.params['obstacle_positions'] = copy.deepcopy(obstacle_positions)
-      self.params['obstacle_radius'] = copy.deepcopy(obstacle_radius)
-    
   def get_state_rollout(self):
     """
     Generate state sequences based on the current optimal control sequence.
@@ -385,18 +391,17 @@ class MPPI_Numba(object):
     # Add first point to the end for visualization
     world_corners = np.vstack([world_corners, world_corners[0]])
     return world_corners
-  
-  """GPU kernels from here on"""
+
   @staticmethod
   @numba_cuda.jit(fastmath=True)
   def rollout_numba(
           vrange_d, 
           wrange_d, 
           xgoal_d,
+          local_costmap_d, # local_costmap added
+          max_local_cost_d,
           obs_cost_d,
-          obs_pos_d,
-          obs_r_d,
-          isObstacleVisible_d,
+
           vehicle_length_d,
           vehicle_width_d,
           vehicle_wheelbase_d,         
@@ -408,7 +413,12 @@ class MPPI_Numba(object):
           dist_weight_d,
           noise_samples_d,
           u_cur_d,
-          costs_d):
+          costs_d,
+          costmap_origin_x,
+          costmap_origin_y,
+          params_costmap_resolution,
+          debug_d
+      ):
     """
     There should only be one thread running in each block, where each block handles a single sampled control sequence.
     """
@@ -421,8 +431,12 @@ class MPPI_Numba(object):
     # Explicit unicycle update and map lookup
     # From here on we assume grid is properly padded so map lookup remains valid
     x_curr = numba_cuda.local.array(3, numba.float32) # Dubins car model states x,y,theta
+    local_costmap_origin = numba_cuda.local.array(2, numba.float32) # x, y
+    x_curr_grid_d = numba_cuda.local.array((2), dtype=np.int32)
     for i in range(3): 
       x_curr[i] = x0_d[i]
+    for i in range(2):
+      local_costmap_origin[i] = x0_d[i]
     timesteps = len(u_cur_d)
 
     goal_reached = False
@@ -430,55 +444,47 @@ class MPPI_Numba(object):
     dist_to_goal2 = 1e9 # initialize to a large value
 
     v_nom = v_noisy = w_nom = w_noisy = 0.0
-
-    # Allocate space for vehicle boundary points (4)
-    vehicle_boundary_points_d = numba_cuda.local.array((6, 2), dtype=np.float32)
-    # vehicle_boundary_points_grid_d = numba_cuda.local.array((4, 2), dtype=np.float32)
-    # printed=False
-    gamma = 1.0 # Discount factor for cost
+    gamma = 0.98 # Discount factor for cost
 
     for t in range(timesteps):
       # Nominal noisy control
       # v_nom = u_cur_d[t, 0] + noise_samples_d[bid, t, 0] # linear velocity cons
       # v_noisy = max(vrange_d[0], min(vrange_d[1], v_nom))
-      v_noisy = v_nom = 1.0 # Constant velocity
+      v_noisy = v_nom = 2.0 # Constant velocity
       w_nom = u_cur_d[t, 1] + noise_samples_d[bid, t, 1]
       w_noisy = max(wrange_d[0], min(wrange_d[1], w_nom))
       
       # Forward simulate
       # dubins car model update
-      x_curr[2] += dt_d*w_nom
-      x_curr[2] = math.fmod(x_curr[2], 2*math.pi)
       x_curr[0] += dt_d*v_nom*math.cos(x_curr[2])
       x_curr[1] += dt_d*v_nom*math.sin(x_curr[2])
+      # delta = math.atan(w_noisy*0.32/1.0)
+      # x_curr[2] += dt_d*math.tan(delta)
+      x_curr[2] += dt_d*(v_nom / 0.32) * math.tan(w_noisy)
+      # x_curr[2] += dt_d*w_noisy
+      x_curr[2] = math.fmod(x_curr[2], 2*math.pi)
+      # x_curr[0] += dt_d*v_nom*math.cos(x_curr[2])
+      # x_curr[1] += dt_d*v_nom*math.sin(x_curr[2])
 
       # Compute distance to goal
       dist_to_goal2 = ((xgoal_d[0]-x_curr[0])**2) + (xgoal_d[1]-x_curr[1])**2
       costs_d[bid]+= stage_cost(dist_to_goal2, dist_weight_d) * gamma
 
-      # Compute vehicle boundary points for the current state
-      get_vehicle_boundary_points(x_curr, vehicle_length_d, vehicle_width_d, vehicle_boundary_points_d)
+      # Get current state costmap indices
+      convert_position_to_costmap_indices_gpu(
+        x_curr[0],
+        x_curr[1],
+        costmap_origin_x,
+        costmap_origin_y,
+        params_costmap_resolution,
+        x_curr_grid_d,
+      )
 
-      # Add obstacle costs
-      num_obs = len(obs_pos_d)
-      if isObstacleVisible_d == 1.0:
-        for obs_i in range(num_obs):
-          op = obs_pos_d[obs_i]
-          dist_diff2 = (x_curr[0]-op[0])**2 + (x_curr[1]-op[1])**2 - obs_r_d[obs_i]**2
-          costs_d[bid] += (1-numba.float32(dist_diff2>0))*obs_cost_d     
-
-          for i in range(6):
-            # calcculate the cost of the boundary points
-            dist_diff = ((vehicle_boundary_points_d[i,0]-op[0])**2+(vehicle_boundary_points_d[i,1]-op[1])**2 -obs_r_d[obs_i]**2)
-            costs_d[bid] += (1-numba.float32(dist_diff>0))*obs_cost_d
-
-      # Convert vehicle boundary points to costmap indices
-      # -15:x_min, -10:y_min, 0.05:grid_resolution 10:scaling factor
-      # get_vehicle_boundary_points_grid(vehicle_boundary_points_d, -15.0, -10.0, 0.05, 10.0, vehicle_boundary_points_grid_d)
-      
-      # Add obstacle costs
-      # costs_d[bid] +=  (calculate_obstacle_cost(vehicle_boundary_points_d, obs_cost_d, max_local_cost_d, local_costmap_d) / 4 )* gamma 
-      gamma *= 1.0
+      debug_d[bid, t, 0] = x_curr_grid_d[0]
+      debug_d[bid, t, 1] = x_curr_grid_d[1]
+      debug_d[bid, t, 2] = calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) 
+      costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) * obs_cost_d * gamma
+      gamma *= 0.98
 
       if dist_to_goal2<= goal_tolerance_d2:
         goal_reached = True
@@ -680,7 +686,6 @@ class MPPIPlannerNode(Node):
         self.mppi = MPPI_Numba(self.cfg)
         self.map_path = "/home/nvidia/f1tenth_ws/src/pure_pursuit/racelines/shepherd_lab_raceline_v1.csv"
         data = np.loadtxt(self.map_path, delimiter = ",")
-        # self.pid_controller = PIDController(kp=1.0, ki=0.0, kd=0.1, target_velocity=1.0)  # Target 1 m/s velocity
 
         # MPPI initial parameters
         self.mppi_params = dict(
@@ -703,12 +708,11 @@ class MPPIPlannerNode(Node):
           u_std = np.array([0.023, 0.1]), # Noise std for sampling linear and angular velocities.
           vrange = np.array([2.0, 2.0]), # Linear velocity range. Constant Linear Velocity
           wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
-          
-          obstacle_positions = np.array([[0.1,-1.7]]).astype(np.float32),
-          obstacle_radius = np.array([0.5]),
-          obs_penalty = 1e8
+          costmap = None, # intiallly nothing
+          obs_penalty = 1e4
         )
 
+        '''############### for path following ###############'''
         self.cx = data[:, 0] # 1st column of data -> x-position of the waypoints
         self.cy = data[:, 1] # 2nd column of data -> y-position of the waypoints
         self.cv = data[:, 2] # 3rd column of data -> velocity of the waypoints
@@ -719,8 +723,6 @@ class MPPIPlannerNode(Node):
         self.min_lookahead = 1.0
         self.max_lookahead = 3.0
         self.lookahead_ratio = 1.5
-
-        # for path following
         self.current_index = None
         self.target_index = 0
 
@@ -732,6 +734,25 @@ class MPPIPlannerNode(Node):
         
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
+
+        '''############### for costmap ##############'''
+        # high level steps
+        # Step 1: subscribe to OccupancyGrid and convert msg.data into a numpy array
+        # Step 2: Pass that array to mppi_params['costmap'] in solve_mppi()
+        self.local_costmap = None  # store the latest costmap
+        self.costmap_sub = self.create_subscription(
+            OccupancyGrid, # Type: nav_msgs/msg/OccupancyGrid
+            '/local_costmap/costmap',
+            self.costmap_callback,
+            1 # only the most recent message is kept in the queue
+        )
+        self.debug_local_costmap_pub = self.create_publisher(OccupancyGrid, '/debug_local_costmap', 1)
+
+        # Step 3: TODO: right now I alraeady have the costmap loaded up and pass to mppi_params
+        #TODO: the next step is to deal with the cooredinate differences and pass this to actual trajectory wrighting process
+        
+        # Step 4: solve_mppi() invokes move_mppi_task_vars_to_device, pass costmap to GPU
+        # Step 5: In the GPU kernel (rollout_numba), weight each trajectories accordingly
         
         self.action_pub = self.create_publisher(
             msg_type=AckermannDriveStamped,
@@ -744,6 +765,37 @@ class MPPIPlannerNode(Node):
         self.isGoalReached = False
         self.mppi.setup(self.mppi_params)
         self.get_logger().info('MPPI Planner Node started')
+
+    def publish_local_costmap_debug(self):
+        if self.mppi.params['costmap'] is not None:
+            height, width = self.mppi.params['costmap'].shape
+            
+            msg = OccupancyGrid()
+            msg.header.frame_id = "map"
+            msg.header.stamp = self.get_clock().now().to_msg()
+            
+            msg.info.width = width
+            msg.info.height = height
+            msg.info.resolution = self.mppi.params['costmap_resolution']
+            
+            # Shift the origin so the costmap is centered on local_costmap_origin
+            msg.info.origin.position.x = self.mppi.local_costmap_origin[0]
+            msg.info.origin.position.y = self.mppi.local_costmap_origin[1] 
+            
+            # Convert float costmap to int8
+            costmap_int8 = self.mppi.params['costmap'].astype(np.int8).flatten()
+            msg.data = costmap_int8.tolist()
+            self.debug_local_costmap_pub.publish(msg)
+
+    def costmap_callback(self, msg: OccupancyGrid):
+        # Convert msg.data to a 2D list or np.array
+        width = msg.info.width
+        height = msg.info.height
+        # Convert msg data to float costmap and store resolution/origin
+        costmap_int8 = np.array(msg.data, dtype=np.int8).reshape(height, width)
+        self.local_costmap = costmap_int8.astype(np.float32)
+        self.mppi_params['costmap_resolution'] = msg.info.resolution
+        self.mppi_params['costmap_origin'] = [msg.info.origin.position.x, msg.info.origin.position.y]
 
     def calc_distance(self, point_x, point_y):
         dx = self.rear_x - point_x
@@ -854,13 +906,16 @@ class MPPIPlannerNode(Node):
             # 3. Convert quaternion to yaw
             quat = transform.transform.rotation
             r = R.from_quat([quat.x, quat.y, quat.z, quat.w])
-            yaw_robot = r.as_euler('xyz', degrees=False)[2]
+            yaw_robot = r.as_euler('xyz', degrees=False)[2]            
 
             # 4. Update the MPPI initial state
             self.mppi_params['x0'] = np.array([x_robot, y_robot, yaw_robot])
             self.rear_x = self.mppi_params['x0'][0] - ((self.mppi_params['vehicle_wheelbase'] / 2) * math.cos(self.mppi_params['x0'][2]))
             self.rear_y = self.mppi_params['x0'][1] - ((self.mppi_params['vehicle_wheelbase'] / 2) * math.sin(self.mppi_params['x0'][2]))
-            #TODO: add obstacle avoidance through costmap
+
+            # If we have a valid costmap, pass it to MPPI
+            if self.local_costmap is not None:
+                self.mppi_params['costmap'] = self.local_costmap
             
             ind = self.search_target_index()[0]
             if self.target_index >= ind:
@@ -869,11 +924,15 @@ class MPPIPlannerNode(Node):
             global_tx = self.cx[ind] # This is the target waypoints x position
             global_ty = self.cy[ind] # This is the target waypoints y position
             latest_target_pos = [global_tx, global_ty]
-            self.mppi_params['xgoal'] = np.array([latest_target_pos[0], latest_target_pos[1]])
+            # self.mppi_params['xgoal'] = np.array([latest_target_pos[0], latest_target_pos[1]])
+            self.mppi_params['xgoal'] = np.array([-1.5, -15]) # hard coded for testing right now
             self.mppi.setup(self.mppi_params)
-
+            self.mppi.local_costmap_origin = self.mppi_params['costmap_origin']
+            start_time = time.time()
             # Solve MPPI
             result = self.mppi.solve()
+            self.get_logger().info(f"Elapsed time for solving mppi: {time.time() - start_time}")
+            self.publish_local_costmap_debug()
 
             #get the first action 
             u_execute = result[0]
@@ -918,8 +977,11 @@ class MPPIPlannerNode(Node):
             self.i += 1
 
         except Exception as e:
-            self.get_logger().warn(f"Could not lookup TF transform: {e}")
+            tb_str = ''.join(traceback.format_exception(None, e, e.__traceback__))
+            self.get_logger().warn(f"Could not lookup TF transform: {e}\n{tb_str}")
             return
+            # self.get_logger().warn(f"Could not lookup TF transform: {e}")
+            # return
 
     def on_shutdown(self):
         self.get_logger().info('MPPI Planner Node shutting down')
