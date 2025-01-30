@@ -45,7 +45,8 @@ np.set_printoptions(precision=2, suppress=True)
 
 num_traj = 1000 # only use the first 'num_traj' trajectories
 print("Reading cuniform trajectories...")
-with open('/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/FINAL_C_Uniform_100000_trajectories_disjoint_DUBINS_v_1_perturb_2.01_slack_2.01_seed_2025_grid_0.05_0.05_4.50deg_na45_t4.01_ts0.2.pkl', 'rb') as f:
+# with open('/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/FINAL_C_Uniform_100000_trajectories_disjoint_DUBINS_v_1_perturb_2.01_slack_2.01_seed_2025_grid_0.05_0.05_4.50deg_na45_t4.01_ts0.2.pkl', 'rb') as f:
+with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/Final_Rahul's_Unsupervised_C_Uniform_50000.pickle", 'rb') as f:
     cuniform_trajectories = pickle.load(f)[:num_traj]
 
 
@@ -303,20 +304,25 @@ class CUniform_Numba(object):
   
   def get_state_rollout(self, x_curr, trajectories):
     # First translate the point
-    transformed_trajectories = copy.deepcopy(trajectories)
-
+    transformed_trajectories = copy.deepcopy(trajectories) #RUNTIME: negeligible
     # Then rotate the point
     # Rotation matrix
+    theta = x_curr[2]
+    translation = x_curr[:2]
     R = np.array([[math.cos(x_curr[2]), -math.sin(x_curr[2])], [math.sin(x_curr[2]), math.cos(x_curr[2])]])
-    for i in range(transformed_trajectories.shape[0]):
-      transformed_trajectories[i,:,:2] = np.dot(R, transformed_trajectories[i,:,:2].T).T      
-      # add the theta
-      transformed_trajectories[i,:,2] += x_curr[2]
-      # Normalize theta between 0 and 2pi
-      # transformed_trajectories[i,:,2] = math.fmod(transformed_trajectories[i,:,2], 2*np.pi)
-    for i in range(transformed_trajectories.shape[0]):
-      transformed_trajectories[i,:,0] += x_curr[0]
-      transformed_trajectories[i,:,1] += x_curr[1]
+    transformed_trajectories[:, :, :2] = np.einsum('ij,nmj->nmi', R, transformed_trajectories[:, :, :2])
+
+    transformed_trajectories[:, :, 2] += theta
+    transformed_trajectories[:, :, :2] += translation
+    # for i in range(transformed_trajectories.shape[0]):   #RUNTIME: 80% of function runtime used in this loop, ~0.03-0.04 
+    #   transformed_trajectories[i,:,:2] = np.dot(R, transformed_trajectories[i,:,:2].T).T      
+    #   # add the theta
+    #   transformed_trajectories[i,:,2] += x_curr[2]
+    #   # Normalize theta between 0 and 2pi
+    #   # transformed_trajectories[i,:,2] = math.fmod(transformed_trajectories[i,:,2], 2*np.pi)
+    # for i in range(transformed_trajectories.shape[0]):   #RUNTIME: 20% of function runtime, ~0.01-0.02
+    #   transformed_trajectories[i,:,0] += x_curr[0]
+    #   transformed_trajectories[i,:,1] += x_curr[1]
     return transformed_trajectories
     
   def shift_and_update(self, x_next, trajectories):
@@ -444,7 +450,7 @@ class CUniformPlannerNode(Node):
           vehicle_wheelbase= 0.32,
           # For risk-aware min time planning
           goal_tolerance = 0.40,
-          dist_weight = 10, #  Weight for dist-to-goal cost.
+          dist_weight = 1e2, #  Weight for dist-to-goal cost.
           num_opt = 1, # Number of steps in each solve() function call.
 
           # Control and sample specification
@@ -454,7 +460,7 @@ class CUniformPlannerNode(Node):
           wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
           
           costmap = None, # intiallly nothing
-          obs_penalty = 1e8
+          obs_penalty = 1e4
         )
 
         self.tf_buffer = Buffer()
@@ -521,6 +527,7 @@ class CUniformPlannerNode(Node):
         height = msg.info.height
         # Convert msg data to float costmap and store resolution/origin
         costmap_int8 = np.array(msg.data, dtype=np.int8).reshape(height, width)
+        # costmap_int8[costmap_int8 == -1] = 100 # make unknown area as obstacles 
         self.local_costmap = costmap_int8.astype(np.float32)
         self.cuniform_params['costmap_resolution'] = msg.info.resolution
         self.cuniform_params['costmap_origin'] = [msg.info.origin.position.x, msg.info.origin.position.y]

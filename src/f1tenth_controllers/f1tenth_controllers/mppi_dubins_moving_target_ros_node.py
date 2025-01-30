@@ -793,6 +793,7 @@ class MPPIPlannerNode(Node):
         height = msg.info.height
         # Convert msg data to float costmap and store resolution/origin
         costmap_int8 = np.array(msg.data, dtype=np.int8).reshape(height, width)
+        # costmap_int8[costmap_int8 == -1] = 100 # make unknown area as obstacles 
         self.local_costmap = costmap_int8.astype(np.float32)
         self.mppi_params['costmap_resolution'] = msg.info.resolution
         self.mppi_params['costmap_origin'] = [msg.info.origin.position.x, msg.info.origin.position.y]
@@ -928,10 +929,10 @@ class MPPIPlannerNode(Node):
             self.mppi_params['xgoal'] = np.array([-1.5, -15]) # hard coded for testing right now
             self.mppi.setup(self.mppi_params)
             self.mppi.local_costmap_origin = self.mppi_params['costmap_origin']
-            start_time = time.time()
+            # start_time = time.time()
             # Solve MPPI
             result = self.mppi.solve()
-            self.get_logger().info(f"Elapsed time for solving mppi: {time.time() - start_time}")
+            # self.get_logger().info(f"Elapsed time for solving mppi: {time.time() - start_time}")
             self.publish_local_costmap_debug()
 
             #get the first action 
