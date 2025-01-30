@@ -4,6 +4,7 @@ from tf2_ros import Buffer, TransformListener # for locolization
 import traceback
 from rclpy.node import Node
 from scipy.spatial.transform import Rotation as R
+from visualization_msgs.msg import Marker
 import numpy as np
 from geometry_msgs.msg import TransformStamped  # Use TransformStamped instead of Rigids
 from collections import deque  # For implementing a circular buffer
@@ -462,6 +463,8 @@ class CUniformPlannerNode(Node):
           costmap = None, # intiallly nothing
           obs_penalty = 1e4
         )
+        self.lookahead_marker_pub = self.create_publisher(Marker, "/lookahead_marker", 5)
+        self.lookahead_marker_timer = self.create_timer(0.1, self.lookahead_publish_waypoint)
 
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
@@ -495,6 +498,27 @@ class CUniformPlannerNode(Node):
         
         self.cuniform.load_trajectories(self.original_trajectories[:])
         self.get_logger().info('Cuniform Planner Node started')
+
+        def lookahead_publish_waypoint(self):
+        marker = Marker()
+        marker.header.frame_id = "map"
+        marker.header.stamp = self.get_clock().now().to_msg()
+        marker.ns = "lookahead_waypoint"
+        marker.id = 1
+        marker.type = Marker.SPHERE
+        marker.action = Marker.ADD
+        marker.pose.position.x = self.cuniform_params['xgoal'][0]
+        marker.pose.position.y = self.cuniform_params['xgoal'][1]
+        marker.pose.position.z = 0.0
+        marker.pose.orientation.w = 1.0
+
+        marker.scale.x = 0.25
+        marker.scale.y = 0.25
+        marker.scale.z = 0.25
+
+        marker.color.a = 1.0
+        marker.color.r = 1.0
+        self.lookahead_marker_pub.publish(marker)
 
     def notify_no_costmap(self):
         if self.local_costmap is None:
@@ -575,14 +599,14 @@ class CUniformPlannerNode(Node):
                 self.get_logger().info(f'Running CUniform solver with configuration: x: {x_robot:.2f}, y: {y_robot:.2f}, theta: {yaw_robot:.2f}...')
                 self.get_logger().info(f"Target Position: x: {self.cuniform_params['xgoal'][0]}, z: {self.cuniform_params['xgoal'][1]}")
               
-              # if self.isGoalReached: 
-              #   u_execute = [0.0, 0.0]
-              #   drive = AckermannDrive(steering_angle=u_execute[0], speed=u_execute[1])
-              #   data = AckermannDriveStamped(header=h, drive=drive)
-              #   self.get_logger().info(f"Goal Reached!!!!")
-              # else:   
-              drive = AckermannDrive(steering_angle=0.68*(np.tan(u_execute[1]*0.9)*(self.cuniform_params['vehicle_wheelbase'])), speed=1.0)
-              data = AckermannDriveStamped(header=h, drive=drive)
+              if self.isGoalReached: 
+                u_execute = [0.0, 0.0]
+                drive = AckermannDrive(steering_angle=u_execute[0], speed=u_execute[1])
+                data = AckermannDriveStamped(header=h, drive=drive)
+                self.get_logger().info(f"Goal Reached!!!!")
+              else:   
+                drive = AckermannDrive(steering_angle=0.68*(np.tan(u_execute[1]*0.9)*(self.cuniform_params['vehicle_wheelbase'])), speed=1.0)
+                data = AckermannDriveStamped(header=h, drive=drive)
 
               if ((self.i % 10) == 0): 
                 self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {np.rad2deg(u_execute[1]*1.0)}" )
@@ -594,8 +618,8 @@ class CUniformPlannerNode(Node):
               goaltol2 = self.cuniform_params['goal_tolerance'] * self.cuniform_params['goal_tolerance']
               if ((self.i % 10) == 0): 
                 self.get_logger().info(f"Distance to the Goal: {dist2goal2}, Goal Tolerance: {goaltol2}")
-              # if dist2goal2 < goaltol2:
-              #   self.isGoalReached = True
+              if dist2goal2 < goaltol2:
+                self.isGoalReached = True
             self.i += 1
         except Exception as e:
             tb_str = ''.join(traceback.format_exception(None, e, e.__traceback__))
