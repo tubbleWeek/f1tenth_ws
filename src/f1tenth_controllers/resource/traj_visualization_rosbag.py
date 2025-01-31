@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import yaml
 from PIL import Image
+import pickle
 import os
 
 class MapVisualizer:
@@ -30,9 +31,9 @@ class MapVisualizer:
     def plot_map(self, ax):
         """Plot the occupancy grid map in world coordinates"""
         # Calculate map bounds in meters
-        x_min = self.origin[0]
+        x_min = self.origin[0]  # -16.7 from the YAML
         x_max = self.origin[0] + self.width * self.resolution
-        y_min = self.origin[1]
+        y_min = self.origin[1]  # -20.3 from your YAML
         y_max = self.origin[1] + self.height * self.resolution
 
         # Plot with correct orientation and scaling
@@ -101,9 +102,13 @@ class MapVisualizer:
 # Example usage
 if __name__ == '__main__':
     # Sample trajectories (replace with your actual data)
-    sample_trajectories = [
-        [(-0.0, -0.0), (-1.0, -5.5), (-1.0, -10.0)],  # Success case
-    ]
+    with open('/home/nvidia/f1tenth_ws/experiments_data/dummy/trajectory_0130_2141.pkl', 'rb') as f:
+        sample_trajectories = [pickle.load(f)]  # Ensure it's a list of lists
+
+    # sample_trajectories = [
+        #TODO: change this to be a list of recorded pickles
+        # [(-0.0, -0.0), (-1.0, -5.5), (-1.0, -10.0)],  # Success case
+    # ]
 
     manual_obstacles = [
         # {'x': 0.0, 'y': 0.0, 'width': 0.2, 'height': 1.0},

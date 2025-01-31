@@ -499,7 +499,7 @@ class CUniformPlannerNode(Node):
         self.cuniform.load_trajectories(self.original_trajectories[:])
         self.get_logger().info('Cuniform Planner Node started')
 
-        def lookahead_publish_waypoint(self):
+    def lookahead_publish_waypoint(self):
         marker = Marker()
         marker.header.frame_id = "map"
         marker.header.stamp = self.get_clock().now().to_msg()
