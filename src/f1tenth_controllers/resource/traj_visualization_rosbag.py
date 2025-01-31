@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import yaml
+import glob
 from PIL import Image
 import pickle
 import os
@@ -12,8 +13,7 @@ class MapVisualizer:
         self.load_map_data(yaml_path)
         
     def load_map_data(self, yaml_path):
-        # Load YAML file
-        with open(yaml_path) as f:
+        with open(yaml_path) as f: # Load YAML file
             self.map_metadata = yaml.safe_load(f)
         
         # Load and process PGM image
@@ -36,13 +36,49 @@ class MapVisualizer:
         y_min = self.origin[1]  # -20.3 from your YAML
         y_max = self.origin[1] + self.height * self.resolution
 
-        # Plot with correct orientation and scaling
-        ax.imshow(self.map_image,
+        # Define the cropping range (restrict visualization to -10 <= x <= 5)
+        crop_x_min = -10
+        crop_x_max = 7.5
+
+        # Convert world coordinates to pixel indices
+        pixel_x_min = int((crop_x_min - self.origin[0]) / self.resolution)
+        pixel_x_max = int((crop_x_max - self.origin[0]) / self.resolution)
+
+        # Ensure valid cropping indices within the image bounds
+        pixel_x_min = max(0, pixel_x_min)
+        pixel_x_max = min(self.width, pixel_x_max)
+
+        # Crop the image along the X-axis
+        cropped_image = self.map_image[:, pixel_x_min:pixel_x_max]
+
+        # Update new world extents after cropping
+        new_x_min = crop_x_min
+        new_x_max = crop_x_max
+
+        ax.imshow(cropped_image,
                 cmap='gray',
-                extent=[x_min, x_max, y_min, y_max],
+                extent=[new_x_min, new_x_max, y_min, y_max],  # New extent
                 origin='lower',
                 vmin=0, vmax=100,
                 aspect='equal')
+
+        # Set new limits to enforce cropping
+        ax.set_xlim(new_x_min, new_x_max)
+
+        # # Plot with correct orientation and scaling
+        # ax.imshow(self.map_image,
+        #         cmap='gray',
+        #         extent=[x_min, x_max, y_min, y_max],
+        #         origin='lower',
+        #         vmin=0, vmax=100,
+        #         aspect='equal')
+        # ax.set_xlim(crop_x_min, crop_x_max)
+
+    def detect_crash(self, traj):
+        # Assume that ending within a certain boundary is a success
+        goal_x, goal_y = -1, -15  # Change to actual goal coordinates
+        distance_to_goal = np.hypot(traj[-1][0] - goal_x, traj[-1][1] - goal_y)
+        return distance_to_goal > 0.5  # Mark as crash if far from goal
 
     def plot_trajectories(self, ax, trajectories):
         """Plot robot trajectories in world coordinates"""
@@ -51,7 +87,12 @@ class MapVisualizer:
             ys = [p[1] for p in traj]
             ax.plot(xs, ys, linewidth=2, alpha=0.7)
             ax.scatter(xs[0], ys[0], marker='o', color='green', s=50, label='Start')
-            ax.scatter(xs[-1], ys[-1], marker='X', color='red', s=100, label='End')
+            is_crash = self.detect_crash(traj)
+            if is_crash:
+                ax.scatter(xs[-1], ys[-1], marker='X', color='red', s=100, label='Crash')
+            else:
+                ax.scatter(xs[-1], ys[-1], marker='^', color='blue', s=50, label='Success')
+        ax.scatter([], [], marker='s', color='purple', s=100, label='Obstacle')  
 
     def plot_obstacles(self, ax):
         """Plot manual obstacles in world coordinates"""
@@ -80,12 +121,12 @@ class MapVisualizer:
         # Add coordinate system elements
         # ax.axhline(0, color='black', linestyle='--', linewidth=0.5)  # X-axis
         # ax.axvline(0, color='black', linestyle='--', linewidth=0.5)  # Y-axis
-        ax.scatter(-1, -15, color='gold', marker='*', s=200, zorder=5, label='Goal (-1,-15)')
+        ax.scatter(-1, -15, color='gold', marker='*', s=200, zorder=5, label='Goal')
 
         # Configure axes
         ax.set_xlabel('X (meters)', fontsize=12)
         ax.set_ylabel('Y (meters)', fontsize=12)
-        ax.set_title('Robot Trajectories in Map Coordinates', fontsize=14)
+        ax.set_title('Robot Trajectories', fontsize=14)
         ax.grid(True, alpha=0.3)
         
         # Set equal aspect ratio and tight bounds
@@ -99,25 +140,26 @@ class MapVisualizer:
 
         plt.show()
 
-# Example usage
 if __name__ == '__main__':
-    # Sample trajectories (replace with your actual data)
-    with open('/home/nvidia/f1tenth_ws/experiments_data/dummy/trajectory_0130_2141.pkl', 'rb') as f:
-        sample_trajectories = [pickle.load(f)]  # Ensure it's a list of lists
+    base_path = "/home/nvidia/f1tenth_ws/experiments_data/"
+    start_dirs = [
+        "cuniform_setting1_starting1_done",
+        "cuniform_setting1_starting2_done",
+        "cuniform_setting1_starting3_done"
+    ]
+    all_trajectories = []
+    for start_dir in start_dirs:
+        traj_files = sorted(glob.glob(os.path.join(base_path, start_dir, "trajectory_*.pkl")))
 
-    # sample_trajectories = [
-        #TODO: change this to be a list of recorded pickles
-        # [(-0.0, -0.0), (-1.0, -5.5), (-1.0, -10.0)],  # Success case
-    # ]
+        for file in traj_files:
+            with open(file, 'rb') as f:
+                all_trajectories.append(pickle.load(f))  # Append each trajectory set
 
     manual_obstacles = [
-        # {'x': 0.0, 'y': 0.0, 'width': 0.2, 'height': 1.0},
-        {'x': -1.0, 'y': -7.0, 'width': 1.0, 'height': 0.2}
+    #     {'x': -1.0, 'y': -7.0, 'width': 1.0, 'height': 0.2}
     ]
-
     visualizer = MapVisualizer(
         yaml_path="/home/nvidia/f1tenth_ws/maps/shepherd_lab_map.yaml",
         manual_obstacles=manual_obstacles
     )
-    
-    visualizer.visualize(sample_trajectories)
+    visualizer.visualize(all_trajectories)  # Pass all trajectories together

@@ -605,7 +605,8 @@ class CUniformPlannerNode(Node):
                 data = AckermannDriveStamped(header=h, drive=drive)
                 self.get_logger().info(f"Goal Reached!!!!")
               else:   
-                drive = AckermannDrive(steering_angle=0.68*(np.tan(u_execute[1]*0.9)*(self.cuniform_params['vehicle_wheelbase'])), speed=1.0)
+                drive = AckermannDrive(steering_angle=0.9*np.arctan2((self.cuniform_params['vehicle_wheelbase'])*u_execute[1], u_execute[0]), speed=1.0)
+                # drive = AckermannDrive(steering_angle=0.8*(np.tan(u_execute[1]*0.9)*(self.cuniform_params['vehicle_wheelbase'])), speed=1.0)
                 data = AckermannDriveStamped(header=h, drive=drive)
 
               if ((self.i % 10) == 0): 
@@ -620,6 +621,8 @@ class CUniformPlannerNode(Node):
                 self.get_logger().info(f"Distance to the Goal: {dist2goal2}, Goal Tolerance: {goaltol2}")
               if dist2goal2 < goaltol2:
                 self.isGoalReached = True
+              if dist2goal2 > goaltol2:
+                self.isGoalReached = False
             self.i += 1
         except Exception as e:
             tb_str = ''.join(traceback.format_exception(None, e, e.__traceback__))
