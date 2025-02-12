@@ -50,7 +50,6 @@ print("Reading cuniform trajectories...")
 with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/Final_Rahul's_Unsupervised_C_Uniform_50000.pickle", 'rb') as f:
     cuniform_trajectories = pickle.load(f)[:num_traj]
 
-
 def process_element(array_part, scalar_part):
     # Replace None scalar with 0.0
     if scalar_part is None:
@@ -76,7 +75,6 @@ class Config:
                num_vis_state_rollouts=16384, # Number of visualization rollouts
                seed=1,
                ):
-    
     self.seed = seed
     self.T = T
     self.dt = dt
@@ -86,7 +84,6 @@ class Config:
     assert dt > 0
     assert T > dt
     assert self.num_steps > 0
-    
     print('C-Uniform is used, could be either flow-based or neural c-uniform')
 
     # Number of control rollouts are currently limited by the number of blocks
@@ -105,18 +102,12 @@ class Config:
     self.num_vis_state_rollouts = min([self.num_vis_state_rollouts, self.num_control_rollouts])
     self.num_vis_state_rollouts = max([1, self.num_vis_state_rollouts])
 
-
 class CUniform_Numba(object):
-  
   """ 
-
-
   Planner object that initializes GPU memory and runs CUniform on GPU via numba.   
   CURRENT IMPLEMENATION will one calculate the cost of the each trajectory and select the one with the minimum one. 
   """
-
   def __init__(self, cfg):
-
     # Fixed configs
     self.cfg = cfg
     self.T = cfg.T
@@ -149,7 +140,6 @@ class CUniform_Numba(object):
     self.local_costmap_size = 120
     self.costmap_loaded = False
     self.reset()
-
     
   def reset(self):
     # Other task specific params
@@ -167,7 +157,6 @@ class CUniform_Numba(object):
     self.trajectories = copy.deepcopy(trajectories)
     self.trajectories_d = numba_cuda.to_device(self.trajectories.astype(np.float32))
 
-
   def init_device_vars_before_solving(self):
     if not self.device_var_initialized:
       t0 = time.time()      
@@ -180,7 +169,6 @@ class CUniform_Numba(object):
   def setup(self, params):
     # These tend to change (e.g., current robot position, the map) after each step
     self.set_params(params)
-
 
   def set_params(self, params):
     self.params = copy.deepcopy(params)
@@ -203,11 +191,9 @@ class CUniform_Numba(object):
 
   def solve(self):
     """Entry point for different algoritims"""
-    
     if not self.check_solve_conditions():
       print("C-Uniform solve condition not met. Cannot solve. Return")
       return
-    
     return self.get_rollout_cost()
 
   def move_cuniform_task_vars_to_device(self):
@@ -398,14 +384,6 @@ class CUniform_Numba(object):
         dist_to_goal2 = (xgoal_d[0]-x_curr[0])**2 + (xgoal_d[1]-x_curr[1])**2
         costs_d[bid] += stage_cost(dist_to_goal2, dist_weight_d) * gamma
 
-        # Compute vehicle boundary points for the current state
-        # get_vehicle_boundary_points(x_curr, vehicle_length_d, vehicle_width_d, vehicle_boundary_points_d)
-        
-          
-        # Convert vehicle boundary points to costmap indices
-        # -15:x_min, -10:y_min, 0.05:grid_resolution 10:scaling factor
-        # get_vehicle_boundary_points_grid(vehicle_boundary_points_d, -15.0, -10.0, 0.05, 10.0, vehicle_boundary_points_grid_d)
-
         convert_position_to_costmap_indices_gpu(
             x_curr[0],
             x_curr[1],
@@ -430,14 +408,14 @@ class CUniformPlannerNode(Node):
         super().__init__('cuniform_planner_node')
 
         self.cfg = Config(T = 3,
-            dt = 0.1,
+            dt = 0.2,
             num_control_rollouts =1000, # Same1 as number of blocks, can be more than 1024
             num_vis_state_rollouts = 1000,
             seed = 1,
             )
         
         self.cuniform = CUniform_Numba(self.cfg)
-        self.original_trajectories = cuniform_trajectories_transformed
+        self.original_trajectories = cuniform_trajectories_transformed[:self.cfg.num_control_rollouts,:16,:]
 
         # CUniform initial parameters
         self.cuniform_params = dict(
@@ -459,7 +437,6 @@ class CUniformPlannerNode(Node):
           u_std = np.array([0.023, 0.05]), # Noise std for sampling linear and angular velocities.
           vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
           wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
-          
           costmap = None, # intiallly nothing
           obs_penalty = 1e4
         )
@@ -597,7 +574,7 @@ class CUniformPlannerNode(Node):
                 # self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {-np.rad2deg(u_execute[1]*1.0)}" )
                 self.get_logger().info(f'-----------------')
                 self.get_logger().info(f'Running CUniform solver with configuration: x: {x_robot:.2f}, y: {y_robot:.2f}, theta: {yaw_robot:.2f}...')
-                self.get_logger().info(f"Target Position: x: {self.cuniform_params['xgoal'][0]}, z: {self.cuniform_params['xgoal'][1]}")
+                # self.get_logger().info(f"Target Position: x: {self.cuniform_params['xgoal'][0]}, z: {self.cuniform_params['xgoal'][1]}")
               
               if self.isGoalReached: 
                 u_execute = [0.0, 0.0]

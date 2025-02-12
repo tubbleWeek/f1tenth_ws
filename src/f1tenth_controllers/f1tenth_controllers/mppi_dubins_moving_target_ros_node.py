@@ -131,7 +131,7 @@ class MPPI_Numba(object):
     self.mppi_type = self.cfg.mppi_type # Normal dist / 1: NLN
     if self.mppi_type == 1:
       # print("NLN is used for noise")
-      self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.002, 0.02]))
+      self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.1, 0.2]))
       print('the mu:', self.mu_LogN)
       print('the std:', self.std_LogN)
       self.LogN_info = [self.mppi_type, self.mu_LogN, self.std_LogN]
@@ -444,13 +444,13 @@ class MPPI_Numba(object):
     dist_to_goal2 = 1e9 # initialize to a large value
 
     v_nom = v_noisy = w_nom = w_noisy = 0.0
-    gamma = 0.98 # Discount factor for cost
+    gamma = 1.0 # Discount factor for cost
 
     for t in range(timesteps):
       # Nominal noisy control
       # v_nom = u_cur_d[t, 0] + noise_samples_d[bid, t, 0] # linear velocity cons
       # v_noisy = max(vrange_d[0], min(vrange_d[1], v_nom))
-      v_noisy = v_nom = 2.0 # Constant velocity
+      v_noisy = v_nom = 1.0 # Constant velocity
       w_nom = u_cur_d[t, 1] + noise_samples_d[bid, t, 1]
       w_noisy = max(wrange_d[0], min(wrange_d[1], w_nom))
       
@@ -484,7 +484,7 @@ class MPPI_Numba(object):
       debug_d[bid, t, 1] = x_curr_grid_d[1]
       debug_d[bid, t, 2] = calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) 
       costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) * obs_cost_d * gamma
-      gamma *= 0.98
+      gamma *= 1.0
 
       if dist_to_goal2<= goal_tolerance_d2:
         goal_reached = True
@@ -678,8 +678,8 @@ class MPPIPlannerNode(Node):
 
         # Initialize configuration for MPPI
         self.cfg = Config(T = 3,
-            dt = 0.1,
-            num_control_rollouts =1000, # Same1 as number of blocks, can be more than 1024
+            dt = 0.2,
+            num_control_rollouts =2000, # Same1 as number of blocks, can be more than 1024
             num_vis_state_rollouts = 500,
             seed = 1,
             mppi_type = 1)
@@ -698,15 +698,15 @@ class MPPIPlannerNode(Node):
           vehicle_wheelbase= 0.32,
           # For risk-aware min time planning
           goal_tolerance = 0.40,
-          dist_weight = 10, #  Weight for dist-to-goal cost.
+          dist_weight = 1e2, #  Weight for dist-to-goal cost.
 
           lambda_weight = 0.572, # Temperature param in MPPI
           num_opt = 1, # Number of steps in each solve() function call.
 
           # Control and sample specification
           # variance = 0.1
-          u_std = np.array([0.023, 0.1]), # Noise std for sampling linear and angular velocities.
-          vrange = np.array([2.0, 2.0]), # Linear velocity range. Constant Linear Velocity
+          u_std = np.array([0.023, 0.2]), # Noise std for sampling linear and angular velocities.
+          vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
           wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
           costmap = None, # intiallly nothing
           obs_penalty = 1e4
@@ -813,8 +813,10 @@ class MPPIPlannerNode(Node):
         marker.id = 1
         marker.type = Marker.SPHERE
         marker.action = Marker.ADD
-        marker.pose.position.x = self.cx[self.target_index]
-        marker.pose.position.y = self.cy[self.target_index]
+        # marker.pose.position.x = self.cx[self.target_index]
+        # marker.pose.position.y = self.cy[self.target_index]
+        marker.pose.position.x = -1.0
+        marker.pose.position.y = -15.0
         marker.pose.position.z = 0.0
         marker.pose.orientation.w = 1.0
 
@@ -926,7 +928,7 @@ class MPPIPlannerNode(Node):
             global_ty = self.cy[ind] # This is the target waypoints y position
             latest_target_pos = [global_tx, global_ty]
             # self.mppi_params['xgoal'] = np.array([latest_target_pos[0], latest_target_pos[1]])
-            self.mppi_params['xgoal'] = np.array([-1.5, -15]) # hard coded for testing right now
+            self.mppi_params['xgoal'] = np.array([-1.0, -15]) # hard coded for testing right now
             self.mppi.setup(self.mppi_params)
             self.mppi.local_costmap_origin = self.mppi_params['costmap_origin']
             # start_time = time.time()
@@ -941,31 +943,23 @@ class MPPIPlannerNode(Node):
               h = std_msgs.msg.Header()
               h.stamp = self.get_clock().now().to_msg()
               if ((self.i % 10) == 0): 
-                self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {np.rad2deg(-u_execute[1]*1.0)}" )
+                self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {np.rad2deg(0.9*np.arctan2((self.mppi_params['vehicle_wheelbase'])*u_execute[1], u_execute[0]))}" )
                 self.get_logger().info(f"Target Position: x: {self.mppi_params['xgoal'][0]}, z: {self.mppi_params['xgoal'][1]}")
                 self.get_logger().info(f"F1tenth Configuration x: {x_robot}, y:{y_robot}, yaw: {yaw_robot}")
 
-              ''' Do not use this variable for circular corridor path following setting, because there is never an end  
               if self.isGoalReached:
                 u_execute = [0.0, 0.0]
                 drive = AckermannDrive(steering_angle=u_execute[0], speed=u_execute[1])
                 data = AckermannDriveStamped(header=h, drive=drive)
                 self.get_logger().info(f"Goal Reached!!!!")
               else: 
-              '''  
-              # drive = AckermannDrive(steering_angle=-0.8*(np.tan(u_execute[1]*1.0)*(self.mppi_params['vehicle_wheelbase'])), speed=1.0)
-              drive = AckermannDrive(steering_angle=0.8*(np.tan(u_execute[1]*1.0)*(self.mppi_params['vehicle_wheelbase'])), speed=1.0)
-              data = AckermannDriveStamped(header=h, drive=drive)
-
-              # if ((self.i % 10) == 0): 
-              #   self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {np.rad2deg(-u_execute[1]*1.0)}" )
-              
-              # msg = String()
-              # msg.data = "Hello World: %d" % self.i
+                drive = AckermannDrive(steering_angle=1.0*np.arctan2((self.mppi_params['vehicle_wheelbase'])*u_execute[1], u_execute[0]), speed=1.0)
+                # drive = AckermannDrive(steering_angle=-0.8*(np.tan(u_execute[1]*1.0)*(self.mppi_params['vehicle_wheelbase'])), speed=1.0)
+                # drive = AckermannDrive(steering_angle=0.8*(np.tan(u_execute[1]*1.0)*(self.mppi_params['vehicle_wheelbase'])), speed=1.0)
+                data = AckermannDriveStamped(header=h, drive=drive)
               self.action_pub.publish(data)
               self.mppi.shift_and_update(self.mppi_params['x0'], result, 1)
 
-              # dist2goal2 = (self.mppi_params['xgoal'][0] - latest_data[0])**2 + (self.mppi_params['xgoal'][1] - latest_data[2])**2
               dist2goal2 = (self.mppi_params['xgoal'][0] - x_robot)**2 \
                          + (self.mppi_params['xgoal'][1] - y_robot)**2
               
@@ -975,14 +969,14 @@ class MPPIPlannerNode(Node):
               if dist2goal2 < goaltol2:
                 self.isGoalReached = True
                 self.target_index  = self.search_target_index()[0]
+              if dist2goal2 > goaltol2:
+                self.isGoalReached = False
             self.i += 1
 
         except Exception as e:
             tb_str = ''.join(traceback.format_exception(None, e, e.__traceback__))
             self.get_logger().warn(f"Could not lookup TF transform: {e}\n{tb_str}")
             return
-            # self.get_logger().warn(f"Could not lookup TF transform: {e}")
-            # return
 
     def on_shutdown(self):
         self.get_logger().info('MPPI Planner Node shutting down')
