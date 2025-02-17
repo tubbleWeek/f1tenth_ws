@@ -50,6 +50,7 @@ print("Reading cuniform trajectories...")
 with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/Final_Rahul's_Unsupervised_C_Uniform_50000.pickle", 'rb') as f:
     cuniform_trajectories = pickle.load(f)[:num_traj]
 
+
 def process_element(array_part, scalar_part):
     # Replace None scalar with 0.0
     if scalar_part is None:
@@ -75,6 +76,7 @@ class Config:
                num_vis_state_rollouts=16384, # Number of visualization rollouts
                seed=1,
                ):
+    
     self.seed = seed
     self.T = T
     self.dt = dt
@@ -84,6 +86,7 @@ class Config:
     assert dt > 0
     assert T > dt
     assert self.num_steps > 0
+    
     print('C-Uniform is used, could be either flow-based or neural c-uniform')
 
     # Number of control rollouts are currently limited by the number of blocks
@@ -101,6 +104,7 @@ class Config:
     self.num_vis_state_rollouts = num_vis_state_rollouts
     self.num_vis_state_rollouts = min([self.num_vis_state_rollouts, self.num_control_rollouts])
     self.num_vis_state_rollouts = max([1, self.num_vis_state_rollouts])
+
 
 class CUniform_Numba(object):
   """ 
@@ -140,6 +144,7 @@ class CUniform_Numba(object):
     self.local_costmap_size = 120
     self.costmap_loaded = False
     self.reset()
+
     
   def reset(self):
     # Other task specific params
@@ -257,43 +262,11 @@ class CUniform_Numba(object):
     return min_cost_index, self.costs_d.copy_to_host(), self.trajectories_d[min_cost_index].copy_to_host()
     # return self.trajectories_d[min_cost_index].copy_to_host()
 
-
-  def get_vehicle_boundary_points_p(self, x_curr, vehicle_length, vehicle_width):
-    x_center, y_center, theta = x_curr
-    # Half dimensions
-    half_length = vehicle_length / 2
-    half_width = vehicle_width / 2
-
-    # Define the relative positions of the corners
-    corners = np.array([
-        [half_length, half_width],     # Front left
-        [half_length, -half_width],    # Front right
-        [0, -half_width],               # center right,   
-        [-half_length, -half_width],   # Rear right
-        [-half_length, half_width],    # Rear left,
-        [0, half_width]    # center left
-    ])
-
-    # Compute the rotation matrix based on heading angle (theta)
-    cos_theta = math.cos(theta)
-    sin_theta = math.sin(theta)
-    rotation_matrix = np.array([
-        [cos_theta, -sin_theta],
-        [sin_theta, cos_theta]
-    ])
-
-    # Rotate corners by the heading angle and translate to world coordinates
-    world_corners = rotation_matrix @ corners.T 
-    world_corners = world_corners.T + np.array([x_center, y_center])
-    # Add first point to the end for visualization
-    world_corners = np.vstack([world_corners, world_corners[0]])
-    return world_corners
-  
   def get_state_rollout(self, x_curr, trajectories):
     # First translate the point
     transformed_trajectories = copy.deepcopy(trajectories) #RUNTIME: negeligible
-    # Then rotate the point
-    # Rotation matrix
+
+    # Then rotate the point, Rotation matrix
     theta = x_curr[2]
     translation = x_curr[:2]
     R = np.array([[math.cos(x_curr[2]), -math.sin(x_curr[2])], [math.sin(x_curr[2]), math.cos(x_curr[2])]])
@@ -301,15 +274,6 @@ class CUniform_Numba(object):
 
     transformed_trajectories[:, :, 2] += theta
     transformed_trajectories[:, :, :2] += translation
-    # for i in range(transformed_trajectories.shape[0]):   #RUNTIME: 80% of function runtime used in this loop, ~0.03-0.04 
-    #   transformed_trajectories[i,:,:2] = np.dot(R, transformed_trajectories[i,:,:2].T).T      
-    #   # add the theta
-    #   transformed_trajectories[i,:,2] += x_curr[2]
-    #   # Normalize theta between 0 and 2pi
-    #   # transformed_trajectories[i,:,2] = math.fmod(transformed_trajectories[i,:,2], 2*np.pi)
-    # for i in range(transformed_trajectories.shape[0]):   #RUNTIME: 20% of function runtime, ~0.01-0.02
-    #   transformed_trajectories[i,:,0] += x_curr[0]
-    #   transformed_trajectories[i,:,1] += x_curr[1]
     return transformed_trajectories
     
   def shift_and_update(self, x_next, trajectories):
@@ -366,10 +330,7 @@ class CUniform_Numba(object):
     goal_tolerance_d2 = goal_tolerance_d*goal_tolerance_d
     dist_to_goal2 = 1e9 # initialize to a large value
 
-    # Allocate space for vehicle boundary points (4)
-    vehicle_boundary_points_d = numba_cuda.local.array((6, 2), dtype=np.float32)
     x_curr = numba_cuda.local.array(3, numba.float32) # Dubins car model states x,y,theta
-
     x_curr_grid_d = numba_cuda.local.array((2), dtype=np.int32)
 
     gamma = 1.0 # Discount factor for cost
@@ -408,14 +369,14 @@ class CUniformPlannerNode(Node):
         super().__init__('cuniform_planner_node')
 
         self.cfg = Config(T = 3,
-            dt = 0.2,
+            dt = 0.1,
             num_control_rollouts =1000, # Same1 as number of blocks, can be more than 1024
             num_vis_state_rollouts = 1000,
             seed = 1,
             )
         
         self.cuniform = CUniform_Numba(self.cfg)
-        self.original_trajectories = cuniform_trajectories_transformed[:self.cfg.num_control_rollouts,:16,:]
+        self.original_trajectories = cuniform_trajectories_transformed
 
         # CUniform initial parameters
         self.cuniform_params = dict(
@@ -437,6 +398,7 @@ class CUniformPlannerNode(Node):
           u_std = np.array([0.023, 0.05]), # Noise std for sampling linear and angular velocities.
           vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
           wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
+          
           costmap = None, # intiallly nothing
           obs_penalty = 1e4
         )
@@ -574,7 +536,7 @@ class CUniformPlannerNode(Node):
                 # self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {-np.rad2deg(u_execute[1]*1.0)}" )
                 self.get_logger().info(f'-----------------')
                 self.get_logger().info(f'Running CUniform solver with configuration: x: {x_robot:.2f}, y: {y_robot:.2f}, theta: {yaw_robot:.2f}...')
-                # self.get_logger().info(f"Target Position: x: {self.cuniform_params['xgoal'][0]}, z: {self.cuniform_params['xgoal'][1]}")
+                self.get_logger().info(f"Target Position: x: {self.cuniform_params['xgoal'][0]}, z: {self.cuniform_params['xgoal'][1]}")
               
               if self.isGoalReached: 
                 u_execute = [0.0, 0.0]
