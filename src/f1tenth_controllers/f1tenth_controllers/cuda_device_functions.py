@@ -85,8 +85,6 @@ def convert_position_to_costmap_indices_gpu(x_curr_x, x_curr_y, x_min, y_min, gr
     center = 60
     flipped_x_grid = 2 * center - x_grid 
     flipped_y_grid = 2 * center - y_grid 
-    # x_curr_grid[0] = x_grid
-    # x_curr_grid[1] = y_grid
     x_curr_grid[0] = x_grid
     x_curr_grid[1] = y_grid
 
@@ -102,24 +100,24 @@ def calculate_obstacle_cost(vehicle_boundary_points_grid, obstacle_weight, max_c
 @cuda.jit('float32(float32[:,:], int32[:])', device=True, inline=True)
 def calculate_localcostmap_cost(costmap, x_curr_grid):
     cost = 0.0
-    # Sum the 13,13 grid around the current position grid
-    # for i in range(13):
-    #     for j in range(13):
-    #         cost += costmap[x_curr_grid[1]-6+i, x_curr_grid[0]-6+j]
-    # Sum the 5,5 grid around the current position grid
-    # for i in range(7):
-    #     for j in range(7):
-    #         cost += costmap[x_curr_grid[1]-3+i, x_curr_grid[0]-3+j]
-    # return cost
-    # GPT-o1's suggestion below
     cost = 0.0
     for i in range(7):
         for j in range(7):
-            y_index = x_curr_grid[1] - 3 + i  # row
-            x_index = x_curr_grid[0] - 3 + j  # column
-            cost += costmap[y_index, x_index]
+            # cost += costmap[y_index, x_index]
+            y_idx = x_curr_grid[1] - 3 + i
+            x_idx = x_curr_grid[0] - 3 + j
+            # Ensure indices are within valid range
+            if 0 <= y_idx < 120 and 0 <= x_idx < 120:  
+                cost += costmap[y_idx, x_idx]
     return cost
 
+@cuda.jit('float32(float32[:,:], int32[:])', device=True, inline=True)
+def check_state_collision_gpu(costmap, x_curr_grid):
+    for i in range(7):
+        for j in range(7):
+            if costmap[x_curr_grid[1]-3+i, x_curr_grid[0]-3+j] == 1:
+                return 1.0 # collision
+    return 0.0 # no collision
 
 # @cuda.jit('float32(float32[:,:], float32[:,:], float32[:], float32)', device=True, inline=True)
 # def calculate_obstacle_cost(vehicle_boundary_points, obs_pos_d, obs_r_d, obs_cost_d):

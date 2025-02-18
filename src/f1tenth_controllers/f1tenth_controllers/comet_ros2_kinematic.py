@@ -55,10 +55,9 @@ max_rec_blocks = rec_max_control_rollouts = int(1e6) # Though theoretically limi
 rec_min_control_rollouts = 100
 np.set_printoptions(precision=2, suppress=True)
 
-num_traj = 1000 # only use the first 'num_traj' trajectories
+num_traj = 500 # only use the first 'num_traj' trajectories
 print("Reading cuniform trajectories...")
-# with open('/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/FINAL_C_Uniform_100000_trajectories_disjoint_DUBINS_v_1_perturb_2.01_slack_2.01_seed_2025_grid_0.05_0.05_4.50deg_na45_t4.01_ts0.2.pkl', 'rb') as f:
-with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/Final_Rahul's_Unsupervised_C_Uniform_50000.pickle", 'rb') as f:
+with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/Rahul_Final_representative_KS_neural_c_uniform_10000_latest.pickle", 'rb') as f:
     cuniform_trajectories = pickle.load(f)[:num_traj]
 
 # Function to handle None in the scalar part
@@ -270,7 +269,7 @@ class CUniform_Numba(object):
     # Weight for distance cost
     dist_weight = DEFAULT_DIST_WEIGHT if 'dist_weight' not in self.params else self.params['dist_weight']
 
-    # Transform the trajectories to the current state #TODO: What does this part do?
+    # # Transform the trajectories to the current state
     # threadperblock = (16,16)
     # blockpergrid_x = (self.num_control_rollouts + threadperblock[0] - 1) // threadperblock[0]
     # blockpergrid_y = (self.num_steps + threadperblock[1] - 1) // threadperblock[1]
@@ -803,7 +802,7 @@ class MPPI_Numba(object):
       v_noisy = vrange_d[0] # fixed speed 1.0
 
       # Forward simulate
-      # Dubins model update
+      # kinematic model update
       x_curr[0] += dt_d*v_noisy*math.cos(x_curr[2])
       x_curr[1] += dt_d*v_noisy*math.sin(x_curr[2])
       # x_curr[2] += dt_d*(x_curr[3]/vehicle_wheelbase_d)*math.tan(w_noisy)
@@ -838,6 +837,9 @@ class MPPI_Numba(object):
         costs_d[bid] += prev_dist_to_goal2 # distance to goal cost
     # Accumulate terminal cost 
     costs_d[bid] += term_cost(dist_to_goal2, goal_reached)
+    # for t in range(timesteps):
+    #   costs_d[bid] += lambda_weight_d*((u_cur_d[t,1]/(u_std_d[1]**2))*noise_samples_d[bid, t, 1])
+
 
   @staticmethod
   @numba_cuda.jit(fastmath=True)
@@ -1020,8 +1022,8 @@ class COMETPlannerNode(Node):
         super().__init__('COMET_planner_node')
         self.cfg = Config(T = 3,
             dt = 0.2,
-            num_control_rollouts =1000, # Same as number of blocks, can be more than 1024
-            num_vis_state_rollouts = 1000,
+            num_control_rollouts =500, # Same as number of blocks, can be more than 1024
+            num_vis_state_rollouts = 500,
             seed = 1,
             )
         
@@ -1040,6 +1042,8 @@ class COMETPlannerNode(Node):
           dist_weight = 1e2, #  Weight for dist-to-goal cost.
           num_opt = 1, # Number of steps in each solve() function call.
 
+          lambda_weight = 1.0, # Temperature param in MPPI
+
           # Control and sample specification
           # variance = 0.1
           u_std = np.array([0.023, 0.05]), # Noise std for sampling linear and angular velocities.
@@ -1055,13 +1059,14 @@ class COMETPlannerNode(Node):
         self.original_trajectories = cuniform_trajectories_transformed
         self.cuniform.setup(self.cuniform_params)
         self.cuniform.load_trajectories(self.original_trajectories[:])
-        self.get_logger().info('Cuniform Planner initialized.')
+        self.get_logger().info('Cuniform NUMBA initialized.')
 
         # Define initial parameters for the MPPI planner
         self.mppi_params = dict(
           # Task specification
           dt = self.cfg.dt, 
           x0 = np.zeros(3), # Start state
+          xgoal = np.array([-1.0, -15.0]), # Goal position
           # vehicle length(lf and lr wrt the cog) and width
           vehicle_length = 0.57,
           vehicle_width = 0.3,
@@ -1076,7 +1081,10 @@ class COMETPlannerNode(Node):
           # Control and sample specification
           # variance = 0.1
           u_std = np.array([0.023, 0.1]), # Noise std for sampling linear and angular velocities.
+          v_switch = 0.2, 
+          a_max = 2.0 , # Maximum linear acceleration
           vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
+          delta_range = np.array([-np.pi/4, np.pi/4]), # Steering angle range
           wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
           costmap = None, # intiallly nothing
           obs_penalty = 1e4
@@ -1084,6 +1092,7 @@ class COMETPlannerNode(Node):
         # Instantiate the MPPI planner
         self.mppi = MPPI_Numba(self.cfg)
         self.mppi.setup(self.mppi_params)
+        self.get_logger().info('MPPI NUMBA initialized.')
 
         # Publishers, subscribers, and tf
         self.tf_buffer = Buffer()
@@ -1139,6 +1148,11 @@ class COMETPlannerNode(Node):
         self.cuniform_params['costmap_origin'] = [msg.info.origin.position.x, msg.info.origin.position.y]
         self.cuniform_params['costmap'] = self.local_costmap
 
+        # update MPPI parameters
+        self.mppi_params['costmap_resolution'] = msg.info.resolution
+        self.mppi_params['costmap_origin'] = [msg.info.origin.position.x, msg.info.origin.position.y]
+        self.mppi_params['costmap'] = self.local_costmap
+
     def solve_COMET(self):
         try:
             # 1. Look up transform from map -> base_link
@@ -1158,15 +1172,19 @@ class COMETPlannerNode(Node):
 
             # Update planner parameters with current state and latest costmap.
             self.cuniform_params['x0'] = current_state
+            self.mppi_params['x0'] = current_state
             if self.local_costmap is not None:
                 self.cuniform_params['costmap'] = self.local_costmap
+                self.mppi_params['costmap'] = self.local_costmap
 
-            # Update c_uniform with the new state.
-            self.cuniform.shift_and_update(current_state, self.original_trajectories)
+            # Update with the new state.
             self.cuniform.setup(self.cuniform_params)
+            self.mppi.setup(self.mppi_params)
 
             ################## This is the major line change for COMET ##################
+            start_time_comet = time.time()
             refined_control = self.solve_COMET_core(current_state)
+            # refined_control[1] = -refined_control[1]
 
             '''Old solve cuniform code
             # Solve CUniform
@@ -1183,16 +1201,17 @@ class COMETPlannerNode(Node):
             h.stamp = self.get_clock().now().to_msg()
             if (self.i % 10) == 0:
                 self.get_logger().info('-----------------')
+                self.get_logger().info(f"Time to solve COMET: {time.time() - start_time_comet}")
                 self.get_logger().info(f'Running COMET planner with configuration: x: {x_robot:.2f}, y: {y_robot:.2f}, theta: {yaw_robot:.2f}...')
                 self.get_logger().info(f"Target Position: x: {self.cuniform_params['xgoal'][0]}, y: {self.cuniform_params['xgoal'][1]}")
             if self.isGoalReached:
                 refined_control = [0.0, 0.0]
                 self.get_logger().info("Goal Reached!!!!")
             # Create and publish drive command based on refined_control.
-            drive = AckermannDrive(steering_angle=refined_control[1], speed=refined_control[0])
-            data = AckermannDriveStamped(header=h, drive=drive)
             if (self.i % 10) == 0:
                 self.get_logger().info(f"Input given: velocity {refined_control[0]}, Steering_Angle: {np.rad2deg(refined_control[1])}")
+            drive = AckermannDrive(steering_angle=float(refined_control[1]), speed=float(refined_control[0]))
+            data = AckermannDriveStamped(header=h, drive=drive)
             self.action_pub.publish(data)
             
             # Compute distance to goal and update goal status.
@@ -1218,23 +1237,29 @@ class COMETPlannerNode(Node):
           - Solve MPPI to refine the control sequence.
           - Update both planners and return the first control command.
         """
-        # Update c_uniform planner with the current state.
-        self.cuniform.shift_and_update(current_state, self.original_trajectories)
         # Solve c_uniform planner.
-        min_idx, costs, candidate_traj = self.cuniform.solve()
-        # Extract the control seed (assumed to be stored in column index 3).
-        control_seed = candidate_traj[:, 3]
-        constant_velocity = self.cuniform_params['vrange'][0]
-        control_sequence = np.hstack((np.full((control_seed.shape[0], 1), constant_velocity),
-                                      control_seed.reshape(-1, 1)))
-        # Set actions to the MPPI planner (dropping the final action if needed).
-        self.mppi.set_actions(control_sequence[:-1])
+        min_idx, _, min_cost_trajectory, useq_numba = self.cuniform.solve()
+
+        #TODO: check what exactly is this min cost trajectory
+        u_seq_for_mppi = min_cost_trajectory[:, 3]
+        # self.get_logger().info("u_seq_for_mppi: (min cost traj) ")
+        # self.get_logger().info(np.array2string(min_cost_trajectory))
+
+        constant_v = self.cuniform_params['vrange'][0]
+        u_seq_for_mppi_vel = np.hstack((np.ones((u_seq_for_mppi.shape[0],1))*constant_v, u_seq_for_mppi.reshape(-1,1)))
+        # set actions to the MPPI planner (dropping the final action)
+        self.mppi.set_actions(u_seq_for_mppi_vel[:-1])
+
         # Solve MPPI to refine the control sequence.
         refined_control_sequence = self.mppi.solve()
         # Update both planners with the new state.
-        self.cuniform.shift_and_update(current_state, self.original_trajectories)
-        current_u = self.mppi.u_cur_d.copy_to_host()
-        self.mppi.shift_and_update(current_state, current_u)
+
+        self.cuniform.shift_and_update(
+          x_next=current_state,
+          useq=refined_control_sequence,
+          trajectories=self.original_trajectories
+        )
+        self.mppi.shift_and_update(current_state, refined_control_sequence)
         return refined_control_sequence[0] # return the first control command 
 
     def on_shutdown(self):

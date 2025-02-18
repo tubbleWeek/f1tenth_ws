@@ -47,7 +47,7 @@ np.set_printoptions(precision=2, suppress=True)
 num_traj = 1000 # only use the first 'num_traj' trajectories
 print("Reading cuniform trajectories...")
 # with open('/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/FINAL_C_Uniform_100000_trajectories_disjoint_DUBINS_v_1_perturb_2.01_slack_2.01_seed_2025_grid_0.05_0.05_4.50deg_na45_t4.01_ts0.2.pkl', 'rb') as f:
-with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/Final_Rahul's_Unsupervised_C_Uniform_50000.pickle", 'rb') as f:
+with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/DUBINS_Final_Rahul's_Unsupervised_C_Uniform_50000.pickle", 'rb') as f:
     cuniform_trajectories = pickle.load(f)[:num_traj]
 
 
