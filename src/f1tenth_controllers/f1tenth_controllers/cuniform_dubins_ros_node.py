@@ -11,10 +11,11 @@ from collections import deque  # For implementing a circular buffer
 from rclpy.qos import qos_profile_sensor_data
 from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
 from nav_msgs.msg import OccupancyGrid # for applying local costmap
+from nav_msgs.msg import Path
+from geometry_msgs.msg import PoseStamped
+import time
 import std_msgs
-
 import pickle
- # Import your CUniform class
 
 import pycuda.driver as cuda
 import pycuda.autoinit
@@ -47,9 +48,11 @@ np.set_printoptions(precision=2, suppress=True)
 num_traj = 1000 # only use the first 'num_traj' trajectories
 print("Reading cuniform trajectories...")
 # with open('/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/FINAL_C_Uniform_100000_trajectories_disjoint_DUBINS_v_1_perturb_2.01_slack_2.01_seed_2025_grid_0.05_0.05_4.50deg_na45_t4.01_ts0.2.pkl', 'rb') as f:
-with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/DUBINS_Final_Rahul's_Unsupervised_C_Uniform_50000.pickle", 'rb') as f:
+# with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/DUBINS_Final_Rahul's_Unsupervised_C_Uniform_50000.pickle", 'rb') as f:
+# with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/representative_KS_perturb_10000_0.2_3.01_45.pickle", 'rb') as f:
+with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/representative_KS_perturb_10000_0.2_3.01_45_no_perturbation.pickle", 'rb') as f:
     cuniform_trajectories = pickle.load(f)[:num_traj]
-
+    #TODO: for unsupervised dubin trajectories, it is 4 seconds long, so make sure to cut it to the planned horizon
 
 def process_element(array_part, scalar_part):
     # Replace None scalar with 0.0
@@ -145,7 +148,6 @@ class CUniform_Numba(object):
     self.costmap_loaded = False
     self.reset()
 
-    
   def reset(self):
     # Other task specific params
     self.u_seq0 = np.zeros((self.num_steps, 2), dtype=np.float32)
@@ -282,7 +284,7 @@ class CUniform_Numba(object):
     self.load_trajectories(transformed_trajs)
     self.x0 = x_next.copy()
 
-  def control(self, x_curr, x_next, dt):
+  def control_dubins(self, x_curr, x_next, dt):
     '''Dubins Car model
     Forward simulate 
     x_curr[0] += dt_d*v_nom*math.cos(x_curr[2])
@@ -316,7 +318,6 @@ class CUniform_Numba(object):
     vehicle_wheelbase_d,
     dist_weight_d,
   ):
-    
     """
     There should only be one thread running in each block, where each block handles a single sampled trajecotry calulation.
     """
@@ -369,14 +370,20 @@ class CUniformPlannerNode(Node):
         super().__init__('cuniform_planner_node')
 
         self.cfg = Config(T = 3,
-            dt = 0.1,
-            num_control_rollouts =1000, # Same1 as number of blocks, can be more than 1024
+            dt = 0.2,
+            num_control_rollouts = 1000, # Same1 as number of blocks, can be more than 1024
             num_vis_state_rollouts = 1000,
             seed = 1,
-            )
+        )
         
         self.cuniform = CUniform_Numba(self.cfg)
         self.original_trajectories = cuniform_trajectories_transformed
+        self.u_execute = [0.0, 0.0] # initial action
+
+        # for PD controller
+        self.kp = 0.5  # proportional Gain
+        self.kd = 0.01 # derivative Gain
+        self.last_steering_error = 0.0 
 
         # CUniform initial parameters
         self.cuniform_params = dict(
@@ -394,14 +401,13 @@ class CUniformPlannerNode(Node):
           num_opt = 1, # Number of steps in each solve() function call.
 
           # Control and sample specification
-          # variance = 0.1
-          u_std = np.array([0.023, 0.05]), # Noise std for sampling linear and angular velocities.
           vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
-          wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
           
           costmap = None, # intiallly nothing
           obs_penalty = 1e4
         )
+        self.path_pub = self.create_publisher(Path, "/min_cost_path", 10)
+
         self.lookahead_marker_pub = self.create_publisher(Marker, "/lookahead_marker", 5)
         self.lookahead_marker_timer = self.create_timer(0.1, self.lookahead_publish_waypoint)
 
@@ -429,7 +435,7 @@ class CUniformPlannerNode(Node):
         )
 
         # Create a timer to call the CUniform solver every 100ms (0.1s)
-        self.timer = self.create_timer(0.1, self.solve_cuniform)
+        self.timer = self.create_timer(0.125, self.solve_cuniform)
         self.i = 0
         self.isGoalReached = False
 
@@ -498,6 +504,7 @@ class CUniformPlannerNode(Node):
         
     def solve_cuniform(self):
         try:
+            c_uniform_start = time.time()
             # 1. Look up transform from map -> base_link
             transform = self.tf_buffer.lookup_transform(
                 'map',           # source frame (or "map")
@@ -522,36 +529,77 @@ class CUniformPlannerNode(Node):
 
             # Solve CUniform
             self.cuniform.setup(self.cuniform_params)
-            min_idx, _ , _  = self.cuniform.solve()
+            # min_idx, _ , _  = self.cuniform.solve()
+            min_idx, _, min_traj = self.cuniform.solve()
+            ############### visualize min cost traj below ##############
+            # Visualize minimum cost trajectory as a Path message
+            path_msg = Path()
+            path_msg.header.frame_id = "map"
+            path_msg.header.stamp = self.get_clock().now().to_msg()
+            for state in min_traj:
+                pose = PoseStamped()
+                pose.header = path_msg.header
+                pose.pose.position.x = float(state[0])
+                pose.pose.position.y = float(state[1])
+                pose.pose.position.z = 0.0
+                q = R.from_euler('z', float(state[2])).as_quat()
+                pose.pose.orientation.x = q[0]
+                pose.pose.orientation.y = q[1]
+                pose.pose.orientation.z = q[2]
+                pose.pose.orientation.w = q[3]
+                path_msg.poses.append(pose)
+            self.path_pub.publish(path_msg)
+            ############### visualize min cost traj above ##############
             self.cuniform.local_costmap_origin = self.cuniform_params['costmap_origin']
             self.publish_local_costmap_debug()
               
-            omega = self.cuniform.control(x_current, self.cuniform.trajectories[min_idx][1], dt=0.2)
-            u_execute = [1.0, omega]
+            # omega = self.cuniform.control_dubins(x_current, self.cuniform.trajectories[min_idx][1], dt=0.2)
+            # NOTE: if using kinematic model, you can directly uses the omega
+            omega = self.cuniform.trajectories[min_idx][0][3]
 
+            # ###### adding PD controller
+            # current_steering_angle = self.u_execute[1] # Use previous command from self.u_execute
+            # desired_steering_angle = omega
+            # steering_error = desired_steering_angle - current_steering_angle
+            # proportional_term = self.kp * steering_error
+            # error_change = steering_error - self.last_steering_error
+            # derivative_term = self.kd * (error_change / self.cfg.dt) # Divide by dt for rate of change
+            # steering_command = current_steering_angle + proportional_term + derivative_term
+            # steering_command = np.clip(steering_command, -0.53, 0.53) # +-30 degrees
+            # self.last_steering_error = steering_error
+            # omega = steering_command
+
+            self.u_execute = [1.0, omega]
+           
             if self.i > 3:
               h = std_msgs.msg.Header()
               h.stamp = self.get_clock().now().to_msg()
-              if ((self.i % 10) == 0): 
-                # self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {-np.rad2deg(u_execute[1]*1.0)}" )
-                self.get_logger().info(f'-----------------')
-                self.get_logger().info(f'Running CUniform solver with configuration: x: {x_robot:.2f}, y: {y_robot:.2f}, theta: {yaw_robot:.2f}...')
-                self.get_logger().info(f"Target Position: x: {self.cuniform_params['xgoal'][0]}, z: {self.cuniform_params['xgoal'][1]}")
-              
               if self.isGoalReached: 
-                u_execute = [0.0, 0.0]
-                drive = AckermannDrive(steering_angle=u_execute[0], speed=u_execute[1])
+                self.u_execute = [0.0, 0.0]
+                drive = AckermannDrive(steering_angle=self.u_execute[0], speed=self.u_execute[1])
                 data = AckermannDriveStamped(header=h, drive=drive)
                 self.get_logger().info(f"Goal Reached!!!!")
               else:   
-                drive = AckermannDrive(steering_angle=0.9*np.arctan2((self.cuniform_params['vehicle_wheelbase'])*u_execute[1], u_execute[0]), speed=1.0)
-                # drive = AckermannDrive(steering_angle=0.8*(np.tan(u_execute[1]*0.9)*(self.cuniform_params['vehicle_wheelbase'])), speed=1.0)
+                # drive = AckermannDrive(steering_angle=0.9*np.arctan2((self.cuniform_params['vehicle_wheelbase'])*self.u_execute[1], self.u_execute[0]), speed=1.0)
+                # NOTE: if using kinematic model, you can directly uses the omega
+                drive = AckermannDrive(steering_angle=self.u_execute[1], speed=1.0)
                 data = AckermannDriveStamped(header=h, drive=drive)
 
               if ((self.i % 10) == 0): 
-                self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {np.rad2deg(u_execute[1]*1.0)}" )
-              
+                self.get_logger().info(f"Input given: velocity {self.u_execute[0]}, Steering_Angle: {np.rad2deg(self.u_execute[1]*1.0)}" )
+                # self.get_logger().info(f"Final Steering_Angle: {0.9*np.arctan2((self.cuniform_params['vehicle_wheelbase'])*self.u_execute[1], self.u_execute[0])}" )
               self.action_pub.publish(data)
+              if ((self.i % 10) == 0): 
+                self.get_logger().info(f'-----------------')
+                # self.get_logger().info(f'current steering angle: {current_steering_angle}')
+                # self.get_logger().info(f'desired steering angle: {desired_steering_angle}')
+                # self.get_logger().info(f'error change: {error_change}')
+                # self.get_logger().info(f'proportional term: {proportional_term}')
+                # self.get_logger().info(f'derivative term: {derivative_term}')
+                # self.get_logger().info(f'steering command: {steering_command}')
+                self.get_logger().info(f'Running CUniform solver with configuration: x: {x_robot:.2f}, y: {y_robot:.2f}, theta: {yaw_robot:.2f}...')
+                self.get_logger().info(f"Target Position: x: {self.cuniform_params['xgoal'][0]}, z: {self.cuniform_params['xgoal'][1]}")
+                self.get_logger().info(f'Runtime for solve_cuniform: {time.time() - c_uniform_start}')
 
               dist2goal2 = (self.cuniform_params['xgoal'][0] - x_robot)**2 + (self.cuniform_params['xgoal'][1] - y_robot)**2
               

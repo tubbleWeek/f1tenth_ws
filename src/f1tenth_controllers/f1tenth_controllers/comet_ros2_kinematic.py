@@ -11,7 +11,11 @@ from collections import deque  # For implementing a circular buffer
 from rclpy.qos import qos_profile_sensor_data
 from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
 from nav_msgs.msg import OccupancyGrid # for applying local costmap
+from nav_msgs.msg import Path
+from geometry_msgs.msg import PoseStamped
 import std_msgs
+import cProfile
+import pstats
 
 import numpy as np
 import math
@@ -55,9 +59,11 @@ max_rec_blocks = rec_max_control_rollouts = int(1e6) # Though theoretically limi
 rec_min_control_rollouts = 100
 np.set_printoptions(precision=2, suppress=True)
 
-num_traj = 500 # only use the first 'num_traj' trajectories
+num_traj = 1000 # only use the first 'num_traj' trajectories
 print("Reading cuniform trajectories...")
-with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/Rahul_Final_representative_KS_neural_c_uniform_10000_latest.pickle", 'rb') as f:
+# with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/representative_KS_perturb_10000_0.2_3.01_45_no_perturbation.pickle", 'rb') as f:
+# with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/representative_KS_perturb_10000_0.2_3.01_45.pickle", 'rb') as f:
+with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/representative_KS_perturb_10000_0.2_3.01_45_no_perturbation.pickle", 'rb') as f:
     cuniform_trajectories = pickle.load(f)[:num_traj]
 
 # Function to handle None in the scalar part
@@ -113,7 +119,8 @@ class Config:
     self.num_vis_state_rollouts = min([self.num_vis_state_rollouts, self.num_control_rollouts])
     self.num_vis_state_rollouts = max([1, self.num_vis_state_rollouts])
 DEFAULT_OBS_COST = 1e4
-DEFAULT_DIST_WEIGHT = 1e1
+DEFAULT_DIST_WEIGHT = 10
+
 class CUniform_Numba(object):
   """ 
   Planner object that initializes GPU memory and runs MPPI on GPU via numba.   
@@ -187,7 +194,6 @@ class CUniform_Numba(object):
       self.weights_d = numba_cuda.device_array((self.num_control_rollouts), dtype=np.float32)
       self.local_costmap_d = numba_cuda.device_array((self.local_costmap_size, self.local_costmap_size), dtype=np.float32)  
        
-      self.debug_d = numba_cuda.device_array((self.num_control_rollouts, self.num_steps+1, 4), dtype=np.float32)
       self.device_var_initialized = True
       print(" CUniform planner has initialized GPU memory after {} s".format(time.time()-t0))
 
@@ -233,7 +239,6 @@ class CUniform_Numba(object):
     #USEQ UPDATE
     lambda_weight_d = np.float32(self.params['lambda_weight'])
     vrange_d = np.array(self.params['vrange'], dtype=np.float32)
-    wrange_d = np.array(self.params['wrange'], dtype=np.float32)
 
     ''' COSTMAP Variables'''
     local_costmap_edt = self.params['costmap']
@@ -251,7 +256,7 @@ class CUniform_Numba(object):
 
     return xgoal_d, x0_d, goal_tolerance_d, \
             vehicle_length_d, vehicle_width_d, vehicle_wheelbase_d, \
-            lambda_weight_d, vrange_d, wrange_d, \
+            lambda_weight_d, vrange_d, \
             obs_cost_d, local_costmap_d, max_local_cost_d, \
             costmap_origin_x, costmap_origin_y, costmap_resolution
 
@@ -261,7 +266,7 @@ class CUniform_Numba(object):
     '''
     xgoal_d, x0_d, goal_tolerance_d, \
     vehicle_length_d, vehicle_width_d, vehicle_wheelbase_d, \
-    lambda_weight_d, vrange_d, wrange_d, \
+    lambda_weight_d, vrange_d, \
     obs_cost_d, local_costmap_d, max_local_cost_d, \
     costmap_origin_x, costmap_origin_y, costmap_resolution, \
     = self.move_cuniform_task_vars_to_device()
@@ -269,15 +274,8 @@ class CUniform_Numba(object):
     # Weight for distance cost
     dist_weight = DEFAULT_DIST_WEIGHT if 'dist_weight' not in self.params else self.params['dist_weight']
 
-    # # Transform the trajectories to the current state
-    # threadperblock = (16,16)
-    # blockpergrid_x = (self.num_control_rollouts + threadperblock[0] - 1) // threadperblock[0]
-    # blockpergrid_y = (self.num_steps + threadperblock[1] - 1) // threadperblock[1]
-    # blockpergrid = (blockpergrid_x, blockpergrid_y)
-    # self.transform_trajectories[blockpergrid, threadperblock](x0_d, self.original_trajectories_d, self.trajectories_d)
-
     # get the number of feasible trajectories
-    self.num_feasible_d = np.float32(np.sum(self.feasible_mask_d.copy_to_host()))
+    # self.num_feasible_d = np.float32(np.sum(self.feasible_mask_d.copy_to_host()))
 
     self.rollouts_cost_numba[self.num_control_rollouts, 1](
       self.trajectories_d,
@@ -295,8 +293,6 @@ class CUniform_Numba(object):
       vehicle_width_d,
       vehicle_wheelbase_d,
       dist_weight,
-      
-      self.debug_d
     )
 
     # # get the cost of the trajectories that are feasible to the host
@@ -320,16 +316,11 @@ class CUniform_Numba(object):
     transformed_trajectories[:, :, :2] += translation
     return transformed_trajectories
     
-  def shift_and_update(self, x_next, useq, trajectories):
+  def shift_and_update(self, x_next, trajectories):
     trajs = copy.deepcopy(trajectories)
     transformed_trajs = self.get_state_rollout(x_next, trajs)
     self.load_trajectories(transformed_trajs)
-
-    self.x0 = self.params["x0"] = x_next.copy()
-
-    u_cur_shifted = useq.copy()
-    u_cur_shifted[:-1] = u_cur_shifted[1:]
-    self.u_cur_d = numba_cuda.to_device(u_cur_shifted.astype(np.float32))
+    self.x0 = x_next.copy()
 
   """GPU kernels from here on"""
   @staticmethod
@@ -350,7 +341,6 @@ class CUniform_Numba(object):
     vehicle_width_d,
     vehicle_wheelbase_d,
     dist_weight_d,
-    debug_d
   ):
     """
     There should only be one thread running in each block, where each block handles a single sampled trajecotry calulation.
@@ -392,14 +382,14 @@ class CUniform_Numba(object):
           # Check for collision
           if check_state_collision_gpu(local_costmap_d, x_curr_grid_d) == 1.0:
             isCollided = True
-            # costs_d[bid] += 1e6 * (action)**2
-          costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / max_local_cost_d * obs_cost_d
+          # costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / max_local_cost_d * obs_cost_d
+          costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
 
           # Compute distance to goal
           dist_to_goal2 = (((xgoal_d[0]-x_curr[0])**2 + (xgoal_d[1]-x_curr[1])**2))**0.5
           costs_d[bid] += stage_cost(dist_to_goal2, 1.0)
           
-          if dist_to_goal2  <= goal_tolerance_d: #TODO: why not use goal_tolerance_d2 here?
+          if dist_to_goal2  <= goal_tolerance_d:
             goal_reached = True
             break
           prev_dist_to_goal2 = dist_to_goal2
@@ -407,44 +397,10 @@ class CUniform_Numba(object):
           costs_d[bid] += 1 * obs_cost_d
           costs_d[bid] += prev_dist_to_goal2 # distans
 
-        debug_d[bid, step, 0] = x_curr_grid_d[0]
-        debug_d[bid, step, 1] = x_curr_grid_d[1]
-        debug_d[bid, step, 2] = calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d)
-        costs_d[bid] +=  calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) * obs_cost_d * gamma
-        debug_d[bid, step, 3] = calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) * obs_cost_d * gamma
-        gamma *= 1.0
-
     # Accumulate terminal cost 
     costs_d[bid] += term_cost(dist_to_goal2, goal_reached)
     # give reward for reaching the goal
     # costs_d[bid] += (-goal_reached) * 10
-
-  @staticmethod
-  @numba_cuda.jit(fastmath=True)
-  def transform_trajectories(
-    x_curr,
-    trajectories,
-    transformed_trajectories
-  ):
-    """ Transform the trajectories to the current state. """
-    i, j = numba_cuda.grid(2)
-    if i < trajectories.shape[0] and j < trajectories.shape[1]:
-      # precompute sin and cos
-      cos_theta = math.cos(x_curr[2])
-      sin_theta = math.sin(x_curr[2])
-      x_curr_x = x_curr[0]
-      x_curr_y = x_curr[1]
-      x_curr_theta = x_curr[2]
-
-      # load the trajectory
-      x = trajectories[i, j, 0]
-      y = trajectories[i, j, 1]
-      theta = trajectories[i, j, 2]
-
-      # Rotate the trajectory
-      transformed_trajectories[i, j, 0] = x * cos_theta - y * sin_theta + x_curr_x
-      transformed_trajectories[i, j, 1] = x * sin_theta + y * cos_theta + x_curr_y
-      transformed_trajectories[i, j, 2] = theta + x_curr_theta
 
 class MPPI_Numba(object):
   """ 
@@ -491,6 +447,7 @@ class MPPI_Numba(object):
     self.device_var_initialized = False
 
     self.generator = XORWOWRandomNumberGenerator()
+    # NOTE: adjust mppi type here
     self.mppi_type = 0 # Normal dist / 1: NLN
     if self.mppi_type == 1:
       self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.1, 0.2]))
@@ -523,8 +480,6 @@ class MPPI_Numba(object):
       self.weights_d = numba_cuda.device_array((self.num_control_rollouts), dtype=np.float32)
       self.rng_states_d = create_xoroshiro128p_states(self.num_control_rollouts*self.num_steps, seed=self.seed)
       
-      self.debug_d = numba_cuda.device_array((self.num_control_rollouts, self.num_steps+1, 3), dtype=np.float32)
-
       self.state_rollout_batch_d = numba_cuda.device_array((self.num_vis_state_rollouts, self.num_steps+1, 3), dtype=np.float32)   
       self.local_costmap_d = numba_cuda.device_array((self.local_costmap_size, self.local_costmap_size), dtype=np.float32)   
       self.device_var_initialized = True
@@ -600,7 +555,6 @@ class MPPI_Numba(object):
     vehicle_width_d = np.float32(self.vehicle_width)
     vehicle_wheelbase_d = np.float32(self.vehicle_wheelbase)
     v_switch_d = np.float32(self.params['v_switch'])
-    a_max_d = np.float32(self.params['a_max'])
     delta_range_d = numba_cuda.to_device(self.params['delta_range'].astype(np.float32))
 
     local_costmap_edt = self.params['costmap']
@@ -616,7 +570,7 @@ class MPPI_Numba(object):
     return vrange_d, wrange_d, xgoal_d, \
            goal_tolerance_d, lambda_weight_d, \
            vehicle_length_d, vehicle_width_d, vehicle_wheelbase_d, \
-           v_switch_d, a_max_d, delta_range_d, \
+           v_switch_d, delta_range_d, \
            u_std_d, x0_d, dt_d, local_costmap_d, obs_cost_d, max_local_cost_d, \
            costmap_origin_x, costmap_origin_y, costmap_resolution
 
@@ -626,7 +580,7 @@ class MPPI_Numba(object):
     """
     vrange_d, wrange_d, xgoal_d, goal_tolerance_d, lambda_weight_d, \
     vehicle_length_d, vehicle_width_d, vehicle_wheelbase_d,\
-    v_switch_d, a_max_d, delta_range_d,\
+    v_switch_d, delta_range_d,\
     u_std_d, x0_d, dt_d, local_costmap_d, obs_cost_d, max_local_cost_d, \
     costmap_origin_x, costmap_origin_y, params_costmap_resolution = self.move_mppi_task_vars_to_device()
 
@@ -644,7 +598,7 @@ class MPPI_Numba(object):
       self.noise_samples_d = numba_cuda.to_device(noise_samples_reshaped)
 
       # Rollout and compute mean or cvar
-      self.rollout_new_cost_numba[self.num_control_rollouts, 1](
+      self.rollouts_cost_numba[self.num_control_rollouts, 1](
         vrange_d,
         wrange_d,
         xgoal_d,
@@ -661,7 +615,6 @@ class MPPI_Numba(object):
         dt_d,
         dist_weight,
         v_switch_d, 
-        a_max_d,
         delta_range_d,
         self.noise_samples_d,
         self.u_cur_d,
@@ -671,18 +624,7 @@ class MPPI_Numba(object):
 
         # results
         self.costs_d,
-        self.debug_d
       )      
-      # print(f"costs_d: {self.costs_d.copy_to_host()}")
-      # print(f'max cost: {np.max(self.costs_d.copy_to_host())}')
-      # print(f'min cost: {np.min(self.costs_d.copy_to_host())}')
-      
-      # # print a debug trajectory
-      # debug_arr = self.debug_d.copy_to_host()
-      # print(f"debug_arr: {debug_arr[0,:,:]}")
-      # print(f"debug_arr: {debug_arr[1,:,:]}")
-      # print(f"debug_arr: {debug_arr[2,:,:]}")
-      # print(f"debug_arr: {debug_arr[3,:,:]}")
       self.u_prev_d = self.u_cur_d
 
       # Compute cost and update the optimal control on device
@@ -719,7 +661,6 @@ class MPPI_Numba(object):
     x0_d = numba_cuda.to_device(self.params['x0'].astype(np.float32))
     dt_d = np.float32(self.params['dt'])
     v_switch_d = np.float32(self.params['v_switch'])
-    a_max_d = np.float32(self.params['a_max'])
     delta_range_d = numba_cuda.to_device(self.params['delta_range'].astype(np.float32))
     vehicle_wheelbase_d = np.float32(self.vehicle_wheelbase)
 
@@ -731,7 +672,6 @@ class MPPI_Numba(object):
         vrange_d,
         wrange_d,
         v_switch_d,
-        a_max_d,
         delta_range_d,
         vehicle_wheelbase_d,
         self.u_prev_d,
@@ -742,7 +682,7 @@ class MPPI_Numba(object):
   """GPU kernels from here on"""
   @staticmethod
   @numba_cuda.jit(fastmath=True)
-  def rollout_new_cost_numba(
+  def rollouts_cost_numba(
           vrange_d, 
           wrange_d, 
           xgoal_d, 
@@ -759,7 +699,6 @@ class MPPI_Numba(object):
           dt_d,
           dist_weight_d,
           v_switch_d,
-          a_max_d,
           delta_range_d,
           noise_samples_d,
           u_cur_d,
@@ -767,7 +706,7 @@ class MPPI_Numba(object):
           costmap_origin_y,
           params_costmap_resolution,
           costs_d,
-          debug_d):
+        ):
     """
     There should only be one thread running in each block, where each block handles a single sampled control sequence.
     """
@@ -822,7 +761,7 @@ class MPPI_Numba(object):
         )
         if check_state_collision_gpu(local_costmap_d, x_curr_grid_d) == 1.0:
           isCollided = True
-        costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / 49 * obs_cost_d
+        costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
 
         # distance to goal cost
         dist_to_goal2 = (((xgoal_d[0]-x_curr[0])**2) + ((xgoal_d[1]-x_curr[1])**2)) ** 0.5
@@ -930,7 +869,6 @@ class MPPI_Numba(object):
           vrange_d,
           wrange_d,
           v_switch_d,
-          a_max_d,
           delta_range_d,
           vehicle_wheelbase_d,
           u_prev_d,
@@ -1000,32 +938,31 @@ class MPPI_Numba(object):
         state_rollout_batch_d[bid,t+1,1] = x_curr[1]
         state_rollout_batch_d[bid,t+1,2] = x_curr[2]
 
-  @staticmethod
-  @numba_cuda.jit(fastmath=True)
-  def sample_noise_numba(rng_states, u_std_d, noise_samples_d):
-    """
-    Should be invoked as sample_noise_numba[NUM_U_SAMPLES, NUM_THREADS].
-    noise_samples_d.shape is assumed to be (num_rollouts, time_steps, 2)
-    Assume each thread corresponds to one time step
-    For consistency, each block samples a sequence, and threads (not too many) work together over num_steps.
-    This will not work if time steps are more than max_threads_per_block (usually 1024)
-    """
-    block_id = numba_cuda.blockIdx.x
-    thread_id = numba_cuda.threadIdx.x
-    abs_thread_id = numba_cuda.grid(1)
-
-    noise_samples_d[block_id, thread_id, 0] = u_std_d[0]*xoroshiro128p_normal_float32(rng_states, abs_thread_id)
-    noise_samples_d[block_id, thread_id, 1] = u_std_d[1]*xoroshiro128p_normal_float32(rng_states, abs_thread_id)
-  
 class COMETPlannerNode(Node):
     def __init__(self):
         super().__init__('COMET_planner_node')
-        self.cfg = Config(T = 3,
+        self.cfg = Config(
+            T = 3,
             dt = 0.2,
-            num_control_rollouts =500, # Same as number of blocks, can be more than 1024
-            num_vis_state_rollouts = 500,
             seed = 1,
-            )
+            # mppi_type = 0, # config class doesn't support mppi_type parameter now
+        )
+        self.cuniform_cfg = Config(
+            T = 3,
+            dt = 0.2,
+            num_control_rollouts = 1000, # Same as number of blocks, can be more than 1024
+            num_vis_state_rollouts = 1,
+            seed = 1,
+            # mppi_type = 0, # config class doesn't support mppi_type parameter now
+        )
+        self.mppi_cfg = Config(
+            T = 3,
+            dt = 0.2,
+            num_control_rollouts = 500, # Same as number of blocks, can be more than 1024
+            num_vis_state_rollouts = 1,
+            seed = 1,
+            # mppi_type = 0, # config class doesn't support mppi_type parameter now
+        )
         
         # Define initial parameters for the c_uniform planner.
         self.cuniform_params = dict(
@@ -1045,17 +982,14 @@ class COMETPlannerNode(Node):
           lambda_weight = 1.0, # Temperature param in MPPI
 
           # Control and sample specification
-          # variance = 0.1
-          u_std = np.array([0.023, 0.05]), # Noise std for sampling linear and angular velocities.
           vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
-          wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
           
           costmap = None, # intiallly nothing
           obs_penalty = 1e4
         )
         
         # Instantiate the c_uniform planner and load trajectories
-        self.cuniform = CUniform_Numba(self.cfg)
+        self.cuniform = CUniform_Numba(self.cuniform_cfg)
         self.original_trajectories = cuniform_trajectories_transformed
         self.cuniform.setup(self.cuniform_params)
         self.cuniform.load_trajectories(self.original_trajectories[:])
@@ -1079,18 +1013,16 @@ class COMETPlannerNode(Node):
           num_opt = 1, # Number of steps in each solve() function call.
 
           # Control and sample specification
-          # variance = 0.1
-          u_std = np.array([0.023, 0.1]), # Noise std for sampling linear and angular velocities.
+          u_std = np.array([0.023, 0.05]), # Noise std for sampling linear and angular velocities.
           v_switch = 0.2, 
-          a_max = 2.0 , # Maximum linear acceleration
           vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
-          delta_range = np.array([-np.pi/4, np.pi/4]), # Steering angle range
-          wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
+          delta_range = np.array([-np.pi/6, np.pi/6]), # Steering angle range
+          wrange = np.array([-np.pi/6, np.pi/6]), # Angular velocity range.
           costmap = None, # intiallly nothing
           obs_penalty = 1e4
         )
         # Instantiate the MPPI planner
-        self.mppi = MPPI_Numba(self.cfg)
+        self.mppi = MPPI_Numba(self.mppi_cfg)
         self.mppi.setup(self.mppi_params)
         self.get_logger().info('MPPI NUMBA initialized.')
 
@@ -1109,7 +1041,9 @@ class COMETPlannerNode(Node):
             self.costmap_callback,
             1 # only the most recent message is kept in the queue
         )
-        self.debug_local_costmap_pub = self.create_publisher(OccupancyGrid, '/debug_local_costmap', 1)
+        self.path_pub = self.create_publisher(Path, "/min_cost_path", 10)
+        self.mppi_path_pub = self.create_publisher(Path, "/mppi_path", 10)
+
         self.no_costmap_received_timer = self.create_timer(2.0, self.notify_no_costmap)
         self.action_pub = self.create_publisher(
             msg_type=AckermannDriveStamped,
@@ -1118,9 +1052,11 @@ class COMETPlannerNode(Node):
         )
 
         # Create a timer to call the COMET planner solve routine.
+        # self.timer = self.create_timer(0.1428571429, self.solve_COMET)
         self.timer = self.create_timer(0.1, self.solve_COMET)
         self.i = 0
         self.isGoalReached = False
+        self.previous_steering_angle = 0.0
 
     def setup(self, params):
         """
@@ -1152,9 +1088,33 @@ class COMETPlannerNode(Node):
         self.mppi_params['costmap_resolution'] = msg.info.resolution
         self.mppi_params['costmap_origin'] = [msg.info.origin.position.x, msg.info.origin.position.y]
         self.mppi_params['costmap'] = self.local_costmap
+    
+    def _dynamics_KS_3d_steering_angle(self, state, action, dt): #constant velocity
+        x, y, theta = state
+        steering_angle, v = action
+        L_wb = 0.324 # wheelbase for F1Tenth
+        x_new = x + v * np.cos(theta) * dt 
+        y_new = y + v * np.sin(theta) * dt
+        theta_new = theta + v/L_wb * np.tan(steering_angle) * dt
+        return (x_new, y_new, theta_new) 
+    
+    def _state_to_pose(self, state):
+        pose = PoseStamped()
+        pose.header.frame_id = "map"
+        pose.header.stamp = self.get_clock().now().to_msg()
+        pose.pose.position.x = float(state[0])
+        pose.pose.position.y = float(state[1])
+        pose.pose.position.z = 0.0
+        q = R.from_euler('z', float(state[2])).as_quat()
+        pose.pose.orientation.x = q[0]
+        pose.pose.orientation.y = q[1]
+        pose.pose.orientation.z = q[2]
+        pose.pose.orientation.w = q[3]
+        return pose
 
     def solve_COMET(self):
         try:
+            solve_comet_whole_start = time.perf_counter()
             # 1. Look up transform from map -> base_link
             transform = self.tf_buffer.lookup_transform(
                 'map',           # source frame (or "map")
@@ -1177,39 +1137,40 @@ class COMETPlannerNode(Node):
                 self.cuniform_params['costmap'] = self.local_costmap
                 self.mppi_params['costmap'] = self.local_costmap
 
-            # Update with the new state.
+            # Update CUniform parameters with the latest data
+            self.cuniform.shift_and_update(current_state, self.original_trajectories)
             self.cuniform.setup(self.cuniform_params)
             self.mppi.setup(self.mppi_params)
 
+            core_start = time.perf_counter()
             ################## This is the major line change for COMET ##################
-            start_time_comet = time.time()
             refined_control = self.solve_COMET_core(current_state)
-            # refined_control[1] = -refined_control[1]
-
-            '''Old solve cuniform code
-            # Solve CUniform
-            self.cuniform.setup(self.cuniform_params)
-            min_idx, _ , _  = self.cuniform.solve()
-            self.cuniform.local_costmap_origin = self.cuniform_params['costmap_origin']
-            self.publish_local_costmap_debug()
-            omega = self.cuniform.control(x_current, self.cuniform.trajectories[min_idx][1], dt=0.2)
-            u_execute = [1.0, omega]
-            '''
+            # derivative controller below
+            # refined_control[1] = refined_control[1]
+            # raw_control = refined_control.copy()
+            # current_steering = refined_control[1]
+            # delta_t = 1/7.0 # timer period (control update rate, ~7 Hz)
+            # steering_derivative = (current_steering - self.previous_steering_angle) / delta_t
+            # K_d = 1.0  # Derivative gain
+            # adjusted_steering = current_steering - K_d * steering_derivative
+            # refined_control[1] = np.clip(adjusted_steering, self.mppi_params['wrange'][0], self.mppi_params['wrange'][1])
+            # self.previous_steering_angle = current_steering
 
             # Log some status information
             h = std_msgs.msg.Header()
             h.stamp = self.get_clock().now().to_msg()
             if (self.i % 10) == 0:
                 self.get_logger().info('-----------------')
-                self.get_logger().info(f"Time to solve COMET: {time.time() - start_time_comet}")
-                self.get_logger().info(f'Running COMET planner with configuration: x: {x_robot:.2f}, y: {y_robot:.2f}, theta: {yaw_robot:.2f}...')
-                self.get_logger().info(f"Target Position: x: {self.cuniform_params['xgoal'][0]}, y: {self.cuniform_params['xgoal'][1]}")
+                # self.get_logger().info(f"Input: v-{refined_control[0]}, Raw Steering_Angle: {np.rad2deg(raw_control[1])}")
+                # self.get_logger().info(f"Steering derivative: {steering_derivative}")
+                # self.get_logger().info(f"Input: final Steering_Angle: {np.rad2deg(refined_control[1])}")
+                self.get_logger().info(f"  3 Time to solve COMET core: {time.perf_counter() - core_start}")
+                # self.get_logger().info(f'  Current configuration: x: {x_robot:.2f}, y: {y_robot:.2f}, theta: {yaw_robot:.2f}...')
+                # self.get_logger().info(f"  Target Position: x: {self.cuniform_params['xgoal'][0]}, y: {self.cuniform_params['xgoal'][1]}")
             if self.isGoalReached:
                 refined_control = [0.0, 0.0]
                 self.get_logger().info("Goal Reached!!!!")
             # Create and publish drive command based on refined_control.
-            if (self.i % 10) == 0:
-                self.get_logger().info(f"Input given: velocity {refined_control[0]}, Steering_Angle: {np.rad2deg(refined_control[1])}")
             drive = AckermannDrive(steering_angle=float(refined_control[1]), speed=float(refined_control[0]))
             data = AckermannDriveStamped(header=h, drive=drive)
             self.action_pub.publish(data)
@@ -1217,49 +1178,76 @@ class COMETPlannerNode(Node):
             # Compute distance to goal and update goal status.
             dist2goal2 = (self.cuniform_params['xgoal'][0] - x_robot)**2 + (self.cuniform_params['xgoal'][1] - y_robot)**2
             goaltol2 = self.cuniform_params['goal_tolerance'] ** 2
-            if (self.i % 10) == 0:
-                self.get_logger().info(f"Distance to the Goal: {dist2goal2}, Goal Tolerance: {goaltol2}")
             if dist2goal2 < goaltol2:
                 self.isGoalReached = True
             else:
                 self.isGoalReached = False
             self.i += 1
+            if (self.i % 10) == 0:
+                self.get_logger().info(f"  Distance to the Goal: {dist2goal2}, Goal Tolerance: {goaltol2}")
+                self.get_logger().info(f"  Whole solve_COMET runtime {time.perf_counter()-solve_comet_whole_start}")
         except Exception as e:
             tb_str = ''.join(traceback.format_exception(None, e, e.__traceback__))
             self.get_logger().warn(f"Cannnot run solve_cuniform: {e}\n{tb_str}")
 
     def solve_COMET_core(self, current_state):
-        """
-        Core COMET planning routine:
-          - Update the c_uniform planner with the current state.
-          - Solve c_uniform to get the candidate trajectory.
-          - Extract the candidate control sequence and use it to seed the MPPI planner.
-          - Solve MPPI to refine the control sequence.
-          - Update both planners and return the first control command.
-        """
         # Solve c_uniform planner.
+        time_cuniform_start = time.perf_counter()
         min_idx, _, min_cost_trajectory, useq_numba = self.cuniform.solve()
+        if (self.i % 10) == 0:
+            self.get_logger().info(f"  1 Time to solve cuniform: {time.perf_counter() - time_cuniform_start}")
 
-        #TODO: check what exactly is this min cost trajectory
         u_seq_for_mppi = min_cost_trajectory[:, 3]
-        # self.get_logger().info("u_seq_for_mppi: (min cost traj) ")
-        # self.get_logger().info(np.array2string(min_cost_trajectory))
-
         constant_v = self.cuniform_params['vrange'][0]
         u_seq_for_mppi_vel = np.hstack((np.ones((u_seq_for_mppi.shape[0],1))*constant_v, u_seq_for_mppi.reshape(-1,1)))
+        # # NOTE: directly return cuniform traj for testing
+        # return u_seq_for_mppi_vel[0] 
+
         # set actions to the MPPI planner (dropping the final action)
         self.mppi.set_actions(u_seq_for_mppi_vel[:-1])
-
         # Solve MPPI to refine the control sequence.
+        time_mppi = time.perf_counter()
         refined_control_sequence = self.mppi.solve()
-        # Update both planners with the new state.
-
-        self.cuniform.shift_and_update(
-          x_next=current_state,
-          useq=refined_control_sequence,
-          trajectories=self.original_trajectories
-        )
+        if (self.i % 10) == 0:
+            self.get_logger().info(f"  3 Time to solve mppi: {time.perf_counter() - time_mppi}")
         self.mppi.shift_and_update(current_state, refined_control_sequence)
+
+        time_publish = time.perf_counter()
+        ############### visualize min cost traj below ##############
+        visualize_traj = False
+        if visualize_traj:
+            # Visualize minimum cost trajectory as a Path message
+            path_msg = Path()
+            path_msg.header.frame_id = "map"
+            path_msg.header.stamp = self.get_clock().now().to_msg()
+            for state in min_cost_trajectory:
+                pose = PoseStamped()
+                pose.header = path_msg.header
+                pose.pose.position.x = float(state[0])
+                pose.pose.position.y = float(state[1])
+                pose.pose.position.z = 0.0
+                q = R.from_euler('z', float(state[2])).as_quat()
+                pose.pose.orientation.x = q[0]
+                pose.pose.orientation.y = q[1]
+                pose.pose.orientation.z = q[2]
+                pose.pose.orientation.w = q[3]
+                path_msg.poses.append(pose)
+            self.path_pub.publish(path_msg)
+
+            # Visualize final MPPI trajectory by propagating the state using refined control sequence.
+            mppi_path_msg = Path()
+            mppi_path_msg.header.frame_id = "map"
+            mppi_path_msg.header.stamp = self.get_clock().now().to_msg()
+            propagated_state = current_state.copy()
+            mppi_path_msg.poses.append(self._state_to_pose(propagated_state))
+            for action in refined_control_sequence:
+                # Swap action order: [v, steering_angle] -> (steering_angle, v)
+                swapped_action = (action[1], action[0])
+                propagated_state = self._dynamics_KS_3d_steering_angle(propagated_state, swapped_action, self.cfg.dt)
+                mppi_path_msg.poses.append(self._state_to_pose(propagated_state))
+            self.mppi_path_pub.publish(mppi_path_msg)
+            if (self.i % 10) == 0:
+                self.get_logger().info(f"  5 Time to publish: {time.perf_counter() - time_publish}")
         return refined_control_sequence[0] # return the first control command 
 
     def on_shutdown(self):

@@ -10,6 +10,8 @@ from geometry_msgs.msg import TransformStamped  # Use TransformStamped instead o
 from collections import deque  # For implementing a circular buffer
 from rclpy.qos import qos_profile_sensor_data
 from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
+from nav_msgs.msg import Path
+from geometry_msgs.msg import PoseStamped
 from visualization_msgs.msg import Marker
 from nav_msgs.msg import OccupancyGrid # for applying local costmap
 import std_msgs
@@ -131,7 +133,7 @@ class MPPI_Numba(object):
     self.mppi_type = self.cfg.mppi_type # Normal dist / 1: NLN
     if self.mppi_type == 1:
       # print("NLN is used for noise")
-      self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.1, 0.2]))
+      self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.1, 0.1]))
       print('the mu:', self.mu_LogN)
       print('the std:', self.std_LogN)
       self.LogN_info = [self.mppi_type, self.mu_LogN, self.std_LogN]
@@ -453,7 +455,7 @@ class MPPI_Numba(object):
       v_noisy = v_nom = 1.0 # Constant velocity
       w_nom = u_cur_d[t, 1] + noise_samples_d[bid, t, 1]
       w_noisy = max(wrange_d[0], min(wrange_d[1], w_nom))
-      
+      '''
       # Forward simulate
       # dubins car model update
       x_curr[0] += dt_d*v_nom*math.cos(x_curr[2])
@@ -465,6 +467,13 @@ class MPPI_Numba(object):
       x_curr[2] = math.fmod(x_curr[2], 2*math.pi)
       # x_curr[0] += dt_d*v_nom*math.cos(x_curr[2])
       # x_curr[1] += dt_d*v_nom*math.sin(x_curr[2])
+      '''
+      # Forward simulate
+      # kinematic model update
+      x_curr[0] += dt_d*v_noisy*math.cos(x_curr[2])
+      x_curr[1] += dt_d*v_noisy*math.sin(x_curr[2])
+      # x_curr[2] += dt_d*(x_curr[3]/vehicle_wheelbase_d)*math.tan(w_noisy)
+      x_curr[2] += dt_d*v_noisy*math.tan(w_noisy)/vehicle_wheelbase_d
 
       # Compute distance to goal
       dist_to_goal2 = ((xgoal_d[0]-x_curr[0])**2) + (xgoal_d[1]-x_curr[1])**2
@@ -679,10 +688,11 @@ class MPPIPlannerNode(Node):
         # Initialize configuration for MPPI
         self.cfg = Config(T = 3,
             dt = 0.2,
-            num_control_rollouts =2000, # Same1 as number of blocks, can be more than 1024
+            num_control_rollouts =1000, # Same1 as number of blocks, can be more than 1024
             num_vis_state_rollouts = 500,
             seed = 1,
-            mppi_type = 1)
+            mppi_type = 0
+          )
         self.mppi = MPPI_Numba(self.cfg)
         self.map_path = "/home/nvidia/f1tenth_ws/src/pure_pursuit/racelines/shepherd_lab_raceline_v1.csv"
         data = np.loadtxt(self.map_path, delimiter = ",")
@@ -705,9 +715,9 @@ class MPPIPlannerNode(Node):
 
           # Control and sample specification
           # variance = 0.1
-          u_std = np.array([0.023, 0.2]), # Noise std for sampling linear and angular velocities.
+          u_std = np.array([0.023, 0.1]), # Noise std for sampling linear and angular velocities.
           vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
-          wrange = np.array([-np.pi/4, np.pi/4]), # Angular velocity range.
+          wrange = np.array([-np.pi/6, np.pi/6]), # Angular velocity range.
           costmap = None, # intiallly nothing
           obs_penalty = 1e4
         )
@@ -725,6 +735,8 @@ class MPPIPlannerNode(Node):
         self.lookahead_ratio = 1.5
         self.current_index = None
         self.target_index = 0
+
+        self.mppi_path_pub = self.create_publisher(Path, "/mppi_path", 10)
 
         # self publish the marker array
         self.lookahead_marker_pub = self.create_publisher(Marker, "/lookahead_marker", 5)
@@ -860,6 +872,29 @@ class MPPIPlannerNode(Node):
 
         self.curr_marker_pub.publish(marker)
 
+    def _dynamics_KS_3d_steering_angle(self, state, action, dt): #constant velocity
+        x, y, theta = state
+        steering_angle, v = action
+        L_wb = 0.324 # wheelbase for F1Tenth
+        x_new = x + v * np.cos(theta) * dt 
+        y_new = y + v * np.sin(theta) * dt
+        theta_new = theta + v/L_wb * np.tan(steering_angle) * dt
+        return (x_new, y_new, theta_new) 
+
+    def _state_to_pose(self, state):
+        pose = PoseStamped()
+        pose.header.frame_id = "map"
+        pose.header.stamp = self.get_clock().now().to_msg()
+        pose.pose.position.x = float(state[0])
+        pose.pose.position.y = float(state[1])
+        pose.pose.position.z = 0.0
+        q = R.from_euler('z', float(state[2])).as_quat()
+        pose.pose.orientation.x = q[0]
+        pose.pose.orientation.y = q[1]
+        pose.pose.orientation.z = q[2]
+        pose.pose.orientation.w = q[3]
+        return pose
+
     def search_target_index(self):
         # To speed up nearest point search, doing it at only first time.
         if self.current_index is None:
@@ -934,6 +969,18 @@ class MPPIPlannerNode(Node):
             # start_time = time.time()
             # Solve MPPI
             result = self.mppi.solve()
+            mppi_path_msg = Path()
+            mppi_path_msg.header.frame_id = "map"
+            mppi_path_msg.header.stamp = self.get_clock().now().to_msg()
+            propagated_state = self.mppi_params['x0'].copy()
+            mppi_path_msg.poses.append(self._state_to_pose(propagated_state))
+            for action in result:
+                # Swap action order: [v, steering_angle] -> (steering_angle, v)
+                swapped_action = (action[1], action[0])
+                propagated_state = self._dynamics_KS_3d_steering_angle(propagated_state, swapped_action, self.cfg.dt)
+                mppi_path_msg.poses.append(self._state_to_pose(propagated_state))
+            self.mppi_path_pub.publish(mppi_path_msg)
+
             # self.get_logger().info(f"Elapsed time for solving mppi: {time.time() - start_time}")
             self.publish_local_costmap_debug()
 
@@ -943,19 +990,20 @@ class MPPIPlannerNode(Node):
               h = std_msgs.msg.Header()
               h.stamp = self.get_clock().now().to_msg()
               if ((self.i % 10) == 0): 
-                self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {np.rad2deg(0.9*np.arctan2((self.mppi_params['vehicle_wheelbase'])*u_execute[1], u_execute[0]))}" )
+                # self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {np.rad2deg(0.9*np.arctan2((self.mppi_params['vehicle_wheelbase'])*u_execute[1], u_execute[0]))}" )
+                self.get_logger().info(f"Input given: velocity {u_execute[0]}, Steering_Angle: {np.rad2deg(u_execute[1])}" )
                 self.get_logger().info(f"Target Position: x: {self.mppi_params['xgoal'][0]}, z: {self.mppi_params['xgoal'][1]}")
                 self.get_logger().info(f"F1tenth Configuration x: {x_robot}, y:{y_robot}, yaw: {yaw_robot}")
 
               if self.isGoalReached:
                 u_execute = [0.0, 0.0]
-                drive = AckermannDrive(steering_angle=u_execute[0], speed=u_execute[1])
+                drive = AckermannDrive(steering_angle=float(u_execute[1]), speed=float(u_execute[0]))
                 data = AckermannDriveStamped(header=h, drive=drive)
                 self.get_logger().info(f"Goal Reached!!!!")
               else: 
-                drive = AckermannDrive(steering_angle=1.0*np.arctan2((self.mppi_params['vehicle_wheelbase'])*u_execute[1], u_execute[0]), speed=1.0)
+                # drive = AckermannDrive(steering_angle=1.0*np.arctan2((self.mppi_params['vehicle_wheelbase'])*u_execute[1], u_execute[0]), speed=1.0)
                 # drive = AckermannDrive(steering_angle=-0.8*(np.tan(u_execute[1]*1.0)*(self.mppi_params['vehicle_wheelbase'])), speed=1.0)
-                # drive = AckermannDrive(steering_angle=0.8*(np.tan(u_execute[1]*1.0)*(self.mppi_params['vehicle_wheelbase'])), speed=1.0)
+                drive = AckermannDrive(steering_angle=float(u_execute[1]), speed=1.0)
                 data = AckermannDriveStamped(header=h, drive=drive)
               self.action_pub.publish(data)
               self.mppi.shift_and_update(self.mppi_params['x0'], result, 1)
