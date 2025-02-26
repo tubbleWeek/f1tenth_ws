@@ -48,9 +48,9 @@ np.set_printoptions(precision=2, suppress=True)
 num_traj = 1000 # only use the first 'num_traj' trajectories
 print("Reading cuniform trajectories...")
 # with open('/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/FINAL_C_Uniform_100000_trajectories_disjoint_DUBINS_v_1_perturb_2.01_slack_2.01_seed_2025_grid_0.05_0.05_4.50deg_na45_t4.01_ts0.2.pkl', 'rb') as f:
-# with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/DUBINS_Final_Rahul's_Unsupervised_C_Uniform_50000.pickle", 'rb') as f:
+with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/DUBINS_Final_Rahul's_Unsupervised_C_Uniform_50000.pickle", 'rb') as f:
 # with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/representative_KS_perturb_10000_0.2_3.01_45.pickle", 'rb') as f:
-with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/representative_KS_perturb_10000_0.2_3.01_45_no_perturbation.pickle", 'rb') as f:
+# with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/representative_KS_perturb_10000_0.2_3.01_45_no_perturbation.pickle", 'rb') as f:
     cuniform_trajectories = pickle.load(f)[:num_traj]
     #TODO: for unsupervised dubin trajectories, it is 4 seconds long, so make sure to cut it to the planned horizon
 
@@ -390,6 +390,7 @@ class CUniformPlannerNode(Node):
           # Task specification
           dt = self.cfg.dt, 
           x0 = np.zeros(3), # Start state
+          # xgoal = np.array([0.0, 0.0]), # Goal position
           xgoal = np.array([-1.0, -15.0]), # Goal position
           # vehicle length(lf and lr wrt the cog) and width
           vehicle_length = 0.57,
@@ -553,9 +554,9 @@ class CUniformPlannerNode(Node):
             self.cuniform.local_costmap_origin = self.cuniform_params['costmap_origin']
             self.publish_local_costmap_debug()
               
-            # omega = self.cuniform.control_dubins(x_current, self.cuniform.trajectories[min_idx][1], dt=0.2)
+            omega = self.cuniform.control_dubins(x_current, self.cuniform.trajectories[min_idx][1], dt=0.2)
             # NOTE: if using kinematic model, you can directly uses the omega
-            omega = self.cuniform.trajectories[min_idx][0][3]
+            # omega = self.cuniform.trajectories[min_idx][0][3]
 
             # ###### adding PD controller
             # current_steering_angle = self.u_execute[1] # Use previous command from self.u_execute
@@ -580,9 +581,9 @@ class CUniformPlannerNode(Node):
                 data = AckermannDriveStamped(header=h, drive=drive)
                 self.get_logger().info(f"Goal Reached!!!!")
               else:   
-                # drive = AckermannDrive(steering_angle=0.9*np.arctan2((self.cuniform_params['vehicle_wheelbase'])*self.u_execute[1], self.u_execute[0]), speed=1.0)
+                drive = AckermannDrive(steering_angle=0.9*np.arctan2((self.cuniform_params['vehicle_wheelbase'])*self.u_execute[1], self.u_execute[0]), speed=1.0)
                 # NOTE: if using kinematic model, you can directly uses the omega
-                drive = AckermannDrive(steering_angle=self.u_execute[1], speed=1.0)
+                # drive = AckermannDrive(steering_angle=self.u_execute[1], speed=1.0)
                 data = AckermannDriveStamped(header=h, drive=drive)
 
               if ((self.i % 10) == 0): 

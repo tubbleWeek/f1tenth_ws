@@ -477,7 +477,8 @@ class MPPI_Numba(object):
 
       # Compute distance to goal
       dist_to_goal2 = ((xgoal_d[0]-x_curr[0])**2) + (xgoal_d[1]-x_curr[1])**2
-      costs_d[bid]+= stage_cost(dist_to_goal2, dist_weight_d) * gamma
+      # costs_d[bid]+= stage_cost(dist_to_goal2, dist_weight_d) * gamma
+      costs_d[bid]+= stage_cost(dist_to_goal2, 1.0) * gamma
 
       # Get current state costmap indices
       convert_position_to_costmap_indices_gpu(
@@ -489,10 +490,10 @@ class MPPI_Numba(object):
         x_curr_grid_d,
       )
 
-      debug_d[bid, t, 0] = x_curr_grid_d[0]
-      debug_d[bid, t, 1] = x_curr_grid_d[1]
-      debug_d[bid, t, 2] = calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) 
-      costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) * obs_cost_d * gamma
+      # debug_d[bid, t, 0] = x_curr_grid_d[0]
+      # debug_d[bid, t, 1] = x_curr_grid_d[1]
+      # debug_d[bid, t, 2] = calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) 
+      costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d * gamma
       gamma *= 1.0
 
       if dist_to_goal2<= goal_tolerance_d2:
@@ -691,7 +692,7 @@ class MPPIPlannerNode(Node):
             num_control_rollouts =1000, # Same1 as number of blocks, can be more than 1024
             num_vis_state_rollouts = 500,
             seed = 1,
-            mppi_type = 0
+            mppi_type = 1
           )
         self.mppi = MPPI_Numba(self.cfg)
         self.map_path = "/home/nvidia/f1tenth_ws/src/pure_pursuit/racelines/shepherd_lab_raceline_v1.csv"
@@ -719,7 +720,7 @@ class MPPIPlannerNode(Node):
           vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
           wrange = np.array([-np.pi/6, np.pi/6]), # Angular velocity range.
           costmap = None, # intiallly nothing
-          obs_penalty = 1e4
+          obs_penalty = 1e2
         )
 
         '''############### for path following ###############'''
@@ -963,6 +964,7 @@ class MPPIPlannerNode(Node):
             global_ty = self.cy[ind] # This is the target waypoints y position
             latest_target_pos = [global_tx, global_ty]
             # self.mppi_params['xgoal'] = np.array([latest_target_pos[0], latest_target_pos[1]])
+            # self.mppi_params['xgoal'] = np.array([0.0, 0.0]) # hard coded for testing right now
             self.mppi_params['xgoal'] = np.array([-1.0, -15]) # hard coded for testing right now
             self.mppi.setup(self.mppi_params)
             self.mppi.local_costmap_origin = self.mppi_params['costmap_origin']

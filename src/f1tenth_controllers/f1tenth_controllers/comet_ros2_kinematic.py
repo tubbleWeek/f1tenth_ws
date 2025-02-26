@@ -379,16 +379,11 @@ class CUniform_Numba(object):
               params_costmap_resolution,
               x_curr_grid_d,
           )
-
-          # Check for collision
-          # if check_state_collision_gpu(local_costmap_d, x_curr_grid_d) == 1.0:
-            # isCollided = True
-          # costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / max_local_cost_d * obs_cost_d
-          costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) * obs_cost_d
+          costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
 
           # Compute distance to goal
           dist_to_goal2 = (((xgoal_d[0]-x_curr[0])**2 + (xgoal_d[1]-x_curr[1])**2))**0.5
-          costs_d[bid] += stage_cost(dist_to_goal2, 100.0)
+          costs_d[bid] += stage_cost(dist_to_goal2, 10.0)
           
           if dist_to_goal2  <= goal_tolerance_d:
             goal_reached = True
@@ -724,13 +719,11 @@ class MPPI_Numba(object):
           params_costmap_resolution,
           x_curr_grid_d,
         )
-        # if check_state_collision_gpu(local_costmap_d, x_curr_grid_d) == 1.0:
-          # isCollided = True
-        costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) * obs_cost_d
+        costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
 
         # distance to goal cost
         dist_to_goal2 = (((xgoal_d[0]-x_curr[0])**2) + ((xgoal_d[1]-x_curr[1])**2)) ** 0.5
-        costs_d[bid] += stage_cost(dist_to_goal2, 100.0)
+        costs_d[bid] += stage_cost(dist_to_goal2, 10.0)
         if dist_to_goal2 <= goal_tolerance_d:
           goal_reached = True
           break
@@ -933,10 +926,11 @@ class COMETPlannerNode(Node):
         )
 
         # Create a timer to call the COMET planner solve routine.
-        self.timer = self.create_timer(0.125, self.solve_COMET)
+        self.timer = self.create_timer(0.1, self.solve_COMET)
         self.i = 0
         self.isGoalReached = False
-        self.previous_steering_angle = 0.0
+        self.last_steering_angle = 0.0
+        # self.second_to_last_steering_angle = 0.0
 
     def notify_no_costmap(self):
         if self.local_costmap is None:
@@ -1018,29 +1012,36 @@ class COMETPlannerNode(Node):
             # derivative controller below
             # refined_control[1] = refined_control[1]
             # raw_control = refined_control.copy()
-            # current_steering = refined_control[1]
+            current_steering = refined_control[1]
+            averaged_steering = current_steering*1.0 + self.last_steering_angle*0.0
+            # averaged_steering = current_steering*0.3333 + self.last_steering_angle*0.3333 + self.second_to_last_steering_angle*0.3333
             # delta_t = 1/7.0 # timer period (control update rate, ~7 Hz)
             # steering_derivative = (current_steering - self.previous_steering_angle) / delta_t
             # K_d = 1.0  # Derivative gain
             # adjusted_steering = current_steering - K_d * steering_derivative
             # refined_control[1] = np.clip(adjusted_steering, self.mppi_params['wrange'][0], self.mppi_params['wrange'][1])
-            # self.previous_steering_angle = current_steering
+            # self.get_logger().info(f"  CURRENT_STEERING: {np.rad2deg(current_steering)}")
+            # self.get_logger().info(f"  last steering: {np.rad2deg(self.last_steering_angle)}")
+            # self.get_logger().info(f"  current_steering: {np.rad2deg(self.second_to_last_steering_angle)}")
+            # self.get_logger().info(f"--------------")
+            # self.second_to_last_steering_angle = copy.deepcopy(self.last_steering_angle)
+            self.last_steering_angle = current_steering
 
             # Log some status information
-            h = std_msgs.msg.Header()
-            h.stamp = self.get_clock().now().to_msg()
             if (self.i % 10) == 0:
-                self.get_logger().info('-----------------')
+                self.get_logger().info(f"  Whole solve_COMET runtime {time.perf_counter()-solve_comet_whole_start}")
                 # self.get_logger().info(f"Input: v-{refined_control[0]}, Raw Steering_Angle: {np.rad2deg(raw_control[1])}")
                 # self.get_logger().info(f"Steering derivative: {steering_derivative}")
-                # self.get_logger().info(f"Input: final Steering_Angle: {np.rad2deg(refined_control[1])}")
-                self.get_logger().info(f'  Current configuration: x: {x_robot:.2f}, y: {y_robot:.2f}, theta: {yaw_robot:.2f}...')
+                self.get_logger().info(f"Input: refined_control[1]: {np.rad2deg(current_steering)} averaged Steering_Angle: {np.rad2deg(averaged_steering)}")
+                # self.get_logger().info(f'  Current configuration: x: {x_robot:.2f}, y: {y_robot:.2f}, theta: {yaw_robot:.2f}...')
                 # self.get_logger().info(f"  Target Position: x: {self.cuniform_params['xgoal'][0]}, y: {self.cuniform_params['xgoal'][1]}")
             if self.isGoalReached:
                 refined_control = [0.0, 0.0]
                 self.get_logger().info("Goal Reached!!!!")
+            h = std_msgs.msg.Header()
+            h.stamp = self.get_clock().now().to_msg()
             # Create and publish drive command based on refined_control.
-            drive = AckermannDrive(steering_angle=float(refined_control[1]), speed=float(refined_control[0]))
+            drive = AckermannDrive(steering_angle=float(averaged_steering), speed=float(refined_control[0]))
             data = AckermannDriveStamped(header=h, drive=drive)
             self.action_pub.publish(data)
             
@@ -1054,7 +1055,7 @@ class COMETPlannerNode(Node):
             self.i += 1
             if (self.i % 10) == 0:
                 self.get_logger().info(f"  Distance to the Goal: {dist2goal2}, Goal Tolerance: {goaltol2}")
-                self.get_logger().info(f"  Whole solve_COMET runtime {time.perf_counter()-solve_comet_whole_start}")
+                self.get_logger().info('-------Iteration End----------')
         except Exception as e:
             tb_str = ''.join(traceback.format_exception(None, e, e.__traceback__))
             self.get_logger().warn(f"Cannnot run solve_COMET: {e}\n{tb_str}")
@@ -1064,7 +1065,7 @@ class COMETPlannerNode(Node):
         time_cuniform_start = time.perf_counter()
         min_idx, _, min_cost_trajectory, useq_numba = self.cuniform.solve()
         if (self.i % 10) == 0:
-            self.get_logger().info(f"  1 Time to solve cuniform: {time.perf_counter() - time_cuniform_start}")
+            self.get_logger().info(f"  runtime cuniform.solve(): {time.perf_counter() - time_cuniform_start}")
 
         u_seq_for_mppi = min_cost_trajectory[:, 3]
         constant_v = self.cuniform_params['vrange'][0]
@@ -1078,17 +1079,18 @@ class COMETPlannerNode(Node):
         time_mppi = time.perf_counter()
         refined_control_sequence = self.mppi.solve()
         if (self.i % 10) == 0:
-            self.get_logger().info(f"  3 Time to solve mppi: {time.perf_counter() - time_mppi}")
+            self.get_logger().info(f"  runtime mppi.solve(): {time.perf_counter() - time_mppi}")
         self.mppi.shift_and_update(current_state, refined_control_sequence)
 
         time_publish = time.perf_counter()
         ############### visualize min cost traj below ##############
         visualize_traj = True
         if visualize_traj:
+            pub_time = self.get_clock().now().to_msg()
             # Visualize minimum cost trajectory as a Path message
             path_msg = Path()
             path_msg.header.frame_id = "map"
-            path_msg.header.stamp = self.get_clock().now().to_msg()
+            path_msg.header.stamp = pub_time
             for state in min_cost_trajectory:
                 pose = PoseStamped()
                 pose.header = path_msg.header
@@ -1106,7 +1108,7 @@ class COMETPlannerNode(Node):
             # Visualize final MPPI trajectory by propagating the state using refined control sequence.
             mppi_path_msg = Path()
             mppi_path_msg.header.frame_id = "map"
-            mppi_path_msg.header.stamp = self.get_clock().now().to_msg()
+            mppi_path_msg.header.stamp = pub_time
             propagated_state = current_state.copy()
             mppi_path_msg.poses.append(self._state_to_pose(propagated_state))
             for action in refined_control_sequence:
@@ -1116,7 +1118,7 @@ class COMETPlannerNode(Node):
                 mppi_path_msg.poses.append(self._state_to_pose(propagated_state))
             self.mppi_path_pub.publish(mppi_path_msg)
             if (self.i % 10) == 0:
-                self.get_logger().info(f"  5 Time to publish: {time.perf_counter() - time_publish}")
+                self.get_logger().info(f"  traj visualization runtime: {time.perf_counter() - time_publish}")
         return refined_control_sequence[0] # return the first control command 
 
     def on_shutdown(self):
