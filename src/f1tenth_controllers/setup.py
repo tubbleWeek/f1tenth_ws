@@ -25,8 +25,11 @@ setup(
         'console_scripts': [
             'follow_the_gap_node = f1tenth_controllers.follow_the_gap_node:main',
             'path_follower_node = f1tenth_controllers.p_controller:main',
-            # 'mppi_costmap_node = f1tenth_controllers.mppi_goal_kinematic_model_pycuda_costmap:main'
-            'mppi_costmap_node = f1tenth_controllers.mppi_dubins_moving_target_ros_node:main'
+            'mppi_costmap_node = f1tenth_controllers.mppi_dubins_moving_target_ros_node:main',
+            'c_uniform_costmap_node = f1tenth_controllers.cuniform_dubins_ros_node:main',
+            'comet_costmap_node = f1tenth_controllers.comet_ros2_kinematic:main',
+            'stein_costmap_node = f1tenth_controllers.stein_mppi_node:main',
+            'pose_collector_node = f1tenth_controllers.amcl_pose_collector_node:main'
         ],
     },
 )
