@@ -43,6 +43,7 @@ rec_min_control_rollouts = 100
 np.set_printoptions(precision=2, suppress=True)
 
 DEFAULT_OBS_COST = 1e4
+ACTION_WEIGHT = 10.0
 
 class Config:
   """ Configurations that are typically fixed throughout execution. """
@@ -133,7 +134,7 @@ class MPPI_Numba(object):
     self.mppi_type = self.cfg.mppi_type # Normal dist / 1: NLN
     if self.mppi_type == 1:
       # print("NLN is used for noise")
-      self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.1, 0.1]))
+      self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.05, 0.05]))
       print('the mu:', self.mu_LogN)
       print('the std:', self.std_LogN)
       self.LogN_info = [self.mppi_type, self.mu_LogN, self.std_LogN]
@@ -442,6 +443,7 @@ class MPPI_Numba(object):
     timesteps = len(u_cur_d)
 
     goal_reached = False
+    isCollided = False
     goal_tolerance_d2 = goal_tolerance_d*goal_tolerance_d
     dist_to_goal2 = 1e9 # initialize to a large value
 
@@ -475,11 +477,6 @@ class MPPI_Numba(object):
       # x_curr[2] += dt_d*(x_curr[3]/vehicle_wheelbase_d)*math.tan(w_noisy)
       x_curr[2] += dt_d*v_noisy*math.tan(w_noisy)/vehicle_wheelbase_d
 
-      # Compute distance to goal
-      dist_to_goal2 = ((xgoal_d[0]-x_curr[0])**2) + (xgoal_d[1]-x_curr[1])**2
-      # costs_d[bid]+= stage_cost(dist_to_goal2, dist_weight_d) * gamma
-      costs_d[bid]+= stage_cost(dist_to_goal2, 1.0) * gamma
-
       # Get current state costmap indices
       convert_position_to_costmap_indices_gpu(
         x_curr[0],
@@ -489,22 +486,31 @@ class MPPI_Numba(object):
         params_costmap_resolution,
         x_curr_grid_d,
       )
+      costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
 
-      # debug_d[bid, t, 0] = x_curr_grid_d[0]
-      # debug_d[bid, t, 1] = x_curr_grid_d[1]
-      # debug_d[bid, t, 2] = calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) 
-      costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d * gamma
-      gamma *= 1.0
+      # Check the state is collided with the obstacle
+      # Get current state costmap indices
+      if not isCollided:
+        # Check for collision
+        if check_state_collision_gpu(local_costmap_d, x_curr_grid_d) == 1.0:
+          isCollided = True
+        # Compute distance to goal
+        dist_to_goal2 = (((xgoal_d[0]-x_curr[0])**2 + (xgoal_d[1]-x_curr[1])**2))**0.5
+        costs_d[bid]+= stage_cost(dist_to_goal2, 20.0) * gamma
 
-      if dist_to_goal2<= goal_tolerance_d2:
-        goal_reached = True
-        break
-    
+        if dist_to_goal2 <= goal_tolerance_d:
+          goal_reached = True
+          break
+        prev_dist_to_goal2 = dist_to_goal2
+      else:
+        # costs_d[bid] +=  1 * obs_cost_d
+        costs_d[bid] += prev_dist_to_goal2 # distance to goal cost
+      # costs_d[bid] += ACTION_WEIGHT * math.fabs(w_noisy)
     # Accumulate terminal cost 
     costs_d[bid] += term_cost(dist_to_goal2, goal_reached)
 
-    for t in range(timesteps):
-      costs_d[bid] += lambda_weight_d*((u_cur_d[t,1]/(u_std_d[1]**2))*noise_samples_d[bid, t, 1])
+    # for t in range(timesteps):
+      # costs_d[bid] += lambda_weight_d*((u_cur_d[t,1]/(u_std_d[1]**2))*noise_samples_d[bid, t, 1])
 
   @staticmethod
   @numba_cuda.jit(fastmath=True)
@@ -703,20 +709,21 @@ class MPPIPlannerNode(Node):
           # Task specification
           dt = self.cfg.dt, 
           x0 = np.zeros(3), # Start state
+          xgoal = np.array([-1.0, -15.0]), # Goal position
           # vehicle length(lf and lr wrt the cog) and width
           vehicle_length = 0.57,
           vehicle_width = 0.3,
           vehicle_wheelbase= 0.32,
           # For risk-aware min time planning
           goal_tolerance = 0.40,
-          dist_weight = 1e2, #  Weight for dist-to-goal cost.
+          dist_weight = 10, #  Weight for dist-to-goal cost.
 
-          lambda_weight = 0.572, # Temperature param in MPPI
+          lambda_weight = 1.0, # Temperature param in MPPI
           num_opt = 1, # Number of steps in each solve() function call.
 
           # Control and sample specification
           # variance = 0.1
-          u_std = np.array([0.023, 0.1]), # Noise std for sampling linear and angular velocities.
+          u_std = np.array([0.023, 0.05]), # Noise std for sampling linear and angular velocities.
           vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
           wrange = np.array([-np.pi/6, np.pi/6]), # Angular velocity range.
           costmap = None, # intiallly nothing
@@ -749,9 +756,6 @@ class MPPIPlannerNode(Node):
         self.tf_listener = TransformListener(self.tf_buffer, self)
 
         '''############### for costmap ##############'''
-        # high level steps
-        # Step 1: subscribe to OccupancyGrid and convert msg.data into a numpy array
-        # Step 2: Pass that array to mppi_params['costmap'] in solve_mppi()
         self.local_costmap = None  # store the latest costmap
         self.costmap_sub = self.create_subscription(
             OccupancyGrid, # Type: nav_msgs/msg/OccupancyGrid
@@ -760,13 +764,6 @@ class MPPIPlannerNode(Node):
             1 # only the most recent message is kept in the queue
         )
         self.debug_local_costmap_pub = self.create_publisher(OccupancyGrid, '/debug_local_costmap', 1)
-
-        # Step 3: TODO: right now I alraeady have the costmap loaded up and pass to mppi_params
-        #TODO: the next step is to deal with the cooredinate differences and pass this to actual trajectory wrighting process
-        
-        # Step 4: solve_mppi() invokes move_mppi_task_vars_to_device, pass costmap to GPU
-        # Step 5: In the GPU kernel (rollout_numba), weight each trajectories accordingly
-        
         self.action_pub = self.create_publisher(
             msg_type=AckermannDriveStamped,
             topic="/drive",
@@ -806,7 +803,7 @@ class MPPIPlannerNode(Node):
         height = msg.info.height
         # Convert msg data to float costmap and store resolution/origin
         costmap_int8 = np.array(msg.data, dtype=np.int8).reshape(height, width)
-        # costmap_int8[costmap_int8 == -1] = 100 # make unknown area as obstacles 
+        costmap_int8[costmap_int8 == -1] = 100 # make unknown area as obstacles 
         self.local_costmap = costmap_int8.astype(np.float32)
         self.mppi_params['costmap_resolution'] = msg.info.resolution
         self.mppi_params['costmap_origin'] = [msg.info.origin.position.x, msg.info.origin.position.y]
@@ -964,8 +961,6 @@ class MPPIPlannerNode(Node):
             global_ty = self.cy[ind] # This is the target waypoints y position
             latest_target_pos = [global_tx, global_ty]
             # self.mppi_params['xgoal'] = np.array([latest_target_pos[0], latest_target_pos[1]])
-            # self.mppi_params['xgoal'] = np.array([0.0, 0.0]) # hard coded for testing right now
-            self.mppi_params['xgoal'] = np.array([-1.0, -15]) # hard coded for testing right now
             self.mppi.setup(self.mppi_params)
             self.mppi.local_costmap_origin = self.mppi_params['costmap_origin']
             # start_time = time.time()

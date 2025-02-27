@@ -59,6 +59,7 @@ max_rec_blocks = rec_max_control_rollouts = int(1e6) # Though theoretically limi
 rec_min_control_rollouts = 100
 np.set_printoptions(precision=2, suppress=True)
 
+ACTION_WEIGHT = 1.0
 num_traj = 1000 # only use the first 'num_traj' trajectories
 print("Reading cuniform trajectories...")
 # with open("/home/nvidia/f1tenth_ws/src/f1tenth_controllers/resource/representative_KS_perturb_10000_0.2_3.01_45_no_perturbation.pickle", 'rb') as f:
@@ -275,9 +276,6 @@ class CUniform_Numba(object):
     # Weight for distance cost
     dist_weight = DEFAULT_DIST_WEIGHT if 'dist_weight' not in self.params else self.params['dist_weight']
 
-    # get the number of feasible trajectories
-    # self.num_feasible_d = np.float32(np.sum(self.feasible_mask_d.copy_to_host()))
-
     self.rollouts_cost_numba[self.num_control_rollouts, 1](
       self.trajectories_d,
       self.costs_d,
@@ -362,36 +360,44 @@ class CUniform_Numba(object):
     x_curr_grid_d = numba_cuda.local.array((2), dtype=np.int32)
     
     gamma = 1.0 # Discount factor for cost
-
     # Loop through each state in the trajectory
     num_steps = trajectories_d.shape[1]
     for step in range(num_steps):
         # Extract current state (x, y, theta)
         for i in range(3):
           x_curr[i] = trajectories_d[bid, step, i]
+        # steering_angle = trajectories_d[bid, step, 3]
+        convert_position_to_costmap_indices_gpu(
+            x_curr[0],
+            x_curr[1],
+            costmap_origin_x,
+            costmap_origin_y,
+            params_costmap_resolution,
+            x_curr_grid_d,
+        )
+        # obstacle cost
+        costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
 
         if not isCollided:
-          convert_position_to_costmap_indices_gpu(
-              x_curr[0],
-              x_curr[1],
-              costmap_origin_x,
-              costmap_origin_y,
-              params_costmap_resolution,
-              x_curr_grid_d,
-          )
-          costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
+          # Check for collision
+          if check_state_collision_gpu(local_costmap_d, x_curr_grid_d) == 1.0:
+            isCollided = True
 
-          # Compute distance to goal
+          # action cost
+          # costs_d[bid] += ACTION_WEIGHT * math.fabs(steering_angle)
+            
+          # distance to goal cost
           dist_to_goal2 = (((xgoal_d[0]-x_curr[0])**2 + (xgoal_d[1]-x_curr[1])**2))**0.5
-          costs_d[bid] += stage_cost(dist_to_goal2, 10.0)
+          costs_d[bid] += stage_cost(dist_to_goal2, 20.0)
           
           if dist_to_goal2  <= goal_tolerance_d:
             goal_reached = True
             break
           prev_dist_to_goal2 = dist_to_goal2
         else:
-          costs_d[bid] += 1 * obs_cost_d
-          costs_d[bid] += prev_dist_to_goal2 # distans
+          # costs_d[bid] += 1 * obs_cost_d
+          # stage cost
+          costs_d[bid] += prev_dist_to_goal2
 
     # Accumulate terminal cost 
     costs_d[bid] += term_cost(dist_to_goal2, goal_reached)
@@ -708,28 +714,37 @@ class MPPI_Numba(object):
       x_curr[2] += dt_d*v_noisy*math.tan(w_noisy)/vehicle_wheelbase_d
       # x_curr[2] = math.fmod(x_curr[2], 2*math.pi)
 
+      # obstacle cost
+      convert_position_to_costmap_indices_gpu(
+        x_curr[0],
+        x_curr[1],
+        costmap_origin_x,
+        costmap_origin_y,
+        params_costmap_resolution,
+        x_curr_grid_d,
+      )
+      costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
+
       # Check the state is collided with the obstacle
       # Get current state costmap indices
       if not isCollided:
-        convert_position_to_costmap_indices_gpu(
-          x_curr[0],
-          x_curr[1],
-          costmap_origin_x,
-          costmap_origin_y,
-          params_costmap_resolution,
-          x_curr_grid_d,
-        )
-        costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
+        # Check for collision
+        if check_state_collision_gpu(local_costmap_d, x_curr_grid_d) == 1.0:
+          isCollided = True
 
         # distance to goal cost
         dist_to_goal2 = (((xgoal_d[0]-x_curr[0])**2) + ((xgoal_d[1]-x_curr[1])**2)) ** 0.5
-        costs_d[bid] += stage_cost(dist_to_goal2, 10.0)
+        costs_d[bid] += stage_cost(dist_to_goal2, 20.0)
+
+        # action cost
+        # costs_d[bid] += ACTION_WEIGHT * math.fabs(w_noisy)
+
         if dist_to_goal2 <= goal_tolerance_d:
           goal_reached = True
           break
         prev_dist_to_goal2 = dist_to_goal2
       else:
-        costs_d[bid] +=  1 * obs_cost_d
+        # costs_d[bid] +=  1 * obs_cost_d
         costs_d[bid] += prev_dist_to_goal2 # distance to goal cost
     # Accumulate terminal cost 
     costs_d[bid] += term_cost(dist_to_goal2, goal_reached)
@@ -1084,7 +1099,7 @@ class COMETPlannerNode(Node):
 
         time_publish = time.perf_counter()
         ############### visualize min cost traj below ##############
-        visualize_traj = True
+        visualize_traj = False
         if visualize_traj:
             pub_time = self.get_clock().now().to_msg()
             # Visualize minimum cost trajectory as a Path message

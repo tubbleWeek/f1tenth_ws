@@ -84,8 +84,6 @@ def convert_position_to_costmap_indices_gpu(x_curr_x, x_curr_y, x_min, y_min, gr
     y_grid = numba.int32((y - y_min) / grid_resolution)
     center = 60
     # center = 80
-    flipped_x_grid = 2 * center - x_grid 
-    flipped_y_grid = 2 * center - y_grid 
     x_curr_grid[0] = x_grid
     x_curr_grid[1] = y_grid
 
@@ -101,7 +99,11 @@ def calculate_obstacle_cost(vehicle_boundary_points_grid, obstacle_weight, max_c
 @cuda.jit('float32(float32[:,:], int32[:])', device=True, inline=True)
 def calculate_localcostmap_cost(costmap, x_curr_grid):
     cost = 0.0
-    cost = 0.0
+    # y_idx = x_curr_grid[1]
+    # x_idx = x_curr_grid[0]
+    # if 0 <= y_idx < 120 and 0 <= x_idx < 120:  
+    #     cost += costmap[y_idx, x_idx]
+    # '''
     for i in range(7):
         for j in range(7):
             # cost += costmap[y_index, x_index]
@@ -111,6 +113,7 @@ def calculate_localcostmap_cost(costmap, x_curr_grid):
             if 0 <= y_idx < 120 and 0 <= x_idx < 120:  
             # if 0 <= y_idx < 160 and 0 <= x_idx < 160:  
                 cost += costmap[y_idx, x_idx]
+    # '''
     return cost
 
 @cuda.jit('float32(float32[:,:], int32[:])', device=True, inline=True)
@@ -118,8 +121,8 @@ def check_state_collision_gpu(costmap, x_curr_grid):
     return 0.0 # no collision
     for i in range(7):
         for j in range(7):
-            # if costmap[x_curr_grid[1]-3+i, x_curr_grid[0]-3+j] == 1: #NOTE:
-            if costmap[x_curr_grid[1]-3+i, x_curr_grid[0]-3+j] >= 99.0:
+            # if costmap[x_curr_grid[1]-3+i, x_curr_grid[0]-3+j] == 1: 
+            if costmap[x_curr_grid[1]-3+i, x_curr_grid[0]-3+j] >= 10.0:
                 return 1.0 # collision
     return 0.0 # no collision
 
