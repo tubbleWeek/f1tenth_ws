@@ -102,29 +102,44 @@ def calculate_localcostmap_cost(costmap, x_curr_grid):
     # y_idx = x_curr_grid[1]
     # x_idx = x_curr_grid[0]
     # if 0 <= y_idx < 120 and 0 <= x_idx < 120:  
-    #     cost += costmap[y_idx, x_idx]
-    # '''
-    for i in range(7):
-        for j in range(7):
+        # cost += costmap[y_idx, x_idx]
+    '''
+    # for i in range(7):
+    #     for j in range(7):
+    #         # cost += costmap[y_index, x_index]
+    #         y_idx = x_curr_grid[1] - 3 + i
+    #         x_idx = x_curr_grid[0] - 3 + j
+    #         # Ensure indices are within valid range
+    #         if 0 <= y_idx < 120 and 0 <= x_idx < 120:  
+    #         # if 0 <= y_idx < 160 and 0 <= x_idx < 160:  
+    #             cost += costmap[y_idx, x_idx]
+    '''
+    for i in range(3):
+        for j in range(3):
             # cost += costmap[y_index, x_index]
-            y_idx = x_curr_grid[1] - 3 + i
-            x_idx = x_curr_grid[0] - 3 + j
+            y_idx = x_curr_grid[1] - 1 + i
+            x_idx = x_curr_grid[0] - 1 + j
             # Ensure indices are within valid range
             if 0 <= y_idx < 120 and 0 <= x_idx < 120:  
             # if 0 <= y_idx < 160 and 0 <= x_idx < 160:  
                 cost += costmap[y_idx, x_idx]
-    # '''
     return cost
 
 @cuda.jit('float32(float32[:,:], int32[:])', device=True, inline=True)
 def check_state_collision_gpu(costmap, x_curr_grid):
-    return 0.0 # no collision
+    # return 0.0 # no collision
+    y_idx = x_curr_grid[1]
+    x_idx = x_curr_grid[0]
+    if 0 <= y_idx < 120 and 0 <= x_idx < 120:
+        return costmap[y_idx, x_idx] > 90.0       
+    return 0.0
+
     for i in range(7):
         for j in range(7):
             # if costmap[x_curr_grid[1]-3+i, x_curr_grid[0]-3+j] == 1: 
             if costmap[x_curr_grid[1]-3+i, x_curr_grid[0]-3+j] >= 10.0:
                 return 1.0 # collision
-    return 0.0 # no collision
+    # return 0.0 # no collision
 
 # @cuda.jit('float32(float32[:,:], float32[:,:], float32[:], float32)', device=True, inline=True)
 # def calculate_obstacle_cost(vehicle_boundary_points, obs_pos_d, obs_r_d, obs_cost_d):

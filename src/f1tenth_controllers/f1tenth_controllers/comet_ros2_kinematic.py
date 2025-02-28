@@ -240,7 +240,7 @@ class CUniform_Numba(object):
 
     #USEQ UPDATE
     lambda_weight_d = np.float32(self.params['lambda_weight'])
-    vrange_d = np.array(self.params['vrange'], dtype=np.float32)
+    vrange_d = numba_cuda.to_device(self.params['vrange'].astype(np.float32))
 
     ''' COSTMAP Variables'''
     local_costmap_edt = self.params['costmap']
@@ -376,7 +376,7 @@ class CUniform_Numba(object):
             x_curr_grid_d,
         )
         # obstacle cost
-        costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
+        costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (100) * obs_cost_d
 
         if not isCollided:
           # Check for collision
@@ -388,7 +388,7 @@ class CUniform_Numba(object):
             
           # distance to goal cost
           dist_to_goal2 = (((xgoal_d[0]-x_curr[0])**2 + (xgoal_d[1]-x_curr[1])**2))**0.5
-          costs_d[bid] += stage_cost(dist_to_goal2, 20.0)
+          costs_d[bid] += stage_cost(dist_to_goal2, 5.0)
           
           if dist_to_goal2  <= goal_tolerance_d:
             goal_reached = True
@@ -397,7 +397,7 @@ class CUniform_Numba(object):
         else:
           # costs_d[bid] += 1 * obs_cost_d
           # stage cost
-          costs_d[bid] += prev_dist_to_goal2
+          costs_d[bid] += stage_cost(prev_dist_to_goal2, 5.0)
 
     # Accumulate terminal cost 
     costs_d[bid] += term_cost(dist_to_goal2, goal_reached)
@@ -450,9 +450,9 @@ class MPPI_Numba(object):
 
     self.generator = XORWOWRandomNumberGenerator()
     # NOTE: adjust mppi type here
-    self.mppi_type = 0 # Normal dist / 1: NLN
+    self.mppi_type = 1 # Normal dist / 1: NLN
     if self.mppi_type == 1:
-      self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.1, 0.2]))
+      self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.05, 0.05]))
       self.rLogN_info = [self.mppi_type, self.mu_LogN, self.std_LogN]
 
     # local costmap size and resolution
@@ -723,7 +723,7 @@ class MPPI_Numba(object):
         params_costmap_resolution,
         x_curr_grid_d,
       )
-      costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
+      costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (100) * obs_cost_d
 
       # Check the state is collided with the obstacle
       # Get current state costmap indices
@@ -734,7 +734,7 @@ class MPPI_Numba(object):
 
         # distance to goal cost
         dist_to_goal2 = (((xgoal_d[0]-x_curr[0])**2) + ((xgoal_d[1]-x_curr[1])**2)) ** 0.5
-        costs_d[bid] += stage_cost(dist_to_goal2, 20.0)
+        costs_d[bid] += stage_cost(dist_to_goal2, 5.0)
 
         # action cost
         # costs_d[bid] += ACTION_WEIGHT * math.fabs(w_noisy)
@@ -745,7 +745,7 @@ class MPPI_Numba(object):
         prev_dist_to_goal2 = dist_to_goal2
       else:
         # costs_d[bid] +=  1 * obs_cost_d
-        costs_d[bid] += prev_dist_to_goal2 # distance to goal cost
+        costs_d[bid] += stage_cost(prev_dist_to_goal2, 5.0)# distance to goal cost
     # Accumulate terminal cost 
     costs_d[bid] += term_cost(dist_to_goal2, goal_reached)
     # for t in range(timesteps):
@@ -997,8 +997,8 @@ class COMETPlannerNode(Node):
             # 1. Look up transform from map -> base_link
             transform = self.tf_buffer.lookup_transform(
                 'map',           # source frame (or "map")
-                'base_link',     # target frame (your robot)
-                # 'laser',     # target frame (your robot)
+                # 'base_link',     # target frame (your robot)
+                'laser',     # target frame (your robot)
                 rclpy.time.Time()
             )
             # 2. Extract x, y

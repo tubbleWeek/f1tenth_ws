@@ -486,7 +486,7 @@ class MPPI_Numba(object):
         params_costmap_resolution,
         x_curr_grid_d,
       )
-      costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
+      costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (100) * obs_cost_d
 
       # Check the state is collided with the obstacle
       # Get current state costmap indices
@@ -496,7 +496,7 @@ class MPPI_Numba(object):
           isCollided = True
         # Compute distance to goal
         dist_to_goal2 = (((xgoal_d[0]-x_curr[0])**2 + (xgoal_d[1]-x_curr[1])**2))**0.5
-        costs_d[bid]+= stage_cost(dist_to_goal2, 20.0) * gamma
+        costs_d[bid]+= stage_cost(dist_to_goal2, 5.0)
 
         if dist_to_goal2 <= goal_tolerance_d:
           goal_reached = True
@@ -504,7 +504,7 @@ class MPPI_Numba(object):
         prev_dist_to_goal2 = dist_to_goal2
       else:
         # costs_d[bid] +=  1 * obs_cost_d
-        costs_d[bid] += prev_dist_to_goal2 # distance to goal cost
+        costs_d[bid] += stage_cost(prev_dist_to_goal2, 5.0) # distance to goal cost
       # costs_d[bid] += ACTION_WEIGHT * math.fabs(w_noisy)
     # Accumulate terminal cost 
     costs_d[bid] += term_cost(dist_to_goal2, goal_reached)
@@ -695,7 +695,7 @@ class MPPIPlannerNode(Node):
         # Initialize configuration for MPPI
         self.cfg = Config(T = 3,
             dt = 0.2,
-            num_control_rollouts =1000, # Same1 as number of blocks, can be more than 1024
+            num_control_rollouts =1500, # Same1 as number of blocks, can be more than 1024
             num_vis_state_rollouts = 500,
             seed = 1,
             mppi_type = 1
@@ -931,7 +931,8 @@ class MPPIPlannerNode(Node):
             # 1. Look up transform from map -> base_link
             transform = self.tf_buffer.lookup_transform(
                 'map',           # source frame (or "map")
-                'base_link',     # target frame (your robot)
+                # 'base_link',     # target frame (your robot)
+                'laser',     # target frame (your robot)
                 rclpy.time.Time()
             )
 

@@ -64,8 +64,8 @@ class Config:
   def __init__(self, 
                T=3, # Horizon (s)
                dt=0.2, # Length of each step (s)
-               num_control_rollouts=16384, # Number of control sequences
-               num_vis_state_rollouts=16384, # Number of visualization rollouts
+               num_control_rollouts=1000, # Number of control sequences
+               num_vis_state_rollouts=1000, # Number of visualization rollouts
                seed=1):
     
     self.seed = seed
@@ -283,7 +283,11 @@ class MPPI_Numba(object):
       noise_samples_reshaped[:,:,0] *= 1            #NOTE: this part is different
       noise_samples_reshaped[:,:,1] *= covs[:,0]
       self.noise_samples_d = numba_cuda.to_device(noise_samples_reshaped)
-
+      nominal_seq_velocity = np.ones((nominal_seq.shape[0], 1))
+      nominal_seq_theta = nominal_seq[:,:,0]
+      final_nominal_seq = np.hstack((nominal_seq_velocity, nominal_seq_theta))
+      self.u_cur_d = numba_cuda.to_device(final_nominal_seq)
+      
       # Rollout and compute mean or cvar
       self.rollouts_cost_numba[self.num_control_rollouts, 1](
         vrange_d,
@@ -311,7 +315,7 @@ class MPPI_Numba(object):
         # results
         self.costs_d,
       )      
-      self.u_prev_d = nominal_seq
+      self.u_prev_d = final_nominal_seq
 
       # Compute cost and update the optimal control on device
       self.update_useq_numba[1, 32](
@@ -624,31 +628,32 @@ class SVGuidedMPPI:
             x_curr[2] += dt_d*v_noisy*math.tan(w_noisy)/vehicle_wheelbase_d
             # x_curr[2] = math.fmod(x_curr[2], 2*math.pi)
 
+            convert_position_to_costmap_indices_gpu(
+                x_curr[0],
+                x_curr[1],
+                costmap_origin_x,
+                costmap_origin_y,
+                params_costmap_resolution,
+                x_curr_grid_d,
+            )
+            costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (100) * obs_cost_d
+
             # Check the state is collided with the obstacle
             # Get current state costmap indices
             if not isCollided:
-                convert_position_to_costmap_indices_gpu(
-                    x_curr[0],
-                    x_curr[1],
-                    costmap_origin_x,
-                    costmap_origin_y,
-                    params_costmap_resolution,
-                    x_curr_grid_d,
-                )
                 if check_state_collision_gpu(local_costmap_d, x_curr_grid_d) == 1.0:
                     isCollided = True
-                costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
 
                 # distance to goal cost
                 dist_to_goal2 = (((xgoal_d[0]-x_curr[0])**2) + ((xgoal_d[1]-x_curr[1])**2)) ** 0.5
-                costs_d[bid] += stage_cost(dist_to_goal2, 1.0)
+                costs_d[bid] += stage_cost(dist_to_goal2, 5.0)
                 if dist_to_goal2 <= goal_tolerance_d:
                     goal_reached = True
                     break
                 prev_dist_to_goal2 = dist_to_goal2
             else:
-                costs_d[bid] +=  1 * obs_cost_d
-                costs_d[bid] += prev_dist_to_goal2 # distance to goal cost
+                # costs_d[bid] +=  1 * obs_cost_d
+                costs_d[bid] += stage_cost(prev_dist_to_goal2, 5.0) # distance to goal cost
     	# Accumulate terminal cost
         costs_d[bid] += term_cost(dist_to_goal2, goal_reached)
 
@@ -909,7 +914,7 @@ class SteinMPPIPlannerNode(Node):
             num_vis_state_rollouts = 1000,
             seed = 1,
             )
-
+        ## Change the variance for MPPI
         self.mppi_params = dict(
             # Task specification
             dt = self.cfg.dt, 
@@ -926,18 +931,18 @@ class SteinMPPIPlannerNode(Node):
             num_opt = 1, # Number of steps in each solve() function call.
 
             # Control and sample specification
-            u_std = np.array([1.0, 0.1]), # Noise std for sampling linear and angular velocities.
+            u_std = np.array([0.023, 0.1]), # Noise std for sampling linear and angular velocities.
             vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
             wrange = np.array([-np.pi/6, np.pi/6]), # Angular velocity range.
             v_switch = 0.2, 
             ## obstacles
             costmap = None,
-            obs_penalty = 1e3,
+            obs_penalty = 1e2,
         )
         self.mppi = MPPI_Numba(self.cfg)
         self.mppi.setup(self.mppi_params)
         self.get_logger().info('MPPI NUMBA initialized.')
-
+        ## Change the max_steer_cov, steer_cov according to the experiment
         self.svg_mppi_params = {
             "sample_batch_num": 2000,
             "lambda": 1.0, # temperature parameter [0, inf) of free energy, which is a balancing term between control cost and state cost.
@@ -946,7 +951,7 @@ class SteinMPPIPlannerNode(Node):
             "steer_cov": 0.01, # initial covariance or constant covariance if is_covariance_adaptation is false
             "guide_sample_num": 1,
             "grad_lambda": 1.0,
-            "sample_num_for_grad_estimation": 200,
+            "sample_num_for_grad_estimation": 100,
             "steer_cov_for_grad_estimation": 0.01,
             # "svgd_step_size": 0.005,
             "svgd_step_size": 0.015,
@@ -1035,7 +1040,8 @@ class SteinMPPIPlannerNode(Node):
             # 1. Look up transform from map -> base_link
             transform = self.tf_buffer.lookup_transform(
                 'map',           # source frame (or "map")
-                'base_link',     # target frame (your robot)
+                # 'base_link',   # target frame (your robot)
+                'laser',         # target frame (your robot)
                 rclpy.time.Time()
             )
             # 2. Extract x, y

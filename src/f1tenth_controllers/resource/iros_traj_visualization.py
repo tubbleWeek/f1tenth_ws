@@ -80,19 +80,19 @@ class MapVisualizer:
         distance_to_goal = np.hypot(traj[-1][0] - goal_x, traj[-1][1] - goal_y)
         return distance_to_goal > 1.5  # Mark as crash if far from goal
 
-    def plot_trajectories(self, ax, trajectories):
+    def plot_trajectories(self, ax, trajectories, color):
         """Plot robot trajectories in world coordinates"""
         for traj in trajectories:
             xs = [p[0] for p in traj]
             ys = [p[1] for p in traj]
-            ax.plot(xs, ys, linewidth=2, alpha=0.7)
-            ax.scatter(xs[0], ys[0], marker='o', color='green', s=50, label='Start')
+            ax.plot(xs, ys, linewidth=1, alpha=0.7, color=color)
+            ax.scatter(xs[0], ys[0], marker='o', color='green', s=50) # start
             is_crash = self.detect_crash(traj)
             if is_crash:
-                ax.scatter(xs[-1], ys[-1], marker='X', color='red', s=100, label='Crash')
+                ax.scatter(xs[-1], ys[-1], marker='X', color='red', s=100)
             else:
-                ax.scatter(xs[-1], ys[-1], marker='^', color='blue', s=50, label='Success')
-        ax.scatter([], [], marker='s', color='purple', s=100, label='Obstacle')  
+                ax.scatter(xs[-1], ys[-1], marker='^', color='blue', s=50)
+          
 
     def plot_obstacles(self, ax):
         """Plot manual obstacles in world coordinates"""
@@ -106,6 +106,7 @@ class MapVisualizer:
                 alpha=0.5,
                 linewidth=2
             ))
+        ax.scatter([], [], marker='s', color='purple', s=100, label='Obstacle')
 
     def visualize(self, trajectories):
         fig, ax = plt.subplots(figsize=(10, 10))
@@ -168,9 +169,6 @@ class MapVisualizer:
                         find_last_y = True
                         last_index = neg_i  
                 filtered_traj = traj[initial_index:last_index+1]
-                print("initial index: ", initial_index)
-                print("last index: ", last_index)
-                print("len traj:", len(traj))
                 filtered_traj[0] = (traj[initial_index][0], -2.0)
                 filtered_traj[-1] = (traj[last_index][0], -14.0)
                 contained_trajs.append(filtered_traj)
@@ -211,45 +209,76 @@ class MapVisualizer:
         return stats
 
 if __name__ == '__main__':
-    base_path = "/home/nvidia/f1tenth_ws/experiments_data/rss/neural_cuniform"
-    # base_path = "/home/nvidia/f1tenth_ws/experiments_data/log_mppi_var0.2"
-    # base_path = "/home/nvidia/f1tenth_ws/experiments_data/vanilla_mppi_var0.2"
-    # base_path = "/home/nvidia/f1tenth_ws/experiments_data/flow_cuniform"
-    start_dirs = [
-        "cuniform_setting1_starting1_done",
-        "cuniform_setting1_starting2_done",
-        "cuniform_setting1_starting3_done",
-        # "log_mppi_setting1_starting1_done",
-        # "log_mppi_setting1_starting2_done",
-        # "log_mppi_setting1_starting3_done",
-        # "setting1_starting1",
-        # "setting1_starting2",
-        # "setting1_starting3",
+    base_paths = [
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/cuniform_mppi/log_mppi_0.05",
+        "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/cuniform_mppi/log_mppi_0.1",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/cuniform_mppi/log_mppi_0.1",
+        "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/log_mppi_0.1",
+        "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/mppi_0.1",
     ]
-    all_trajectories = []
-    for start_dir in start_dirs:
-        traj_files = sorted(glob.glob(os.path.join(base_path, start_dir, "trajectory_*.pkl")))
+    controller_names = [
+        # "log_mppi_0.05",
+        "CU-MPPI",
+        "Log-MPPI",
+        "MPPI",
+    ]  # Adjust names as desired
 
+    # Dictionary to store trajectories for each controller setting
+    trajectories_dict = {}
+    for base_path, name in zip(base_paths, controller_names):
+        traj_files = sorted(glob.glob(os.path.join(base_path, "trajectory_*.pkl")))
+        trajectories = []
         for file in traj_files:
             with open(file, 'rb') as f:
-                all_trajectories.append(pickle.load(f))  # Append each trajectory set
+                trajectories.append(pickle.load(f))
+        # trajectories_dict[name] = trajectories[:3]
+        trajectories_dict[name] = trajectories
 
     manual_obstacles = [
         {'x': -0.5, 'y': -7.3, 'width': 0.31, 'height': 0.15, 'angle':45.0}, # Wooden Square 1
-        {'x': -1.2, 'y': -9.0, 'width': 0.31, 'height': 0.15, 'angle':45.0}, # Wooden Square 2
-        {'x': -1.7, 'y': -9.3, 'width': 0.31, 'height': 0.15, 'angle':0.0}, # Wooden Square 3
-        {'x': -2.4, 'y': -11.8, 'width': 0.31, 'height': 0.15, 'angle':-45.0}, # Wooden Square 4
-        {'x': -1.5, 'y': -13.1, 'width': 0.31, 'height': 0.15, 'angle':0.0}, # Wooden Square 5
+        {'x': -1.4, 'y': -9.2, 'width': 0.31, 'height': 0.15, 'angle':45.0}, # Wooden Square 2
+        {'x': -2.1, 'y': -9.5, 'width': 0.31, 'height': 0.15, 'angle':0.0}, # Wooden Square 3
+        {'x': -2.9, 'y': -10.3, 'width': 0.31, 'height': 0.15, 'angle':-50.0}, # Wooden Square 4
+        {'x': -1.75, 'y': -12.7, 'width': 0.31, 'height': 0.15, 'angle':0.0}, # (FAR)Wooden Square 5
         {'x': -2.5, 'y': -8.3, 'width': 0.72, 'height': 0.25, 'angle':90.0}, # Long Right Box
-        {'x': -0.8, 'y': -7.8, 'width': 0.57, 'height': 0.18, 'angle':0.0},  # Skinny Front Left Box
-        {'x': -1.5, 'y': -10.0, 'width': 0.55, 'height': 0.34, 'angle':0.0}, # Square Middle Box
+        {'x': -1.0, 'y': -7.8, 'width': 0.57, 'height': 0.18, 'angle':0.0},  # Skinny Front Left Box
+        {'x': -1.5, 'y': -10.5, 'width': 0.55, 'height': 0.34, 'angle':90.0}, # Square Middle Box
         {'x': -0.7, 'y': -10.0, 'width': 0.40, 'height': 0.18, 'angle':0.0}, # Long middle left Box
-        {'x': -0.75, 'y': -12.5, 'width': 0.11,	 'height': 0.11, 'angle':0.0}, # Small Back Box
-        {'x': -1.9, 'y': -12.5, 'width': 0.25, 'height': 0.25, 'angle':0.0} # Back right square Box
+        {'x': -0.75, 'y': -12.2, 'width': 0.11,	 'height': 0.11, 'angle':0.0}, # Small Back Box
+        {'x': -2.2, 'y': -12.1, 'width': 0.25, 'height': 0.25, 'angle':0.0} # Back right square Box
     ]
     visualizer = MapVisualizer(
-        yaml_path="/home/nvidia/f1tenth_ws/maps/shepherd_lab_map.yaml",
+        yaml_path="/home/nvidia/f1tenth_ws/maps/shepherd_lab_map_cleaned.yaml",
         manual_obstacles=manual_obstacles
     )
-    analysis_results = visualizer.analyze_trajectories(all_trajectories)
-    visualizer.visualize(all_trajectories)  # Pass all trajectories together
+    # NOTE: old visulization and analysis below
+    # analysis_results = visualizer.analyze_trajectories(all_trajectories)
+    # visualizer.visualize(all_trajectories)  # Pass all trajectories together
+    # Create figure
+    fig, ax = plt.subplots(figsize=(10, 10))
+    visualizer.plot_map(ax)
+    
+    # Assign colors
+    colors = plt.cm.get_cmap('tab10')(np.linspace(0, 1, len(trajectories_dict)))
+    
+    # Plot trajectories
+    for (name, trajs), color in zip(trajectories_dict.items(), colors):
+        visualizer.plot_trajectories(ax, trajs, color=color)
+        ax.plot([], [], color=color, linewidth=2, label=name)
+    
+    # Add legend markers
+    ax.scatter([], [], marker='o', color='green', s=50, label='Start')
+    ax.scatter([], [], marker='^', color='blue', s=50, label='Success')
+    ax.scatter([], [], marker='X', color='red', s=100, label='Crash')
+    ax.scatter(-1, -15, color='gold', marker='*', s=200, zorder=5, label='Goal')
+    
+    # Configure plot
+    visualizer.plot_obstacles(ax)
+    ax.set_xlabel('X (meters)', fontsize=12)
+    ax.set_ylabel('Y (meters)', fontsize=12)
+    ax.set_title('Robot Trajectories for Different Controllers', fontsize=14)
+    ax.grid(True, alpha=0.3)
+    ax.set_aspect('equal')
+    ax.autoscale(tight=True)
+    ax.legend(loc='upper right')
+    plt.show()
