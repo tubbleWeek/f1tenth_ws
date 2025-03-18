@@ -101,6 +101,7 @@ class MapVisualizer:
                 (obs['x'], obs['y']),
                 obs['width'],
                 obs['height'],
+                angle=obs['angle'],
                 color='purple',
                 alpha=0.5,
                 linewidth=2
@@ -210,7 +211,7 @@ class MapVisualizer:
         return stats
 
 if __name__ == '__main__':
-    base_path = "/home/nvidia/f1tenth_ws/experiments_data/neural_cuniform"
+    base_path = "/home/nvidia/f1tenth_ws/experiments_data/rss/neural_cuniform"
     # base_path = "/home/nvidia/f1tenth_ws/experiments_data/log_mppi_var0.2"
     # base_path = "/home/nvidia/f1tenth_ws/experiments_data/vanilla_mppi_var0.2"
     # base_path = "/home/nvidia/f1tenth_ws/experiments_data/flow_cuniform"
@@ -234,18 +235,21 @@ if __name__ == '__main__':
                 all_trajectories.append(pickle.load(f))  # Append each trajectory set
 
     manual_obstacles = [
-        {'x': -1.35, 'y': -6.65, 'width': 1.4, 'height': 0.1}, # Pink Board
-        {'x': -1.0, 'y': -3.0, 'width': 0.75, 'height': 0.2}, # First Right Box
-        {'x': -2.4, 'y': -3.2, 'width': 0.55, 'height': 0.35},  # Second Left Box
-        {'x': -2.0, 'y': -5.0, 'width': 0.45, 'height': 0.45}, # First Circle
-        {'x': -2.5, 'y': -8.6, 'width': 0.9, 'height': 0.2}, # Three Panels
-        {'x': -2.6, 'y': -8.2, 'width': 0.4, 'height': 0.4}, # Three Panels part 2
-        {'x': -2.3, 'y': -10.2, 'width': 0.7, 'height': 1.52}, # Table
-        {'x': -1.3, 'y': -12.0, 'width': 0.6, 'height': 0.6}  # Second Circle
+        {'x': -0.5, 'y': -7.3, 'width': 0.31, 'height': 0.15, 'angle':45.0}, # Wooden Square 1
+        {'x': -1.2, 'y': -9.0, 'width': 0.31, 'height': 0.15, 'angle':45.0}, # Wooden Square 2
+        {'x': -1.7, 'y': -9.3, 'width': 0.31, 'height': 0.15, 'angle':0.0}, # Wooden Square 3
+        {'x': -2.4, 'y': -11.8, 'width': 0.31, 'height': 0.15, 'angle':-45.0}, # Wooden Square 4
+        {'x': -1.5, 'y': -13.1, 'width': 0.31, 'height': 0.15, 'angle':0.0}, # Wooden Square 5
+        {'x': -2.5, 'y': -8.3, 'width': 0.72, 'height': 0.25, 'angle':90.0}, # Long Right Box
+        {'x': -0.8, 'y': -7.8, 'width': 0.57, 'height': 0.18, 'angle':0.0},  # Skinny Front Left Box
+        {'x': -1.5, 'y': -10.0, 'width': 0.55, 'height': 0.34, 'angle':0.0}, # Square Middle Box
+        {'x': -0.7, 'y': -10.0, 'width': 0.40, 'height': 0.18, 'angle':0.0}, # Long middle left Box
+        {'x': -0.75, 'y': -12.5, 'width': 0.11,	 'height': 0.11, 'angle':0.0}, # Small Back Box
+        {'x': -1.9, 'y': -12.5, 'width': 0.25, 'height': 0.25, 'angle':0.0} # Back right square Box
     ]
     visualizer = MapVisualizer(
         yaml_path="/home/nvidia/f1tenth_ws/maps/shepherd_lab_map.yaml",
         manual_obstacles=manual_obstacles
     )
     analysis_results = visualizer.analyze_trajectories(all_trajectories)
-    # visualizer.visualize(all_trajectories)  # Pass all trajectories together
+    visualizer.visualize(all_trajectories)  # Pass all trajectories together
