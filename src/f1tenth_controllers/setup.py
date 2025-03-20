@@ -4,6 +4,21 @@ from glob import glob
 
 package_name = 'f1tenth_controllers'
 
+def get_model_paths():
+    model_paths = []
+    # Walk through the "models" directory recursively
+    for root, _, files in os.walk("models"):
+        # For each file, determine its target installation path
+        files_list = [
+            os.path.join(root, file)
+            for file in files
+        ]
+        if files_list:
+            # Target directory: share/<package_name>/<root>
+            target_dir = os.path.join("share", package_name, root)
+            model_paths.append((target_dir, files_list))
+    return model_paths
+
 setup(
     name=package_name,
     version='0.0.0',
@@ -13,6 +28,9 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         (os.path.join('share', package_name, 'launch'), glob('launch/*.py')),
+        (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),
+        # (os.path.join('share', package_name, 'models'), get_model_paths()),
+        *get_model_paths(),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<robot name="prius_hybrid" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- <link name="base_footprint"/> -->
+  <!-- Base Link -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 -0.02493 0.04502" rpy="0 0 0"/>
+      <mass value="1326.0"/>
+      <inertia ixx="2581.1335" ixy="0.0" ixz="0.0" iyy="591.30846" iyz="0.0" izz="2681.95008"/>
+    </inertial>
+
+    <visual>
+      <geometry>
+        <mesh filename="package://prius_hybrid/meshes/Hybrid.obj" scale="0.00099 0.000938 0.000938"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0.00469 0.05863" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.17351 0.19698 0.08911"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Lidar -->
+  <link name="base_scan"/>
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_scan"/>
+    <origin xyz="-0.064 0 0.151" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Wheels -->
+  <xacro:macro name="wheel" params="name xyz">
+    <link name="${name}">
+      <inertial>
+        <mass value="11"/>
+        <inertia ixx="0.5863" ixy="0.0" ixz="0.0" iyy="0.3355" iyz="0.0" izz="0.3355"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://prius_hybrid/meshes/Hybrid.obj" scale="0.00099 0.000938 0.000938"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <sphere radius="0.03015"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${name}_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="${name}"/>
+      <origin xyz="${xyz}" rpy="0 0 1.57"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:wheel name="front_left_wheel" xyz="0.13959 0.07129 0.02814"/>
+  <xacro:wheel name="front_right_wheel" xyz="0.13959 -0.07129 0.02814"/>
+  <xacro:wheel name="rear_left_wheel" xyz="-0.14355 0.07367 0.02814"/>
+  <xacro:wheel name="rear_right_wheel" xyz="-0.14355 -0.07367 0.02814"/>
+
+  <link name="steering_wheel">
+    <inertial>
+      <origin xyz="0.06216 0.03352 0.09268" rpy="-1.302101 0 1.57"/>
+      <mass value="1.0"/>
+      <inertia ixx="0.145833" ixy="0.0" ixz="0.0" iyy="0.145833" iyz="0.0" izz="0.125"/>
+    </inertial>
+    
+    <visual>
+      <geometry>
+        <mesh filename="package://prius_hybrid/meshes/Hybrid.obj" scale="0.00099 0.000938 0.000938"/>
+      </geometry>
+    </visual>
+    
+    <collision>
+      <geometry>
+        <cylinder radius="0.01718" length="0.00392"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Steering Joint -->
+  <joint name="steering_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="steering_wheel"/>
+    <origin xyz="-0.000198 0 0" rpy="0 0 0"/>
+    <axis xyz="-0.964118 0.000768 0.265556"/>
+    <limit 
+    lower="-7.85" 
+    upper="7.85" 
+    effort="100" 
+    velocity="0.5"
+    />
+  </joint>
+
+  <!-- Add missing rear_axle link and joints -->
+  <link name="rear_axle">
+    <inertial>
+      <mass value="30.0"/>
+      <inertia ixx="0.084375" ixy="0.0" ixz="0.0" iyy="4.64581" iyz="0.0" izz="4.64581"/>
+    </inertial>
+  </link>
+
+  <!-- <joint name="base_joint" type="fixed">
+      <parent>base_footprint</parent>
+      <child>base_link</child>
+      <pose>0.0 0.0 0.010 0 0 0</pose>
+  </joint> -->
+  <joint name="rear_axle_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="rear_axle"/>
+    <axis xyz="0 1 0"/>
+    <limit 
+    lower="-0.05089" 
+    upper="0.05089" 
+    effort="1000" 
+    velocity="0.5"
+    />
+  </joint>
+
+  <!-- Gazebo Extensions -->
+  <gazebo>
+    <plugin name="ackermann_drive" filename="libgazebo_ros_ackermann_drive.so">
+      <update_rate>100</update_rate>
+      <front_left_joint>front_left_wheel_joint</front_left_joint>
+      <front_right_joint>front_right_wheel_joint</front_right_joint>
+      <rear_left_joint>rear_left_wheel_joint</rear_left_joint>
+      <rear_right_joint>rear_right_wheel_joint</rear_right_joint>
+      <max_steer>0.6458</max_steer>
+      <max_speed>20</max_speed>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+    </plugin>
+
+    <plugin name="lidar_plugin" filename="libgazebo_ros_ray_sensor.so">
+      <ros>
+        <remapping>~/out:=scan</remapping>
+      </ros>
+      <output_type>sensor_msgs/LaserScan</output_type>
+      <frame_name>base_scan</frame_name>
+    </plugin>
+  </gazebo>
+
+</robot>

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="prius_world">
+    <!-- Physics Settings -->
+    <physics name="default_physics" default="true" type="ode">
+      <max_step_size>0.01</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>100</real_time_update_rate>
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>50</iters>
+          <precon_iters>0</precon_iters>
+          <sor>1.4</sor>
+        </solver>
+      </ode>
+    </physics>
+
+    <!-- Lighting -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- Environment Model -->
+    <include>
+      <name>shepherd_lab_box</name>
+      <uri>file://${HOME}/Desktop/f1tenth_ws/src/f1tenth_controllers/models/shepherd_lab_box.sdf</uri>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <!-- Prius Robot -->
+    <include>
+      <name>prius_hybrid</name>
+      <uri>file://${HOME}/Desktop/f1tenth_ws/src/f1tenth_controllers/models/f1tenth_gazebo/model.sdf</uri>
+      <pose>0 0 0 0 0 0</pose>  <!-- Spawn 2 meters in front of environment -->
+    </include>
+
+    <!-- Ground Plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- GUI Camera -->
+    <gui fullscreen="0">
+      <camera name="user_camera">
+        <pose>5 -5 2 0 0 0.785</pose>
+        <view_controller>orbit</view_controller>
+      </camera>
+    </gui>
+  </world>
+</sdf>
