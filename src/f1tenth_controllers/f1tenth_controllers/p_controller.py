@@ -44,7 +44,7 @@ class PurePursuitController(Node):
     def __init__(self):
         # member variables
         super().__init__("pure_pursuit_node")
-        self.map_path = "/home/nvidia/f1tenth_ws/src/pure_pursuit/racelines/shepherd_lab_raceline_v1.csv"
+        self.map_path = "/home/jiang/Desktop/f1tenth_ws/src/pure_pursuit/racelines/shepherd_lab_raceline_v1.csv"
         data = np.loadtxt(self.map_path, delimiter = ",")
 
         self.cx = data[:, 0] # 1st column of data -> x-position of the waypoints

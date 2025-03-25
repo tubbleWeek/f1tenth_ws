@@ -47,7 +47,8 @@ setup(
             'c_uniform_costmap_node = f1tenth_controllers.cuniform_dubins_ros_node:main',
             'comet_costmap_node = f1tenth_controllers.comet_ros2_kinematic:main',
             'stein_costmap_node = f1tenth_controllers.stein_mppi_node:main',
-            'pose_collector_node = f1tenth_controllers.amcl_pose_collector_node:main'
+            'pose_collector_node = f1tenth_controllers.amcl_pose_collector_node:main',
+            'ackermann_to_twist = f1tenth_controllers.ackermann_to_twist:main',
         ],
     },
 )
