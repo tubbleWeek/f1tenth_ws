@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+import matplotlib.transforms as transforms
 import numpy as np
 import yaml
 import glob
@@ -85,14 +87,12 @@ class MapVisualizer:
         for traj in trajectories:
             xs = [p[0] for p in traj]
             ys = [p[1] for p in traj]
-            ax.plot(xs, ys, linewidth=1, alpha=0.7, color=color)
-            ax.scatter(xs[0], ys[0], marker='o', color='green', s=50) # start
+            ax.plot(xs, ys, linewidth=0.9, alpha=0.85, color=color)
             is_crash = self.detect_crash(traj)
             if is_crash:
-                ax.scatter(xs[-1], ys[-1], marker='X', color='red', s=100)
-            else:
-                ax.scatter(xs[-1], ys[-1], marker='^', color='blue', s=50)
-          
+                ax.scatter(xs[-1], ys[-1], alpha=0.98, marker='X', color=color, s=90)
+            # else:
+            #     ax.scatter(xs[-1], ys[-1], marker='^', color=color, s=50)
 
     def plot_obstacles(self, ax):
         """Plot manual obstacles in world coordinates"""
@@ -102,11 +102,11 @@ class MapVisualizer:
                 obs['width'],
                 obs['height'],
                 angle=obs['angle'],
-                color='purple',
-                alpha=0.5,
-                linewidth=2
+                color='black',
+                alpha= 1.0,
+                linewidth=0.1
             ))
-        ax.scatter([], [], marker='s', color='purple', s=100, label='Obstacle')
+        ax.scatter([], [], marker='s', color='black', s=100, label='Obstacle')
 
     def visualize(self, trajectories):
         fig, ax = plt.subplots(figsize=(10, 10))
@@ -114,7 +114,6 @@ class MapVisualizer:
         # Plot map background
         self.plot_map(ax)
         
-        # Plot trajectories
         self.plot_trajectories(ax, trajectories)
         
         # Plot manual obstacles
@@ -208,19 +207,41 @@ class MapVisualizer:
 
         return stats
 
-if __name__ == '__main__':
+def main(args=None):
     base_paths = [
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/cuniform_mppi/mppi_0.05",
+        "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/cuniform_mppi/mppi_0.1",
         # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/cuniform_mppi/log_mppi_0.05",
         "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/cuniform_mppi/log_mppi_0.1",
-        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/cuniform_mppi/log_mppi_0.1",
-        "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/log_mppi_0.1",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/mppi_0.05",
         "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/mppi_0.1",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/log_mppi_0.05",
+        "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_289/log_mppi_0.1",
+        # env110 below
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_110/cuniform_mppi_0.05",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_110/cuniform_mppi_0.1",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_110/cuniform_log_mppi_0.05",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_110/cuniform_log_mppi_0.1",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_110/mppi_0.05",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_110/mppi_0.1",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_110/log_mppi_0.05",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_110/log_mppi_0.1",
+        # env21 below
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_21/cuniform_mppi_0.05",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_21/cuniform_mppi_0.1",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_21/cuniform_log_mppi_0.05",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_21/cuniform_log_mppi_0.1",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_21/mppi_0.05",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_21/mppi_0.1",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_21/log_mppi_0.05",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_21/log_mppi_0.1",
+        # "/home/nvidia/f1tenth_ws/experiments_data/iros/env_barn_21/stein_0.1_2iter",
     ]
     controller_names = [
-        # "log_mppi_0.05",
         "CU-MPPI",
-        "Log-MPPI",
+        "CU-LogMPPI",
         "MPPI",
+        "Log-MPPI",
     ]  # Adjust names as desired
 
     # Dictionary to store trajectories for each controller setting
@@ -231,19 +252,29 @@ if __name__ == '__main__':
         for file in traj_files:
             with open(file, 'rb') as f:
                 trajectories.append(pickle.load(f))
-        # trajectories_dict[name] = trajectories[:3]
-        trajectories_dict[name] = trajectories
+        # trajectories_dict[name] = trajectories[:5]
+        trajectories_dict[name] = trajectories[7:]
+        # trajectories_dict[name] = trajectories[8:9]
+        # trajectories_dict[name] = trajectories
+        print(f"Name: {name}, final crash location TBD")
+
+    all_trajectories = []
+    traj_files = sorted(glob.glob(os.path.join(base_path, "trajectory_*.pkl")))
+
+    for file in traj_files:
+        with open(file, 'rb') as f:
+            all_trajectories.append(pickle.load(f))  # Append each trajectory set
 
     manual_obstacles = [
         {'x': -0.5, 'y': -7.3, 'width': 0.31, 'height': 0.15, 'angle':45.0}, # Wooden Square 1
-        {'x': -1.4, 'y': -9.2, 'width': 0.31, 'height': 0.15, 'angle':45.0}, # Wooden Square 2
-        {'x': -2.1, 'y': -9.5, 'width': 0.31, 'height': 0.15, 'angle':0.0}, # Wooden Square 3
-        {'x': -2.9, 'y': -10.3, 'width': 0.31, 'height': 0.15, 'angle':-50.0}, # Wooden Square 4
+        {'x': -1.37, 'y': -9.2, 'width': 0.31, 'height': 0.15, 'angle':20.0}, # Wooden Square 2
+        {'x': -2.07, 'y': -9.55, 'width': 0.31, 'height': 0.15, 'angle':0.0}, # Wooden Square 3
+        {'x': -2.88, 'y': -10.3, 'width': 0.31, 'height': 0.15, 'angle':-50.0}, # Wooden Square 4
         {'x': -1.75, 'y': -12.7, 'width': 0.31, 'height': 0.15, 'angle':0.0}, # (FAR)Wooden Square 5
-        {'x': -2.5, 'y': -8.3, 'width': 0.72, 'height': 0.25, 'angle':90.0}, # Long Right Box
+        {'x': -2.5, 'y': -8.6, 'width': 0.72, 'height': 0.25, 'angle':90.0}, # Long Right Box
         {'x': -1.0, 'y': -7.8, 'width': 0.57, 'height': 0.18, 'angle':0.0},  # Skinny Front Left Box
-        {'x': -1.5, 'y': -10.5, 'width': 0.55, 'height': 0.34, 'angle':90.0}, # Square Middle Box
-        {'x': -0.7, 'y': -10.0, 'width': 0.40, 'height': 0.18, 'angle':0.0}, # Long middle left Box
+        {'x': -1.37, 'y': -10.5, 'width': 0.60, 'height': 0.35, 'angle':90.0}, # Square Middle Box
+        {'x': -1.01, 'y': -10.0, 'width': 0.50, 'height': 0.18, 'angle':0.0}, # Long middle left Box
         {'x': -0.75, 'y': -12.2, 'width': 0.11,	 'height': 0.11, 'angle':0.0}, # Small Back Box
         {'x': -2.2, 'y': -12.1, 'width': 0.25, 'height': 0.25, 'angle':0.0} # Back right square Box
     ]
@@ -251,34 +282,74 @@ if __name__ == '__main__':
         yaml_path="/home/nvidia/f1tenth_ws/maps/shepherd_lab_map_cleaned.yaml",
         manual_obstacles=manual_obstacles
     )
+    #TODO: get the all_trajectories
     # NOTE: old visulization and analysis below
     # analysis_results = visualizer.analyze_trajectories(all_trajectories)
     # visualizer.visualize(all_trajectories)  # Pass all trajectories together
+
+    # return
     # Create figure
     fig, ax = plt.subplots(figsize=(10, 10))
     visualizer.plot_map(ax)
     
     # Assign colors
-    colors = plt.cm.get_cmap('tab10')(np.linspace(0, 1, len(trajectories_dict)))
+    # colors = plt.cm.get_cmap('tab10')(np.linspace(0, 1, len(trajectories_dict)))
+    colors = ['#e6194B', '#ffe119', '#3cb44b', '#4363d8', '#f032e6']
+    # colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00']
     
-    # Plot trajectories
     for (name, trajs), color in zip(trajectories_dict.items(), colors):
         visualizer.plot_trajectories(ax, trajs, color=color)
-        ax.plot([], [], color=color, linewidth=2, label=name)
+        ax.plot([], [], color=color, linewidth=2.5, label=name)
     
     # Add legend markers
-    ax.scatter([], [], marker='o', color='green', s=50, label='Start')
-    ax.scatter([], [], marker='^', color='blue', s=50, label='Success')
-    ax.scatter([], [], marker='X', color='red', s=100, label='Crash')
-    ax.scatter(-1, -15, color='gold', marker='*', s=200, zorder=5, label='Goal')
+    # ax.scatter([], [], marker='o', color='green', s=50, label='Start')
+    # ax.scatter([], [], marker='^', color='blue', s=50, label='Success')
+    # ax.scatter(-1, -15, color='gold', marker='*', s=200, zorder=5, label='Goal')
+    from matplotlib.patches import Circle
+    circle = Circle((-1.29, -1.05), 0.4, edgecolor='olive', facecolor='none', linewidth=2, zorder=10)
+    ax.add_patch(circle)
+    # ax.scatter([], [], marker='o', color='olive', s=50, label='Start')
+
+    circle_goal = Circle((-1, -15), 0.3, edgecolor='Magenta', facecolor='none', linewidth=2, zorder=10)
+    ax.add_patch(circle_goal)
+    ax.scatter([], [], facecolors='none', edgecolors='Magenta', marker='o', s=50, label='Goal')
+    visualizer.plot_obstacles(ax)
+    # ax.scatter([], [], marker='X', color='black', s=100, label='Crash\n(color = controller)')
+    ax.scatter([], [], marker='X', color='black', s=100, label='Crash')
+
+    # generic_handles = [
+    #     Line2D([0], [0], color='black', lw=2, label='Trajectory (color = controller)'),
+    #     Line2D([0], [0], marker='X', color='black', lw=0, markersize=8, label='Crash'),
+    #     Line2D([0], [0], marker='o', color='Magenta', lw=0, markersize=8, label='Goal'),
+    #     Line2D([0], [0], marker='s', color='black', lw=0, markersize=8, label='Obstacle'),
+    # ]
+    # ax.legend(handles=generic_handles, loc='lower left', ncol=1, fontsize='small')
     
     # Configure plot
-    visualizer.plot_obstacles(ax)
-    ax.set_xlabel('X (meters)', fontsize=12)
-    ax.set_ylabel('Y (meters)', fontsize=12)
-    ax.set_title('Robot Trajectories for Different Controllers', fontsize=14)
+    # ax.set_xlabel('X (meters)', fontsize=12)
+    # ax.set_ylabel('Y (meters)', fontsize=12)
+    # ax.set_xlim(-4, 2)
+    # ax.set_ylim(-15, -6)
+    ax.set_xlim(-1, 1)
+    ax.set_ylim(-1, 1)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_xlabel('')
+    ax.set_ylabel('')
+    ax.set_title('')
+    # ax.set_title('Robot Trajectories for Different Controllers', fontsize=14)
     ax.grid(True, alpha=0.3)
     ax.set_aspect('equal')
     ax.autoscale(tight=True)
-    ax.legend(loc='upper right')
+    # ax.legend(loc='upper right')
+    ax.legend(loc='lower left')
+    # Create the legend at a fixed anchor (using data coordinates)
+    # legend = ax.legend(loc='upper left', bbox_to_anchor=(-4.6, -1.65))
+
+    # Rotate the entire legend by 90° clockwise (-90° rotation) by setting its bounding box transform
+    # rot = transforms.Affine2D().rotate_deg(-90)
+    # legend.set_bbox_transform(rot + ax.transData)
     plt.show()
+
+if __name__ == '__main__':
+    main()

@@ -18,7 +18,7 @@ class AMCLPoseCollector(Node):
         self.get_logger().info(f'Pose: x={self.data[-1][0]}, y={self.data[-1][1]}')
 
     def save_and_exit(self, signum, frame):
-        timestamp = datetime.datetime.now().strftime("%m%d_%H%M")
+        timestamp = datetime.datetime.now().strftime("%m%d_%H%M%s")
         filename = f'trajectory_{timestamp}.pkl'
         with open(filename, 'wb') as f:
             pickle.dump(self.data, f)

@@ -5,8 +5,8 @@
   <link name="base_link">
     <inertial>
       <origin xyz="0 -0.02493 0.04502" rpy="0 0 0"/>
-      <mass value="1326.0"/>
-      <inertia ixx="2581.1335" ixy="0.0" ixz="0.0" iyy="591.30846" iyz="0.0" izz="2681.95008"/>
+      <mass value="13.260"/>
+      <inertia ixx="2.5811335" ixy="0.0" ixz="0.0" iyy="0.59130846" iyz="0.0" izz="2.68195008"/>
     </inertial>
 
     <visual>
@@ -35,7 +35,7 @@
   <xacro:macro name="wheel" params="name xyz">
     <link name="${name}">
       <inertial>
-        <mass value="11"/>
+        <mass value="1.1"/>
         <inertia ixx="0.5863" ixy="0.0" ixz="0.0" iyy="0.3355" iyz="0.0" izz="0.3355"/>
       </inertial>
       <visual>
@@ -99,7 +99,7 @@
   <!-- Add missing rear_axle link and joints -->
   <link name="rear_axle">
     <inertial>
-      <mass value="30.0"/>
+      <mass value="3.00"/>
       <inertia ixx="0.084375" ixy="0.0" ixz="0.0" iyy="4.64581" iyz="0.0" izz="4.64581"/>
     </inertial>
   </link>

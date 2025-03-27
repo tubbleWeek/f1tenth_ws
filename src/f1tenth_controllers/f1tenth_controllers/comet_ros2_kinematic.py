@@ -452,7 +452,7 @@ class MPPI_Numba(object):
     # NOTE: adjust mppi type here
     self.mppi_type = 1 # Normal dist / 1: NLN
     if self.mppi_type == 1:
-      self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.05, 0.05]))
+      self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.1, 0.1]))
       self.rLogN_info = [self.mppi_type, self.mu_LogN, self.std_LogN]
 
     # local costmap size and resolution
@@ -906,7 +906,7 @@ class COMETPlannerNode(Node):
           num_opt = 1, # Number of steps in each solve() function call.
 
           # Control and sample specification
-          u_std = np.array([0.023, 0.05]), # Noise std for sampling linear and angular velocities.
+          u_std = np.array([0.023, 0.1]), # Noise std for sampling linear and angular velocities.
           v_switch = 0.2, 
           vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
           wrange = np.array([-np.pi/6, np.pi/6]), # Angular velocity range.
@@ -1099,7 +1099,7 @@ class COMETPlannerNode(Node):
 
         time_publish = time.perf_counter()
         ############### visualize min cost traj below ##############
-        visualize_traj = False
+        visualize_traj = True
         if visualize_traj:
             pub_time = self.get_clock().now().to_msg()
             # Visualize minimum cost trajectory as a Path message

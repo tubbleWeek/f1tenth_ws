@@ -53,7 +53,7 @@ class Config:
                num_control_rollouts=16384, # Number of control sequences
                num_vis_state_rollouts=16384, # Number of visualization rollouts
                seed=1,
-               mppi_type=1): # Normal dist / 1: NLN):
+               mppi_type=0): # Normal dist / 1: NLN):
     self.seed = seed
     self.T = T
     self.dt = dt
@@ -134,7 +134,7 @@ class MPPI_Numba(object):
     self.mppi_type = self.cfg.mppi_type # Normal dist / 1: NLN
     if self.mppi_type == 1:
       # print("NLN is used for noise")
-      self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.05, 0.05]))
+      self.mu_LogN, self.std_LogN = Normal2LogN(0, np.mean([0.1, 0.1]))
       print('the mu:', self.mu_LogN)
       print('the std:', self.std_LogN)
       self.LogN_info = [self.mppi_type, self.mu_LogN, self.std_LogN]
@@ -723,7 +723,7 @@ class MPPIPlannerNode(Node):
 
           # Control and sample specification
           # variance = 0.1
-          u_std = np.array([0.023, 0.05]), # Noise std for sampling linear and angular velocities.
+          u_std = np.array([0.023, 0.10]), # Noise std for sampling linear and angular velocities.
           vrange = np.array([1.0, 1.0]), # Linear velocity range. Constant Linear Velocity
           wrange = np.array([-np.pi/6, np.pi/6]), # Angular velocity range.
           costmap = None, # intiallly nothing
@@ -932,7 +932,8 @@ class MPPIPlannerNode(Node):
             transform = self.tf_buffer.lookup_transform(
                 'map',           # source frame (or "map")
                 # 'base_link',     # target frame (your robot)
-                'laser',     # target frame (your robot)
+                #'laser',     # target frame (your robot)
+                'base_scan',  #changed for simulator
                 rclpy.time.Time()
             )
 

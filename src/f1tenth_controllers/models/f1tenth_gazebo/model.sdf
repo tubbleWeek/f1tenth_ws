@@ -29,16 +29,16 @@
       <!-- Chassis link pose remains at the origin -->
       <pose>0 0 0 0 0 1.57</pose>
       <inertial>
-        <mass>1326.0</mass>
+        <mass>13.260</mass>
         <!-- Inertial pose: (0, -0.266, 0.48) becomes (0, -0.02493, 0.04502) -->
         <pose>0 -0.02493 0.04502 0 0 0</pose>
         <inertia>
-          <ixx>2581.13354740</ixx>
+          <ixx>2.58113354740</ixx>
           <ixy>0.0</ixy>
-          <iyy>591.30846112</iyy>
+          <iyy>0.59130846112</iyy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
-          <izz>2681.95008628</izz>
+          <izz>2.68195008628</izz>
         </inertia>
       </inertial>
 
@@ -310,7 +310,7 @@
       <!-- Pose: (1.41, 0.76, 0.3) becomes (0.13959, 0.07129, 0.02814) -->
       <pose>0.13959 0.07129 0.02814 0 0 1.57</pose>
       <inertial>
-        <mass>11</mass>
+        <mass>1.1</mass>
         <inertia>
           <ixx>0.58631238</ixx>
           <ixy>0.0</ixy>
@@ -366,7 +366,7 @@
       <!-- Pose: (1.41, -0.76, 0.3) becomes (0.13959, -0.07129, 0.02814) -->
       <pose>0.13959 -0.07129 0.02814 0 0 1.57</pose>
       <inertial>
-        <mass>11</mass>
+        <mass>1.1</mass>
         <inertia>
           <ixx>0.58631238</ixx>
           <ixy>0.0</ixy>
@@ -420,7 +420,7 @@
       <!-- Pose: (-1.45, 0.786, 0.3) becomes (-0.14355, 0.07367, 0.02814) -->
       <pose>-0.14355 0.07367 0.02814 0 0 1.57</pose>
       <inertial>
-        <mass>11</mass>
+        <mass>1.1</mass>
         <inertia>
           <ixx>0.58631238</ixx>
           <ixy>0.0</ixy>
@@ -474,7 +474,7 @@
       <!-- Pose: (-1.45, -0.786, 0.3) becomes (-0.14355, -0.07367, 0.02814) -->
       <pose>-0.14355 -0.07367 0.02814 0 0 1.57</pose>
       <inertial>
-        <mass>11</mass>
+        <mass>1.1</mass>
         <inertia>
           <ixx>0.58631238</ixx>
           <ixy>0.0</ixy>
@@ -528,7 +528,7 @@
       <!-- Pose: (-1.45, 0, 0.3) becomes (-0.14355, 0, 0.02814) -->
       <pose>-0.14355 0 0.02814 0 0 0</pose>
       <inertial>
-        <mass>30.0</mass>
+        <mass>3.00</mass>
         <inertia>
           <ixx>0.084375</ixx>
           <ixy>0.0</ixy>
@@ -682,11 +682,11 @@
       <!-- Max absolute linear speed in m/s -->
       <max_speed>20</max_speed>
       <!-- PID tuning -->
-      <left_steering_pid_gain>1500 0 1</left_steering_pid_gain>
+      <left_steering_pid_gain>4 0 1</left_steering_pid_gain>
       <left_steering_i_range>0 0</left_steering_i_range>
-      <right_steering_pid_gain>1500 0 1</right_steering_pid_gain>
+      <right_steering_pid_gain>4 0 1</right_steering_pid_gain>
       <right_steering_i_range>0 0</right_steering_i_range>
-      <linear_velocity_pid_gain>1000 0 1</linear_velocity_pid_gain>
+      <linear_velocity_pid_gain>5 0 1</linear_velocity_pid_gain>
       <linear_velocity_i_range>0 0</linear_velocity_i_range>
       <!-- output -->
       <publish_odom>true</publish_odom>

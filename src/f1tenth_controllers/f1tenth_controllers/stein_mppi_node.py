@@ -280,11 +280,11 @@ class MPPI_Numba(object):
       noise_samples = self.random_noise_sample()
       # reshape the noise samples to (num_control_rollouts, num_steps, 2)
       noise_samples_reshaped = noise_samples.reshape(self.num_control_rollouts, self.num_steps, 2).astype(np.float32)
-      noise_samples_reshaped[:,:,0] *= 1            #NOTE: this part is different
-      noise_samples_reshaped[:,:,1] *= covs[:,0]
+      noise_samples_reshaped[:,:,0] *= 1
+      noise_samples_reshaped[:,:,1] *= covs[:,0,0]
       self.noise_samples_d = numba_cuda.to_device(noise_samples_reshaped)
       nominal_seq_velocity = np.ones((nominal_seq.shape[0], 1))
-      nominal_seq_theta = nominal_seq[:,:,0]
+      nominal_seq_theta = copy.deepcopy(nominal_seq)
       final_nominal_seq = np.hstack((nominal_seq_velocity, nominal_seq_theta))
       self.u_cur_d = numba_cuda.to_device(final_nominal_seq)
       
@@ -315,7 +315,7 @@ class MPPI_Numba(object):
         # results
         self.costs_d,
       )      
-      self.u_prev_d = final_nominal_seq
+      self.u_prev_d = numba_cuda.to_device(final_nominal_seq.astype(np.float32))
 
       # Compute cost and update the optimal control on device
       self.update_useq_numba[1, 32](
@@ -402,32 +402,31 @@ class MPPI_Numba(object):
       x_curr[1] += dt_d*v_noisy*math.sin(x_curr[2])
       x_curr[2] += dt_d*v_noisy*math.tan(w_noisy)/vehicle_wheelbase_d
       # x_curr[2] = math.fmod(x_curr[2], 2*math.pi)
-
-      # Check the state is collided with the obstacle
-      # Get current state costmap indices
-      if not isCollided:
-        convert_position_to_costmap_indices_gpu(
+      convert_position_to_costmap_indices_gpu(
           x_curr[0],
           x_curr[1],
           costmap_origin_x,
           costmap_origin_y,
           params_costmap_resolution,
           x_curr_grid_d,
-        )
+      )
+      costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (100) * obs_cost_d
+
+      # Check the state is collided with the obstacle
+      # Get current state costmap indices
+      if not isCollided:
         if check_state_collision_gpu(local_costmap_d, x_curr_grid_d) == 1.0:
           isCollided = True
-        costs_d[bid] += calculate_localcostmap_cost(local_costmap_d, x_curr_grid_d) / (49*100) * obs_cost_d
-
         # distance to goal cost
         dist_to_goal2 = (((xgoal_d[0]-x_curr[0])**2) + ((xgoal_d[1]-x_curr[1])**2)) ** 0.5
-        costs_d[bid] += stage_cost(dist_to_goal2, 1.0)
+        costs_d[bid] += stage_cost(dist_to_goal2, 5.0)
         if dist_to_goal2 <= goal_tolerance_d:
           goal_reached = True
           break
         prev_dist_to_goal2 = dist_to_goal2
       else:
-        costs_d[bid] +=  1 * obs_cost_d
-        costs_d[bid] += prev_dist_to_goal2 # distance to goal cost
+        # costs_d[bid] +=  1 * obs_cost_d
+        costs_d[bid] += stage_cost(prev_dist_to_goal2, 5.0) # distance to goal cost
     # Accumulate terminal cost 
     costs_d[bid] += term_cost(dist_to_goal2, goal_reached)
 
@@ -509,6 +508,7 @@ class MPPI_Numba(object):
     for ti in range(starti, endi):
       u_cur_d[ti, 0] = max(vrange_d[0], min(vrange_d[1], u_cur_d[ti, 0]))
       u_cur_d[ti, 1] = max(wrange_d[0], min(wrange_d[1], u_cur_d[ti, 1]))
+
 class SVGuidedMPPI:
     def __init__(self, svg_mppi_params, mppi_params):
         self.vehicle_length = 0.57
@@ -540,13 +540,13 @@ class SVGuidedMPPI:
         self.max_control_inputs = np.array([self.max_steer_angle])
         self.min_control_inputs = np.array([self.min_steer_angle])
         self.prior_samples_ptr_ = PriorSamplesWithCosts(
-           self.sample_batch_num, self.prediction_step_size_, self.max_control_inputs, 
-           self.min_control_inputs, self.non_biased_sampling_rate_, 42
+            self.sample_batch_num, self.prediction_step_size_, self.max_control_inputs, 
+            self.min_control_inputs, self.non_biased_sampling_rate_, 42
         )
         
         self.guide_samples_ptr_ = PriorSamplesWithCosts(
-           self.guide_sample_num, self.prediction_step_size_, self.max_control_inputs, 
-           self.min_control_inputs, self.non_biased_sampling_rate_, 42
+            self.guide_sample_num, self.prediction_step_size_, self.max_control_inputs, 
+            self.min_control_inputs, self.non_biased_sampling_rate_, 42
         )
         
         self.prev_control_seq_ = self.prior_samples_ptr_.get_zero_control_seq()
@@ -563,6 +563,11 @@ class SVGuidedMPPI:
             self.grad_sampler_ptrs_.append(PriorSamplesWithCosts(self.sample_num_for_grad_estimation_, self.prediction_step_size_,
                                                             self.max_control_inputs, self.min_control_inputs,
                                                             self.non_biased_sampling_rate_, i))
+        self.exp_costs = np.zeros(self.sample_num_for_grad_estimation_)
+        # calculate cost with control term
+        self.sum_of_grads = np.zeros((self.sample_num_for_grad_estimation_, self.prediction_step_size_ - 1, 1))
+        self.exp_costs_gpu = numba_cuda.to_device(self.exp_costs.astype(np.float32))
+        self.sum_of_grads_gpu = numba_cuda.to_device(self.sum_of_grads.astype(np.float32))
 
     """GPU kernels from here on"""
     @staticmethod
@@ -589,6 +594,7 @@ class SVGuidedMPPI:
           costmap_origin_y,
           params_costmap_resolution,
           costs_d,
+          timesteps
         ):
         """
         There should only be one thread running in each block, where each block handles a single sampled control sequence.
@@ -604,7 +610,6 @@ class SVGuidedMPPI:
         for i in range(3): 
             x_curr[i] = x0_d[i]
 
-        timesteps = noise_samples_d.shape[1]
         goal_reached = False
         isCollided = False
 
@@ -675,7 +680,14 @@ class SVGuidedMPPI:
 
         local_costmap_edt = self.params['costmap']
         local_costmap_edt = np.ascontiguousarray(local_costmap_edt)
-        max_local_cost_d = np.float32(np.max(local_costmap_edt))
+        local_costmap_edt = np.ascontiguousarray(local_costmap_edt)
+        try:
+            max_local_cost_d = np.float32(np.max(local_costmap_edt))
+        except:
+            # if the local costmap is empty, set the max_local_cost to 1.0
+            max_local_cost_d = np.float32(-1.0)
+            # create a local costmap with all 1.0
+            local_costmap_edt = np.ones((self.local_costmap_size, self.local_costmap_size), dtype=np.float32)
         # set the local costmap to the local_costmap_d on the device
         local_costmap_d = numba_cuda.to_device(local_costmap_edt)
         obs_cost_d = np.float32(DEFAULT_OBS_COST if 'obs_penalty' not in self.params 
@@ -697,6 +709,7 @@ class SVGuidedMPPI:
         u_std_d, x0_d, dt_d, local_costmap_d, obs_cost_d, max_local_cost_d, \
         costmap_origin_x, costmap_origin_y, params_costmap_resolution = self.move_mppi_task_vars_to_device(initial_state)
 
+        ## Mean + noise added samples
         noise_samples_d = numba_cuda.to_device(sampler.noised_control_seq_samples_)
         self.costs_d = numba_cuda.device_array((noise_samples_d.shape[0]), dtype=np.float32)
         dist_weight = DEFAULT_DIST_WEIGHT if 'dist_weight' not in self.params else self.params['dist_weight']
@@ -723,6 +736,7 @@ class SVGuidedMPPI:
             params_costmap_resolution,
             # results
             self.costs_d,
+            noise_samples_d.shape[1]
       )
         return np.array(self.costs_d.copy_to_host())
     
@@ -733,16 +747,18 @@ class SVGuidedMPPI:
         for _ in range(self.num_svgd_iteration_):
             # Transport samples by Stein Variational Gradient Descent
             ## Calculating Stein gradient
-            grad_log_posterior_batch = self.approx_grad_posterior_batch(self.guide_samples_ptr_, self.func_calc_costs, initial_state) #runtime around 0.05, manageable
-            for i in range(self.guide_samples_ptr_.get_num_samples()): # for loop runtime negligible
+            grad_log_posterior_batch = self.approx_grad_posterior_batch(self.guide_samples_ptr_, self.func_calc_costs, initial_state)
+            for i in range(self.guide_samples_ptr_.get_num_samples()):
                 # Apply SVGD step
                 self.guide_samples_ptr_.noised_control_seq_samples_[i] += self.svgd_step_size_ * grad_log_posterior_batch[i]
             # Calculate costs for the current batch
-            costs = self.func_calc_costs(self.guide_samples_ptr_, initial_state) # runtime 0.01-0.03
+            cost = self.func_calc_costs(self.guide_samples_ptr_, initial_state)
             # Store costs and samples for adaptive covariance calculation
-            costs_history.extend(costs)
+            costs_history.extend(cost)
             control_seq_history.extend(self.guide_samples_ptr_.noised_control_seq_samples_.tolist())
-        guide_costs = self.func_calc_costs(self.guide_samples_ptr_, initial_state)  # Extract first element (costs)
+        ## Getting the guide samples cost
+        guide_costs = self.func_calc_costs(self.guide_samples_ptr_, initial_state)
+        # guide_costs = self.func_calc_costs(self.guide_samples_ptr_, initial_state)  # Extract first element (costs)
         # # Find the index of the minimum cost
         min_idx = np.argmin(guide_costs)
         # Retrieve the best control sequence
@@ -759,7 +775,10 @@ class SVGuidedMPPI:
                 
                 sigma_clamped = np.clip(sigma, self.min_steer_cov, self.max_steer_cov)
                 covs[i] = np.identity(1) * sigma_clamped
-        return best_particle, covs 
+        return covs, best_particle
+
+    def set_prev_control_seq(self, prev_control_seq):
+       self.prev_control_seq_ = prev_control_seq
 
     def calc_weights(self, prior_samples_ptr_, nominal_control_seq_):
         costs_with_control_term = prior_samples_ptr_.get_costs_with_control_term_numba(self.lambda_, self.alpha_, nominal_control_seq_)
@@ -816,45 +835,62 @@ class SVGuidedMPPI:
         return grad_log_likelihoods
     
     def approx_grad_log_likelihood_numba(self, mean_seq, noised_seq, inv_covs, calc_costs, sampler, initial_state):
+        # start_t = time.time()
         ## Get constant covariance matrix
         grad_cov = sampler.get_constant_control_seq_cov_matrices([self.steer_cov_for_grad_estimation_])
         # # generate gaussian random samples, center of which is noised_seq which has that mean and variance
-        
         sampler.random_sampling_numba(self.generator, noised_seq, grad_cov)
         # sampler.random_sampling(noised_seq, grad_cov)
         sampler.costs_ = calc_costs(sampler, initial_state)
         # calculate forward simulation and costs
-        num_samples = sampler.get_num_samples()
-        exp_costs = np.zeros(num_samples)
         sampler_inv_covs = sampler.get_inv_cov_matrices()
         # calculate cost with control term
-        
         costs_gpu = numba_cuda.to_device(sampler.costs_.astype(np.float32))
         prev_control_seq_gpu = numba_cuda.to_device(self.prev_control_seq_.astype(np.float32))
         noised_control_seq_samples_gpu = numba_cuda.to_device(sampler.noised_control_seq_samples_.astype(np.float32))
-        exp_costs_gpu = numba_cuda.to_device(exp_costs.astype(np.float32))
-        sum_of_grads_gpu = numba_cuda.device_array((np.int32(num_samples), mean_seq.shape[0], mean_seq.shape[1]), dtype = np.float32)
         inv_covs_gpu = numba_cuda.to_device(inv_covs.astype(np.float32))
         sampler_inv_covs_gpu = numba_cuda.to_device(sampler_inv_covs.astype(np.float32))
         noised_seq_gpu = numba_cuda.to_device(noised_seq.astype(np.float32))
-        pred_size_gpu = numba_cuda.to_device(np.int64(self.prediction_step_size_))
-        lamba_gpu = numba_cuda.to_device(np.float32(self.grad_lambda_))
-        
-        self.calculate_grad[num_samples, 1](
-        costs_gpu,
-        self.prediction_step_size_,
-        self.grad_lambda_,
-        prev_control_seq_gpu,
-        noised_control_seq_samples_gpu,
-        exp_costs_gpu,
-        sum_of_grads_gpu,
-        inv_covs_gpu,
-        sampler_inv_covs_gpu,
-        noised_seq_gpu)
-        
-        exp_costs_final = exp_costs_gpu.copy_to_host()
-        sum_of_grads_final = np.sum(sum_of_grads_gpu.copy_to_host(), axis=0)
-        sum_of_costs = np.sum(exp_costs_final)
+        # pred_size_gpu = numba_cuda.to_device(np.int64(self.prediction_step_size_))
+        # lamba_gpu = numba_cuda.to_device(np.float32(self.grad_lambda_))
+        # print("1",time.time() - start_t)
+        # start_t = time.time()
+        self.calculate_exp[sampler.get_num_samples(), 1](
+          costs_gpu,
+          self.prediction_step_size_,
+          self.grad_lambda_,
+          prev_control_seq_gpu,
+          noised_control_seq_samples_gpu,
+          self.exp_costs_gpu,
+          inv_covs_gpu,
+          sampler_inv_covs_gpu,
+          noised_seq_gpu,
+          np.float32(self.prev_control_seq_.shape[0])
+        )
+        # print("2",time.time() - start_t)
+        # start_t = time.time()
+        self.exp_costs = self.exp_costs_gpu.copy_to_host()
+        self.exp_costs =  np.exp(-(self.exp_costs - min(sampler.costs_)) / self.grad_lambda_)
+        sum_of_exp_costs = np.sum(self.exp_costs)
+        self.exp_costs /= abs(sum_of_exp_costs)
+        self.exp_costs_gpu = numba_cuda.to_device(self.exp_costs.astype(np.float32))
+        # print("3",time.time() - start_t)
+        # start_t = time.time()
+        self.calculate_grad[sampler.get_num_samples(), 1](
+            costs_gpu,
+            self.prediction_step_size_,
+            self.grad_lambda_,
+            prev_control_seq_gpu,
+            noised_control_seq_samples_gpu,
+            self.exp_costs_gpu,
+            self.sum_of_grads_gpu,
+            inv_covs_gpu,
+            sampler_inv_covs_gpu,
+            noised_seq_gpu,
+            np.float32(self.prev_control_seq_.shape[0]))
+        sum_of_grads_final = np.sum(self.sum_of_grads_gpu.copy_to_host(),axis = 0)
+        sum_of_costs = np.sum(self.exp_costs)
+        # print("4",time.time() - start_t)
         return sum_of_grads_final / (sum_of_costs + 1e-10)
     
     @staticmethod
@@ -865,52 +901,147 @@ class SVGuidedMPPI:
         grad_lambda_,
         prev_control_seq_,
         noised_control_seq_samples_,
-        exp_costs, ## Saving in this
-        sum_of_grads, ## Saving in this
+        exp_costs,
+        sum_of_grads_gpu,
         inv_covs,
         sampler_inv_covs,
-        noised_seq
-    ):
+        noised_seq,
+        timesteps):
+        """
+        Do a fixed number of rollouts for visualization across blocks.
+        Assume kernel is launched as get_state_rollout_across_control_noise[num_blocks, 1]
+        The block with id 0 will always visualize the best control sequence. Other blocks will visualize random samples.
+        """
         # Use block id
+        tid = numba_cuda.threadIdx.x
         bid = numba_cuda.blockIdx.x
+        exp_cost = exp_costs[bid]
+        for j in range(prediction_step_size_ - 1): 
+            sum_of_grads_gpu[bid,j,0] = 0
+            current_inv_cov = sampler_inv_covs[j,0,0]
+            current_noised_control_seq_samples_ = noised_control_seq_samples_[bid, j,0]
+            current_noised_seq = noised_seq[j,0]
+            new_term = exp_cost * current_inv_cov * (current_noised_control_seq_samples_ - current_noised_seq)
+            sum_of_grads_gpu[bid,j,0] = new_term
+
+    @staticmethod
+    @numba_cuda.jit(fastmath=True)
+    def calculate_exp(
+        costs,
+        prediction_step_size_,
+        grad_lambda_,
+        prev_control_seq_,
+        noised_control_seq_samples_,
+        exp_costs, ## Saving in this
+        inv_covs,
+        sampler_inv_covs,
+        noised_seq,
+        timesteps):
+        """
+        Do a fixed number of rollouts for visualization across blocks.
+        Assume kernel is launched as get_state_rollout_across_control_noise[num_blocks, 1]
+        The block with id 0 will always visualize the best control sequence. Other blocks will visualize random samples.
+        """
+        # Use block id
+        tid = numba_cuda.threadIdx.x
+        bid = numba_cuda.blockIdx.x
+        exp_costs[bid] = 0 
         cost_with_control_term = costs[bid]
         current_noised_control_seq = noised_control_seq_samples_[bid]
+        N = timesteps
         for j in range(prediction_step_size_- 1):
-            prev_control_diff = cuda.local.array(15, dtype=np.float32)  # Temporary local array for subtraction result
-            for k in range(15):
+            prev_control_diff = numba_cuda.local.array((22), dtype=np.float32)  # Temporary local array for subtraction result
+            for k in range(timesteps):
                 prev_control_diff[k] = prev_control_seq_[j, k] - current_noised_control_seq[j, k]
         
             # Manually subtract elements for the second term
-            current_noised_diff = cuda.local.array(15, dtype=np.float32)  # Temporary local array for second subtraction
-            for k in range(15):
+            current_noised_diff = numba_cuda.local.array((22), dtype=np.float32)  # Temporary local array for second subtraction
+            for k in range(timesteps):
                 current_noised_diff[k] = prev_control_seq_[j, k] - current_noised_control_seq[j, k]
 
             diff_control_term = 0.0
         
             # Matrix multiplication manually: prev_control_diff @ inv_covs[j] @ prev_control_diff.T
             for k in range(prev_control_seq_.shape[1]):
-                diff_control_term += prev_control_diff[k] * inv_covs[j][k, k]  # Assuming inv_covs[j] is diagonal, adjust if necessary
+                for l in range(prev_control_seq_.shape[1]):
+                    diff_control_term += prev_control_diff[k] * inv_covs[j][k, l] * prev_control_diff[l]
+
             # Manually apply grad_lambda_
             grad_lambda_ = np.float32(grad_lambda_)
             diff_control_term = np.float32(diff_control_term)
             diff_control_term = diff_control_term * grad_lambda_
             cost_with_control_term += diff_control_term
-        exp_cost = 1.0 / (1.0 + np.float32(-cost_with_control_term / grad_lambda_))
-        exp_costs[bid] = exp_cost
-        exp_cost = np.float32(exp_cost)
-        for j in range(prediction_step_size_ - 1): 
-            current_inv_cov = sampler_inv_covs[j,0,0]
-            current_noised_control_seq_samples_ = noised_control_seq_samples_[bid, j,0]
-            current_noised_seq = noised_seq[j,0]
-            new_term = exp_cost * current_inv_cov * (current_noised_control_seq_samples_ - current_noised_seq)
-            sum_of_grads[bid,j,0] = new_term
+        # exp_cost = 1.0 / (1.0 + np.float32(-cost_with_control_term / grad_lambda_))
+        exp_costs[bid] = cost_with_control_term
 
+    @staticmethod
+    @numba_cuda.jit(fastmath=True)
+    def update_useq_numba(
+          lambda_weight_d,
+          costs_d,
+          noise_samples_d,
+          weights_d,
+          ):
+      """
+      GPU kernel that updates the optimal control sequence based on previously evaluated cost values.
+      Assume that the function is invoked as update_useq_numba[1, NUM_THREADS], with one block and multiple threads.
+      """
+      tid = numba_cuda.threadIdx.x
+      num_threads = numba_cuda.blockDim.x
+      numel = len(noise_samples_d)
+      gap = int(math.ceil(numel / num_threads))
+
+      # Find the minimum value via reduction
+      starti = min(tid*gap, numel)
+      endi = min(starti+gap, numel)
+      if starti<numel:
+        weights_d[starti] = costs_d[starti]
+      for i in range(starti, endi):
+        weights_d[starti] = min(weights_d[starti], costs_d[i])
+      numba_cuda.syncthreads()
+
+      s = gap
+      while s < numel:
+        if (starti % (2 * s) == 0) and ((starti + s) < numel):
+          # Stride by `s` and add
+          weights_d[starti] = min(weights_d[starti], weights_d[starti + s])
+        s *= 2
+        numba_cuda.syncthreads()
+
+      beta = weights_d[0]
+      
+      # Compute weight
+      for i in range(starti, endi):
+        weights_d[i] = math.exp(-1./lambda_weight_d*(costs_d[i]-beta))
+      numba_cuda.syncthreads()
+
+      # Normalize
+      # Reuse costs_d array
+      for i in range(starti, endi):
+        costs_d[i] = weights_d[i]
+      numba_cuda.syncthreads()
+      for i in range(starti+1, endi):
+        costs_d[starti] += costs_d[i]
+      numba_cuda.syncthreads()
+      s = gap
+      while s < numel:
+        if (starti % (2 * s) == 0) and ((starti + s) < numel):
+          # Stride by `s` and add
+          costs_d[starti] += costs_d[starti + s]
+        s *= 2
+        numba_cuda.syncthreads()
+
+      for i in range(starti, endi):
+        weights_d[i] /= costs_d[0]
+      numba_cuda.syncthreads()
+      
+      
 class SteinMPPIPlannerNode(Node):
     def __init__(self):
         super().__init__('Stein_MPPI_Planner_Node')
         self.cfg = Config(T = 3,
             dt = 0.2,
-            num_control_rollouts = 500, # Same as number of blocks, can be more than 1024
+            num_control_rollouts = 1500, # Same as number of blocks, can be more than 1024
             num_vis_state_rollouts = 1000,
             seed = 1,
             )
@@ -942,29 +1073,28 @@ class SteinMPPIPlannerNode(Node):
         self.mppi = MPPI_Numba(self.cfg)
         self.mppi.setup(self.mppi_params)
         self.get_logger().info('MPPI NUMBA initialized.')
-        ## Change the max_steer_cov, steer_cov according to the experiment
+        # ## Change the max_steer_cov, steer_cov according to the experiment
         self.svg_mppi_params = {
             "sample_batch_num": 2000,
-            "lambda": 1.0, # temperature parameter [0, inf) of free energy, which is a balancing term between control cost and state cost.
+            "lambda": 3.0, # temperature parameter [0, inf) of free energy, which is a balancing term between control cost and state cost.
             "non_biased_sampling_rate": 0.1, # [0, 1]. add random noise to candidate control sequence with this rate.
             "alpha": 0.1, # weighting parameter [0, 1], which balances control penalties from previous control sequence and nominal control sequence.
-            "steer_cov": 0.01, # initial covariance or constant covariance if is_covariance_adaptation is false
+            "steer_cov": 0.1, # initial covariance or constant covariance if is_covariance_adaptation is false
             "guide_sample_num": 1,
-            "grad_lambda": 1.0,
+            "grad_lambda": 3.0,
             "sample_num_for_grad_estimation": 100,
             "steer_cov_for_grad_estimation": 0.01,
-            # "svgd_step_size": 0.005,
-            "svgd_step_size": 0.015,
-            "num_svgd_iteration": 2,
+            "svgd_step_size": 0.008,
+            "num_svgd_iteration": 6,
             "is_use_nominal_solution": True,
-            "is_covariance_adaptation": True,
+            "is_covariance_adaptation": False,
             "gaussian_fitting_lambda": 0.1,
             "min_steer_cov": 0.001,
-            "max_steer_cov": 0.2,
+            "max_steer_cov": 0.1,
             "prediction_step_size": 16,
             "max_steer_angle": np.pi/6,
             "min_steer_angle": -np.pi/6,
-        }
+          }
         self.stein = SVGuidedMPPI(self.svg_mppi_params, self.mppi_params)
         self.get_logger().info('SVG MPPI initialized.')
 
@@ -991,7 +1121,7 @@ class SteinMPPIPlannerNode(Node):
         )
 
         # Create a timer to call the Stein planner solve routine.
-        self.timer = self.create_timer(0.25, self.solve_Stein)
+        self.timer = self.create_timer(0.3, self.solve_Stein)
         self.i = 0
         self.isGoalReached = False
 
@@ -1007,9 +1137,10 @@ class SteinMPPIPlannerNode(Node):
         costmap_int8 = np.array(msg.data, dtype=np.int8).reshape(height, width)
         self.local_costmap = costmap_int8.astype(np.float32)
 
+        self.latest_origin = [msg.info.origin.position.x, msg.info.origin.position.y]
+        self.latest_costmap = self.local_costmap
         self.mppi_params['costmap_resolution'] = msg.info.resolution
-        self.mppi_params['costmap_origin'] = [msg.info.origin.position.x, msg.info.origin.position.y]
-        self.mppi_params['costmap'] = self.local_costmap
+       
 
     def _dynamics_KS_3d_steering_angle(self, state, action, dt): #constant velocity
         x, y, theta = state
@@ -1055,6 +1186,9 @@ class SteinMPPIPlannerNode(Node):
 
             # Update planner parameters with current state and latest costmap.
             self.mppi_params['x0'] = current_state
+            self.mppi_params['costmap_origin'] = np.array(self.latest_origin)
+            self.mppi_params['costmap'] = np.array(self.latest_costmap)
+
             if self.local_costmap is not None:
                 self.mppi_params['costmap'] = self.local_costmap
             self.mppi.setup(self.mppi_params)
@@ -1097,6 +1231,7 @@ class SteinMPPIPlannerNode(Node):
         useq = self.mppi.solve(cov, nominal_seq)
         if (self.i % 10) == 0:
             self.get_logger().info(f"  runtime mppi.solve {time.perf_counter()-mppi_strat}")
+        self.stein.set_prev_control_seq(useq[:,1].reshape(-1,1))
         self.mppi.shift_and_update(current_state, useq)
 
         ############### visualize min cost traj below ##############
